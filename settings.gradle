@@ -1,1 +1,8 @@
 rootProject.name = 'QuizForge'
+include 'adapter'
+include 'application'
+include 'bootstrap'
+include 'domain'
+include 'inftastructore'
+include 'infrastructure'
+
