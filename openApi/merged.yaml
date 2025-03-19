@@ -1,0 +1,11 @@
+---
+servers:
+- url: "http://localhost:8080"
+openapi: "3.0.0"
+paths:
+  /exams:
+    $ref: "./examl.yaml#/paths/~1exams"
+info:
+  title: "merged spec"
+  description: "merged spec"
+  version: "1.0.0"

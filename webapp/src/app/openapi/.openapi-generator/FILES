@@ -1,0 +1,14 @@
+.gitignore
+.openapi-generator-ignore
+com/example/README.md
+com/example/api.module.ts
+com/example/api/api.ts
+com/example/api/default.service.ts
+com/example/configuration.ts
+com/example/encoder.ts
+com/example/index.ts
+com/example/model/examDTO.ts
+com/example/model/models.ts
+com/example/param.ts
+com/example/variables.ts
+git_push.sh
