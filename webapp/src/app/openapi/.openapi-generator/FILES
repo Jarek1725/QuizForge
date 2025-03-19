@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 com/example/README.md
 com/example/api.module.ts
 com/example/api/api.ts
