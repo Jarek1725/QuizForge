@@ -71,11 +71,11 @@ tasks.register("generateWebApp", GenerateTask) {
 
 tasks.register("deleteGeneratedFiles", Delete) {
     group = "openapi"
+    delete openApiOutputLocationWebApp
     delete openApiOutputLocationBackend
 }
 
-tasks.register("deleteGeneratedWebApp", Delete) {
-    group = "openapi"
-    delete openApiOutputLocationWebApp
+tasks.named("compileJava") {
+    dependsOn("generateBackend")
+    dependsOn("generateWebApp")
 }
-
