@@ -1,0 +1,81 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
+buildscript {
+    ext {
+        openApiInputLocation = "$rootDir/openapi".toString()
+        openApiOutputLocationBackend = "$buildDir/generated/openapi".toString()
+        openApiOutputLocationWebApp = "$rootDir/webapp/src/app/openapi".toString()
+    }
+}
+
+plugins {
+    id("java")
+    id("org.openapi.generator") version "7.2.0"
+}
+
+group = "tomaszewski"
+version = "0.0.1-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(project(":application"))
+    implementation("jakarta.servlet:jakarta.servlet-api:5.0.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+    implementation("javax.annotation:javax.annotation-api:1.3.2")
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    implementation("jakarta.annotation:jakarta.annotation-api:2.1.0")
+    implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+}
+
+sourceSets {
+    main {
+        java.srcDirs += openApiOutputLocationBackend + "/src/main/java"
+    }
+}
+
+tasks.register("generateBackend", GenerateTask) {
+    group = "openapi"
+    generatorName.set("spring")
+    inputSpecRootDirectory.set(openApiInputLocation)
+    outputDir.set(openApiOutputLocationBackend)
+    configOptions.set([
+        "dateLibrary": "java8",
+        "interfaceOnly": "true",
+        "hideGenerationTimestamp": "true",
+        "useTags": "true",
+        "useSpringBoot3": "true"
+    ])
+    apiPackage.set("tomaszewski.openapi.api")
+    modelPackage.set("tomaszewski.openapi.model")
+}
+
+tasks.register("generateWebApp", GenerateTask) {
+    group = "openapi"
+    generatorName.set("typescript-angular")
+    inputSpecRootDirectory.set(openApiInputLocation)
+    outputDir.set(openApiOutputLocationWebApp)
+    configOptions.set([
+        "ngVersion": "12.0.0",
+        "useHttpClient": "true",
+        "withInterfaces": "true",
+        "withSeparateModelsAndApi": "true",
+        "withNpmName": "openapi",
+        "withNpmVersion": "1.0.0"
+    ])
+    apiPackage.set("tomaszewski.openapi.api")
+}
+
+tasks.register("deleteGeneratedFiles", Delete) {
+    group = "openapi"
+    delete openApiOutputLocationBackend
+}
+
+tasks.register("deleteGeneratedWebApp", Delete) {
+    group = "openapi"
+    delete openApiOutputLocationWebApp
+}
+
