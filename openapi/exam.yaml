@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Exam API
   version: 1.0.0
-  description: API do zarządzania egzaminami
+  description: API for managing exams
 
 servers:
   - url: http://localhost:8080
@@ -11,11 +11,11 @@ servers:
 paths:
   /exams:
     get:
-      summary: Pobiera listę egzaminów
+      summary: Retrieves a list of exams
       operationId: getExams
       responses:
         "200":
-          description: Lista egzaminów
+          description: List of exams
           content:
             application/json:
               schema:
@@ -23,7 +23,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/ExamDTO"
     post:
-      summary: Tworzy nowy egzamin
+      summary: Creates a new exam
       operationId: createExam
       requestBody:
         required: true
@@ -33,7 +33,7 @@ paths:
               $ref: "#/components/schemas/ExamDTO"
       responses:
         "201":
-          description: Egzamin utworzony
+          description: Exam created
 
 components:
   schemas:

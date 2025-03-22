@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: Authentication API
+  description: API for user authentication, registration, and password management
+  version: 1.0.0
+
+paths:
+  /auth/register:
+    post:
+      summary: User registration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequestDTO'
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: Invalid input data
+
+  /auth/login:
+    post:
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDTO'
+      responses:
+        '200':
+          description: Successfully logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponseDTO'
+        '401':
+          description: Invalid login credentials
+
+  /auth/change-password:
+    post:
+      summary: Change user password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequestDTO'
+      responses:
+        '200':
+          description: Password changed successfully
+        '400':
+          description: Invalid input data
+
+components:
+  schemas:
+    RegisterRequestDTO:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        confirmPassword:
+          type: string
+          format: password
+
+    LoginRequestDTO:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+
+    AuthResponseDTO:
+      type: object
+      properties:
+        token:
+          type: string
+
+    ChangePasswordRequestDTO:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+          format: password
+        newPassword:
+          type: string
+          format: password
+        confirmPassword:
+          type: string
+          format: password

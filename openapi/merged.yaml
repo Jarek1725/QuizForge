@@ -1,10 +1,16 @@
 ---
 servers:
 - url: "http://localhost:8080"
-openapi: "3.0.0"
+openapi: "3.0.3"
 paths:
+  /auth/login:
+    $ref: "./auth.yaml#/paths/~1auth~1login"
+  /auth/change-password:
+    $ref: "./auth.yaml#/paths/~1auth~1change-password"
+  /auth/register:
+    $ref: "./auth.yaml#/paths/~1auth~1register"
   /exams:
-    $ref: "./examl.yaml#/paths/~1exams"
+    $ref: "./exam.yaml#/paths/~1exams"
 info:
   title: "merged spec"
   description: "merged spec"

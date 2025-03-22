@@ -76,6 +76,7 @@ tasks.register("deleteGeneratedFiles", Delete) {
 }
 
 tasks.named("compileJava") {
+    dependsOn("deleteGeneratedFiles")
     dependsOn("generateBackend")
     dependsOn("generateWebApp")
 }
