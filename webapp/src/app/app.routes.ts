@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import {HomeComponent} from "./home/home.component";
+import {HomeGuestComponentComponent} from './components/home-guest-component/home-guest-component.component';
 
 export const routes: Routes = [
     {
         path: '',
-        component: HomeComponent
+        component: HomeGuestComponentComponent, canActivate: []
     }
 ];
