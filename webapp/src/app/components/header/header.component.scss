@@ -1,0 +1,18 @@
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  width: 70%;
+  margin: 0 auto;
+  height: 40px;
+  max-height: 40px;
+}
+
+.header-right > * {
+  padding: 0 20px;
+}
+
+.header-left img {
+   max-height: 90px;
+}

@@ -1,7 +1,8 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
+@import 'app/styles/variables';
 
 html {
   @include mat.theme((
@@ -14,7 +15,25 @@ html {
     density: 0,
   ));
 }
+
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  color: $default-text-color;
+  font-weight: 400;
+  margin: 0;
+  font-family: "Questrial", sans-serif;
+}
+
+:root {
+  @include mat.button-overrides((
+    filled-container-color: $color-primary,
+    text-label-text-color: $default-text-color,
+    text-label-text-weight: 400,
+    filled-label-text-weight: 400
+  ));
+}
