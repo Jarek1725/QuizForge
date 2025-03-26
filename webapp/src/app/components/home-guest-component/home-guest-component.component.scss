@@ -1,0 +1,28 @@
+#home-guest-container {
+  display: flex;
+  width: 80%;
+  margin: auto;
+  height: calc(100vh - 80px);
+  align-items: center;
+  justify-content: center;
+
+  * {
+    padding: 5px;
+  }
+}
+
+#home-guest-left-panel {
+  width: 55%;
+}
+
+#home-guest-buttons-container {
+  margin-top: 40px;
+}
+
+#home-guest-right-panel {
+  width: 45%;
+}
+
+#home-guest-main-text {
+  font-size: 37px;
+}
