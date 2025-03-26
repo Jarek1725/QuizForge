@@ -37,3 +37,13 @@ body {
     filled-label-text-weight: 400
   ));
 }
+
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button,
+.mat-mdc-flat-button,
+.mat-mdc-button-base,
+.mat-mdc-fab,
+.mat-mdc-mini-fab {
+  padding: 24px !important;
+}
