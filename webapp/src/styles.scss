@@ -27,7 +27,9 @@ body {
   font-weight: 400;
   margin: 0;
   font-family: "Questrial", sans-serif;
+  background-color: $default-background-color;
 }
+
 
 :root {
   @include mat.button-overrides((
@@ -47,3 +49,13 @@ body {
 .mat-mdc-mini-fab {
   padding: 24px !important;
 }
+
+a {
+  cursor: pointer;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background: none !important;
+}
+
+

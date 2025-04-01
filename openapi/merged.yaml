@@ -9,6 +9,8 @@ paths:
     $ref: "./auth.yaml#/paths/~1logout"
   /authenticated-user:
     $ref: "./auth.yaml#/paths/~1authenticated-user"
+  /kicak:
+    $ref: "./exam.yaml#/paths/~1kicak"
   /exams:
     $ref: "./exam.yaml#/paths/~1exams"
 info:

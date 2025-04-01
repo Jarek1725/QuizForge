@@ -1,11 +1,19 @@
-#login-panel-container {
+@use '../../styles/variables' as *;
+
+.login-panel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   padding: 30px;
+  background-color: white;
   h2 {
-    margin-bottom: 30px;
+    margin: 20px 0 40px 0;
   }
-  width: 350px;
-  height: 350px;
+
+  width: 330px;
+  border-radius: 10px;
+
   margin: auto;
 }
 
@@ -14,11 +22,30 @@
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
+  width: 100%;
+  * {
+    width: 100%;
+  }
 
-  *{
-    width: 80%;
-  }
-  button{
+  button {
     width: 70%;
+    margin: 15px auto;
   }
+
+  mat-checkbox{
+    margin: 0 auto;
+    width: 100%;
+    text-align: left;
+  }
+
+}
+
+a {
+  color: $color-primary;
+}
+
+#register-form-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 10px;
 }
