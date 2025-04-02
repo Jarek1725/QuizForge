@@ -37,12 +37,6 @@ paths:
 
 components:
   schemas:
-    KiciaDTO:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
     ExamDTO:
       type: object
       properties:

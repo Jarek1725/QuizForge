@@ -1,20 +1,22 @@
 <div>
   <div *ngIf="isLogin; else registerForm" class="login-panel-container">
     <h2>Logowanie</h2>
-    <div id="login-form-container">
-      <mat-form-field>
-        <mat-label>Login</mat-label>
-        <input matInput placeholder="Login">
-      </mat-form-field >
-      <mat-form-field >
-        <mat-label>Hasło</mat-label>
-        <input matInput type="password" placeholder="Hasło">
-      </mat-form-field>
-      <div id="reset-password-remember-me">
-        <mat-checkbox class="example-margin">Zapamiętaj mnie</mat-checkbox>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div id="login-form-container">
+        <mat-form-field>
+          <mat-label>Login</mat-label>
+          <input matInput formControlName="username" placeholder="Login">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Hasło</mat-label>
+          <input matInput type="password" formControlName="password" placeholder="Hasło">
+        </mat-form-field>
+        <div id="reset-password-remember-me">
+          <mat-checkbox formControlName="rememberMe">Zapamiętaj mnie</mat-checkbox>
+        </div>
+        <button mat-flat-button type="submit" [disabled]="loginForm.invalid">Logowanie</button>
       </div>
-      <button mat-flat-button>Logowanie</button>
-    </div>
+    </form>
     <p>Nie masz jeszcze konta? <a (click)="toggleForm()">Zarejestruj się!</a></p>
     <a id="reset-password" (click)="toggleForm()">Nie pamiętasz hasła?</a>
   </div>
