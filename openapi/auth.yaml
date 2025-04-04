@@ -9,6 +9,8 @@ servers:
 paths:
   /login:
     post:
+      tags:
+        - User
       summary: User login
       operationId: loginUser
       requestBody:
@@ -29,6 +31,8 @@ paths:
 
   /authenticated-user:
     get:
+      tags:
+        - User
       summary: Get authenticated user
       operationId: getAuthenticatedUser
       responses:
@@ -43,6 +47,8 @@ paths:
 
   /logout:
     post:
+      tags:
+        - User
       summary: User logout
       operationId: logoutUser
       responses:
