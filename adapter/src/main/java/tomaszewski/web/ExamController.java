@@ -22,8 +22,14 @@ public class ExamController implements ExamApi {
         return ExamApi.super.createExam(examDTO);
     }
 
+    @GetMapping("/api/exams")
     @Override
     public ResponseEntity<List<ExamDTO>> getExams() {
-        return ExamApi.super.getExams();
+        System.out.println("BIORE EXAMY");
+        ExamDTO examDTO = new ExamDTO();
+        examDTO.setId(1L);
+        ResponseEntity responseEntity = ResponseEntity.ok().build();
+        responseEntity = ResponseEntity.ok().body(examDTO);
+        return responseEntity;
     }
 }

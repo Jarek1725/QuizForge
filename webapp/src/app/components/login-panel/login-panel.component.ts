@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {DefaultService} from '../../openapi/tomaszewski/openapi';
 import {AuthServiceService} from '../../services/auth-service.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SharedModule} from '../../shared.module';
@@ -11,8 +10,7 @@ import {SharedModule} from '../../shared.module';
     SharedModule
   ],
   templateUrl: './login-panel.component.html',
-  styleUrl: './login-panel.component.scss',
-  providers: [DefaultService]
+  styleUrl: './login-panel.component.scss'
 })
 export class LoginPanelComponent {
   isLogin = true;
@@ -37,7 +35,7 @@ export class LoginPanelComponent {
   login() {
     if (this.loginForm.valid) {
       const {username, password} = this.loginForm.value;
-      this.authService.login({username, password}).subscribe({
+      this.authService.login(username, password).subscribe({
         next: (response) => {
           console.log('logged', response);
         },
