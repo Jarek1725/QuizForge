@@ -1,14 +1,8 @@
 ---
 servers:
 - url: "http://localhost:8080"
-openapi: "3.0.1"
+openapi: "3.0.0"
 paths:
-  /login:
-    $ref: "./auth.yaml#/paths/~1login"
-  /logout:
-    $ref: "./auth.yaml#/paths/~1logout"
-  /authenticated-user:
-    $ref: "./auth.yaml#/paths/~1authenticated-user"
   /exams:
     $ref: "./exam.yaml#/paths/~1exams"
 info:

@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":infrastructure"))
     implementation(project(":adapter"))
     implementation(project(":application"))
     compileOnly("org.projectlombok:lombok:1.18.32")
