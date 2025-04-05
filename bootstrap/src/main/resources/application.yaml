@@ -19,3 +19,9 @@ spring:
       max-request-size: 5MB
   error:
     include-message: always
+
+logging:
+  level:
+    org:
+      springframework:
+        web=DEBUG:

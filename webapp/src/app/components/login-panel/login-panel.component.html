@@ -1,17 +1,58 @@
-<div id="login-panel-container">
-  <h2>Logowanie</h2>
-  <div id="login-form-container">
-    <mat-form-field appearance="outline">
-      <mat-label>Login</mat-label>
-      <input matInput placeholder="Login">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Hasło</mat-label>
-      <input matInput placeholder="Hasło">
-    </mat-form-field>
-    <button mat-flat-button>
-      Rejestracja
-    </button>
-    <p>Nie masz jeszcze konta? Zarejestruj się!</p>
+<div>
+  <div *ngIf="isLogin; else registerForm" class="login-panel-container">
+    <h2>Logowanie</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div id="login-form-container">
+        <mat-form-field>
+          <mat-label>Login</mat-label>
+          <input matInput formControlName="username" placeholder="Login">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Hasło</mat-label>
+          <input matInput type="password" formControlName="password" placeholder="Hasło">
+        </mat-form-field>
+        <div id="reset-password-remember-me">
+          <mat-checkbox formControlName="rememberMe">Zapamiętaj mnie</mat-checkbox>
+        </div>
+        <button mat-flat-button type="submit" [disabled]="loginForm.invalid">Logowanie</button>
+      </div>
+    </form>
+    <p>Nie masz jeszcze konta? <a (click)="toggleForm()">Zarejestruj się!</a></p>
+    <a id="reset-password" (click)="toggleForm()">Nie pamiętasz hasła?</a>
+    <button mat-flat-button type="submit" (click)="test()">Logowanie</button>
   </div>
+
+  <ng-template #registerForm>
+    <div class="login-panel-container">
+      <h2>Rejestracja</h2>
+      <div id="register-form-container">
+        <mat-form-field appearance="outline" class="register-form-field">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" placeholder="Email">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="register-form-field">
+          <mat-label>Hasło</mat-label>
+          <input matInput type="password" placeholder="Hasło">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="register-form-field">
+          <mat-label>Potwierdź hasło</mat-label>
+          <input matInput type="password" placeholder="Potwierdź hasło">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="register-form-field">
+          <mat-label>Potwierdź hasło</mat-label>
+          <input matInput type="password" placeholder="Potwierdź hasło">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="register-form-field">
+          <mat-label>Potwierdź hasło</mat-label>
+          <input matInput type="password" placeholder="Potwierdź hasło">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="register-form-field">
+          <mat-label>Potwierdź hasło</mat-label>
+          <input matInput type="password" placeholder="Potwierdź hasło">
+        </mat-form-field>
+      </div>
+      <p>Masz już konto? <a (click)="toggleForm()">Zaloguj się!</a></p>
+      <button mat-flat-button>Rejestracja</button>
+    </div>
+  </ng-template>
 </div>

@@ -1,18 +1,27 @@
-.header-container {
+#header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
+  padding: 10px 40px;
   width: 80%;
   margin: 0 auto;
-  height: 40px;
-  max-height: 40px;
+  height: 60px;
+  background-color: white;
 }
 
-.header-right > * {
-  padding: 0 20px;
+header{
+  background-color: white;
 }
 
-.header-left img {
-   max-height: 70px;
+.header-right {
+  display: flex;
+  gap: 20px;
+}
+
+.logo {
+  max-height: 50px;
+}
+
+.login-button {
+  padding: 10px 20px;
 }

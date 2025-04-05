@@ -11,6 +11,8 @@ servers:
 paths:
   /exams:
     get:
+      tags:
+        - Exam
       summary: Retrieves a list of exams
       operationId: getExams
       responses:
@@ -23,6 +25,8 @@ paths:
                 items:
                   $ref: "#/components/schemas/ExamDTO"
     post:
+      tags:
+        - Exam
       summary: Creates a new exam
       operationId: createExam
       requestBody:
