@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {AuthServiceService} from '../../services/auth-service.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SharedModule} from '../../shared.module';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -20,17 +22,13 @@ export class LoginPanelComponent {
     this.isLogin = !this.isLogin;
   }
 
-  constructor(private fb: FormBuilder, private authService: AuthServiceService) {
+  constructor(private fb: FormBuilder, private authService: AuthServiceService, private httpClient: HttpClient) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
       rememberMe: [false]
     });
   }
-
-  username: string = '';
-  password: string = '';
-  errorMessage: string = '';
 
   login() {
     if (this.loginForm.valid) {
@@ -44,5 +42,16 @@ export class LoginPanelComponent {
         }
       });
     }
+  }
+
+  test(): void {
+    this.httpClient.get('/api/exams', {withCredentials: true}).subscribe(
+      (response) => {
+        console.log('Response:', response);
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    )
   }
 }

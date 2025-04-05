@@ -15,7 +15,7 @@ export class AuthServiceService {
   private currentUserSubject: BehaviorSubject<UserData | null>;
   public currentUser$: Observable<UserData | null>;
 
-  constructor(private http: HttpClient, private httpClient: HttpClient,
+  constructor(private httpClient: HttpClient,
   ) {
     const storedUser = localStorage.getItem('user');
     this.currentUserSubject = new BehaviorSubject<UserData | null>(
