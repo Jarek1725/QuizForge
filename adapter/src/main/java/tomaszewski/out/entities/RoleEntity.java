@@ -1,4 +1,4 @@
-package tomaszewski.infrastructure.entity;
+package tomaszewski.out.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;

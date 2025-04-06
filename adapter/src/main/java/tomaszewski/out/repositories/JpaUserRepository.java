@@ -1,9 +1,9 @@
-package tomaszewski.infrastructure.repo;
+package tomaszewski.out.repositories;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import tomaszewski.infrastructure.entity.UserEntity;
+import tomaszewski.out.entities.UserEntity;
 
 import java.util.Optional;
 
