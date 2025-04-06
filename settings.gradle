@@ -3,5 +3,4 @@ include 'bootstrap'
 include 'adapter'
 include 'application'
 include 'domain'
-include 'infrastructure'
 

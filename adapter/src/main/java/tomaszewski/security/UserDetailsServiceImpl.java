@@ -1,4 +1,4 @@
-package tomaszewski.application.security;
+package tomaszewski.security;
 
 
 import lombok.RequiredArgsConstructor;
@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import tomaszewski.infrastructure.repo.JpaUserRepository;
+import tomaszewski.out.repositories.JpaUserRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -15,9 +15,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final JpaUserRepository jpaUserRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return jpaUserRepository.findByEmailAndRoles(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+    public UserSecurityDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return
+                jpaUserRepository.findByEmailAndRoles(email)
+                        .map(UserSecurityDetails::new)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
 
 }
