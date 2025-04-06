@@ -45,7 +45,7 @@ export class LoginPanelComponent {
   }
 
   test(): void {
-    this.httpClient.get('/api/exams', {withCredentials: true}).subscribe(
+    this.httpClient.get('/api/user', {withCredentials: true}).subscribe(
       (response) => {
         console.log('Response:', response);
       },

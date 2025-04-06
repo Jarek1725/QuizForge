@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+  description: API for managing users
+
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /get-user-data:
+    get:
+      tags:
+        - User
+      summary: get user details
+      operationId: getUserData
+      responses:
+        "200":
+          description: user details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserData"
+
+components:
+  schemas:
+    UserData:
+      properties:
+        email:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
