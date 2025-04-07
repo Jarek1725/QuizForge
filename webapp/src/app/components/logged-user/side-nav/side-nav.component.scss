@@ -1,0 +1,10 @@
+.drawer-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  width: 100px;
+  height: calc(100vh - 80px);
+  background-color: white;
+}
