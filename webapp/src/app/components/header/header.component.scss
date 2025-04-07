@@ -9,13 +9,16 @@
   background-color: white;
 }
 
-header{
+header {
   background-color: white;
 }
 
 .header-right {
   display: flex;
   gap: 20px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo {
@@ -24,4 +27,12 @@ header{
 
 .login-button {
   padding: 10px 20px;
+}
+
+.header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  cursor: pointer;
 }

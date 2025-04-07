@@ -1,6 +1,7 @@
 <div>
   <div *ngIf="isLogin; else registerForm" class="login-panel-container">
     <h2>Logowanie</h2>
+    <p id="login-error" [ngClass]="{ 'error-text': loginError }">Błędny login lub hasło</p>
     <form [formGroup]="loginForm" (ngSubmit)="login()">
       <div id="login-form-container">
         <mat-form-field>
@@ -19,7 +20,6 @@
     </form>
     <p>Nie masz jeszcze konta? <a (click)="toggleForm()">Zarejestruj się!</a></p>
     <a id="reset-password" (click)="toggleForm()">Nie pamiętasz hasła?</a>
-    <button mat-flat-button type="submit" (click)="test()">Logowanie</button>
   </div>
 
   <ng-template #registerForm>

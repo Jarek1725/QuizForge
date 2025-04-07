@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SharedModule} from '../../shared.module';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -17,12 +18,13 @@ import {Observable} from 'rxjs';
 export class LoginPanelComponent {
   isLogin = true;
   loginForm: FormGroup;
+  loginError: boolean = false;
 
   toggleForm() {
     this.isLogin = !this.isLogin;
   }
 
-  constructor(private fb: FormBuilder, private authService: AuthServiceService, private httpClient: HttpClient) {
+  constructor(private fb: FormBuilder, private authService: AuthServiceService, private router: Router) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -35,23 +37,12 @@ export class LoginPanelComponent {
       const {username, password} = this.loginForm.value;
       this.authService.login(username, password).subscribe({
         next: (response) => {
-          console.log('logged', response);
+          this.router.navigate(['/home']).then(r => {})
         },
         error: (error) => {
-          console.error('error', error);
+          this.loginError = true
         }
       });
     }
-  }
-
-  test(): void {
-    this.httpClient.get('/api/user', {withCredentials: true}).subscribe(
-      (response) => {
-        console.log('Response:', response);
-      },
-      (error) => {
-        console.error('Error:', error);
-      }
-    )
   }
 }
