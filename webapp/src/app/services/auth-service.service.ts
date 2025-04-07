@@ -39,23 +39,10 @@ export class AuthServiceService {
         withCredentials: true,
       })
       .pipe(
-        tap((response: any) => {
-          if (response.status === 200) {
-            console.log('Zalogowano pomyślnie');
-            const userData: UserData = {
-              id: response.headers.get('user-id'),
-              email: email,
-              roles: ['user'],
-            };
-            console.log(userData)
-            localStorage.setItem('user', JSON.stringify(userData));
-            this.currentUserSubject.next(userData);
-          } else {
-            console.log('Błąd logowania');
-            this.currentUserSubject.next(null);
-          }
+        tap(() => {
+          this.getUserInfo()
         })
-      );
+      )
   }
 
   logout(): void {
@@ -66,5 +53,18 @@ export class AuthServiceService {
   isLoggedIn(): boolean {
     return this.currentUserSubject.value !== null;
   }
+
+  private getUserInfo(): void {
+    this.httpClient.get<UserData>('/api/user').subscribe({
+      next: (userData) => {
+        localStorage.setItem('user', JSON.stringify(userData));
+        this.currentUserSubject.next(userData);
+      },
+      error: (error) => {
+        console.error('Error fetching user data', error);
+      }
+    });
+  }
+
 
 }

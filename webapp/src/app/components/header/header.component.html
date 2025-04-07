@@ -3,11 +3,37 @@
     <div class="header-left">
       <img src="simple_logo.png" alt="Logo" class="logo">
     </div>
-    <nav class="header-right">
+
+    <nav *ngIf="!(user$ | async)" class="header-right">
       <button mat-button>O nas</button>
       <button mat-button>Opinie</button>
       <button mat-button>Kontakt</button>
       <button mat-flat-button class="login-button">Logowanie</button>
+    </nav>
+
+    <nav *ngIf="(user$ | async)" class="header-right">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Ikona użytkownika"
+        fontIcon="person"
+        class="header-icon"
+        [matMenuTriggerFor]="userMenu"
+      >
+      </mat-icon>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>account_circle</mat-icon>
+          <span>Profil</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Ustawienia</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Wyloguj się</span>
+        </button>
+      </mat-menu>
     </nav>
   </div>
 </header>

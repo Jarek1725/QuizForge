@@ -7,9 +7,6 @@
   text-align: center;
   padding: 30px;
   background-color: white;
-  h2 {
-    margin: 20px 0 40px 0;
-  }
 
   width: 330px;
   border-radius: 10px;
@@ -48,4 +45,14 @@ a {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0 10px;
+}
+
+#login-error{
+  padding: 0;
+  margin: 0 0 10px 0;
+  color: transparent;
+}
+
+.error-text{
+  color: $color-danger !important;
 }
