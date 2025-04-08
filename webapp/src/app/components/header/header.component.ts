@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AsyncPipe, NgIf, NgOptimizedImage} from '@angular/common';
+import {AsyncPipe, NgIf} from '@angular/common';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {AuthServiceService} from '../../services/auth-service.service';

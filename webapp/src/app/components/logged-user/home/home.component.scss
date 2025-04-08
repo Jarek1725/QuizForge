@@ -1,0 +1,22 @@
+#home-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-gap: 35px;
+  height: 100%;
+  width: 100%;
+}
+
+#app-last-score-container {
+  grid-area: 1 / 1 / 3 / 3;
+}
+
+
+#app-exam-list-container {
+  grid-area: 1 / 3 / 5 / 5;
+}
+
+#app-user-progress-container {
+  grid-area: 3 / 1 / 5 / 3;
+
+}

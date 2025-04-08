@@ -1,19 +1,33 @@
-<app-header></app-header>
-<div class="home-guest-container">
+<ng-container class="home-guest-container" *ngIf="!(user$ | async)">
+  <app-header></app-header>
   <div class="home-guest-left-panel">
-    <h1 class="home-guest-main-text">Twórz, udostępniaj i rozwiązuj egzaminy w inteligentny sposób!</h1>
-    <p class="home-guest-description">
-      QuizForge to nowoczesna platforma, która pomaga w efektywnej nauce i testowaniu wiedzy – generuj pytania,
-      organizuj egzaminy i śledź postępy!
-    </p>
-    <div class="home-guest-buttons-container">
-      <button mat-flat-button>
-        Rejestracja
-        <mat-icon>arrow_forward</mat-icon>
-      </button>
+    <div>
+      <h1 class="home-guest-main-text">Twórz, udostępniaj i rozwiązuj egzaminy w inteligentny sposób!</h1>
+      <p class="home-guest-description">
+        QuizForge to nowoczesna platforma, która pomaga w efektywnej nauce i testowaniu wiedzy – generuj pytania,
+        organizuj egzaminy i śledź postępy!
+      </p>
+      <div class="home-guest-buttons-container">
+        <button mat-flat-button>
+          Rejestracja
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="home-guest-right-panel">
+      <app-login-panel></app-login-panel>
     </div>
   </div>
-  <div class="home-guest-right-panel">
-    <app-login-panel></app-login-panel>
+</ng-container>
+
+
+<ng-container class="logged_user_container" *ngIf="(user$ | async)">
+  <app-header></app-header>
+  <div id="app-content-container">
+    <app-side-nav></app-side-nav>
+    <div id="main-content-container">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-</div>
+</ng-container>

@@ -5,11 +5,14 @@ import {HomeComponent} from './components/logged-user/home/home.component';
 export const routes: Routes = [
   {
     path: '',
-    component: HomeGuestComponentComponent, canActivate: []
-  },
-  {
-    path: 'home',
-    component: HomeComponent, canActivate: []
+    component: HomeGuestComponentComponent, canActivate: [],
+    children:[
+      {
+        path: 'home',
+        component: HomeComponent, canActivate: []
+      }
+    ]
   }
+
 
 ];

@@ -1,11 +1,22 @@
 <mat-drawer mode="side" opened>
   <div class="drawer-content">
-    <mat-icon>add_icon</mat-icon>
-    <mat-icon>format_list_bulleted_icon</mat-icon>
-    <mat-icon>history_icon</mat-icon>
-    <mat-icon>stacked_line_chart_outlined_icon </mat-icon>
-    <mat-icon>tune_icon</mat-icon>
+    <a mat-icon-button [routerLink]="['/home']" routerLinkActive="active">
+      <mat-icon>home</mat-icon>
+    </a>
+    <a mat-icon-button [routerLink]="['/add']" routerLinkActive="active">
+      <mat-icon>add</mat-icon>
+    </a>
+    <a mat-icon-button [routerLink]="['/exams']" routerLinkActive="active">
+      <mat-icon>format_list_bulleted</mat-icon>
+    </a>
+    <a mat-icon-button [routerLink]="['/history']" routerLinkActive="active">
+      <mat-icon>history</mat-icon>
+    </a>
+    <a mat-icon-button [routerLink]="['/statistics']" routerLinkActive="active">
+      <mat-icon>stacked_line_chart</mat-icon>
+    </a>
+    <a mat-icon-button [routerLink]="['/settings']" routerLinkActive="active">
+      <mat-icon>tune</mat-icon>
+    </a>
   </div>
 </mat-drawer>
-
-
