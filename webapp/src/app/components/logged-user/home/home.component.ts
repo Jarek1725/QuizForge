@@ -1,13 +1,15 @@
 import {Component} from '@angular/core';
-import {HeaderComponent} from '../../header/header.component';
-import {SideNavComponent} from "../side-nav/side-nav.component";
+import {LastScoreComponent} from './last-score/last-score.component';
+import {UserProgressComponent} from './user-progress/user-progress.component';
+import {ExamListComponent} from '../../shared/exam-list/exam-list.component';
 
 @Component({
   selector: 'app-home',
-    imports: [
-        HeaderComponent,
-        SideNavComponent
-    ],
+  imports: [
+    LastScoreComponent,
+    UserProgressComponent,
+    ExamListComponent
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

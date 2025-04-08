@@ -3,6 +3,7 @@
 @use '@angular/material' as mat;
 @import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
 @import 'app/styles/variables';
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined");
 
 html {
   @include mat.theme((
@@ -61,4 +62,17 @@ a {
 
 .mat-icon {
   color: #a4a9b5 !important;
+}
+
+.mat-mdc-card, .mat-card-content {
+  background-color: white !important;
+  height: 100% !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: 0 0 9px -7px rgba(66, 68, 90, 1) !important;
+}
+
+mat-card-header {
+  font-size: 19px !important;
+  padding: 18px !important;
 }
