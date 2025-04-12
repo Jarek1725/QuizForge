@@ -1,14 +1,23 @@
-<mat-card appearance="outlined">
+<mat-card appearance="outlined" >
   <mat-card-header>
     Ostatni egzamin
   </mat-card-header>
-  <mat-card-content>
-    <mat-progress-spinner
-      mode="determinate"
-      [value]="70"
-      diameter="100"
-      strokeWidth="8"
-      color="primary">
-    </mat-progress-spinner>
+  <mat-card-content class="center-vertically last-exam-container">
+    <div class="last-score-spinner-container">
+      <mat-progress-spinner
+        mode="determinate"
+        [value]="70"
+        diameter="100"
+        strokeWidth="8"
+        color="primary">
+      </mat-progress-spinner>
+      73%
+    </div>
+    <div class="last-score-info-container">
+      <p>Ostatni egzamin: Matura 2023</p>
+      <p>Próg zdawalności: 30%</p>
+      <p>Data: 20.04.2025</p>
+      <button mat-flat-button class="login-button">Spróbuj ponownie</button>
+    </div>
   </mat-card-content>
 </mat-card>

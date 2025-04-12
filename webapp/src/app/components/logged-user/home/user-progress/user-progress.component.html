@@ -1,7 +1,17 @@
 <mat-card appearance="outlined">
   <mat-card-header>
-    Twój postęp
+    Wyniki na przestrzeni podejść
   </mat-card-header>
   <mat-card-content>
+    <div id="chart">
+      <apx-chart
+        [series]="chartOptions.series"
+        [chart]="chartOptions.chart"
+        [xaxis]="chartOptions.xaxis"
+        [stroke]="chartOptions.stroke"
+        [tooltip]="chartOptions.tooltip"
+        [dataLabels]="chartOptions.dataLabels"
+      ></apx-chart>
+    </div>
   </mat-card-content>
 </mat-card>

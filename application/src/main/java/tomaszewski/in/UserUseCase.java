@@ -2,6 +2,6 @@ package tomaszewski.in;
 
 import tomaszewski.model.UserModel;
 
-public interface UserRepositoryUseCase {
+public interface UserUseCase {
     UserModel findUserById(Long id);
 }
