@@ -5,6 +5,8 @@ openapi: "3.0.0"
 paths:
   /get-user-data:
     $ref: "./user.yaml#/paths/~1get-user-data"
+  /users/{userId}/attempts:
+    $ref: "./exam.yaml#/paths/~1users~1{userId}~1attempts"
   /exams:
     $ref: "./exam.yaml#/paths/~1exams"
 info:

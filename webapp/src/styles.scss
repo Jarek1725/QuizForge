@@ -72,7 +72,17 @@ a {
   box-shadow: 0 0 9px -7px rgba(66, 68, 90, 1) !important;
 }
 
+mat-card-content{
+  height: 100% !important;
+}
+
 mat-card-header {
   font-size: 19px !important;
   padding: 18px !important;
+}
+
+.center-vertically{
+  display: flex !important;
+  align-items: center !important;;
+  height: 100% !important;;
 }

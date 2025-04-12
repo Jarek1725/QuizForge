@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tomaszewski.in.UserRepositoryUseCase;
+import tomaszewski.in.UserUseCase;
 import tomaszewski.in.mapper.SecurityUserMapper;
 import tomaszewski.openapi.api.UserApi;
 import tomaszewski.openapi.model.UserData;
@@ -18,7 +18,7 @@ import tomaszewski.security.UserSecurityDetails;
 @RequiredArgsConstructor
 public class UserController implements UserApi {
 
-    private final UserRepositoryUseCase userRepositoryUseCase;
+    private final UserUseCase userUseCase;
     private final SecurityUserMapper securityUserMapper;
 
     @GetMapping("api/user")

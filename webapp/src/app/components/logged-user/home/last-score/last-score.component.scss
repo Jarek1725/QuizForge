@@ -1,0 +1,18 @@
+.last-score-spinner-container{
+  display: flex;
+  align-items: center;
+  font-size: 60px;
+  gap: 15px;
+  width: 45%;
+}
+
+.last-exam-container{
+  display: flex;
+  justify-content: space-between;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.last-score-info-container > button{
+  right: 0;
+}
