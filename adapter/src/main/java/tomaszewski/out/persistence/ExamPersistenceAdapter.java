@@ -3,7 +3,7 @@ package tomaszewski.out.persistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tomaszewski.model.ExamModel;
-import tomaszewski.out.ExamRepositoryPort;
+import tomaszewski.port.out.ExamRepositoryPort;
 import tomaszewski.out.repositories.JpaExamRepository;
 
 import java.util.List;

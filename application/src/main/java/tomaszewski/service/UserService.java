@@ -2,9 +2,9 @@ package tomaszewski.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tomaszewski.in.UserUseCase;
+import tomaszewski.usecase.UserUseCase;
 import tomaszewski.model.UserModel;
-import tomaszewski.out.UserRepositoryPort;
+import tomaszewski.port.out.UserRepositoryPort;
 
 @Service
 @RequiredArgsConstructor

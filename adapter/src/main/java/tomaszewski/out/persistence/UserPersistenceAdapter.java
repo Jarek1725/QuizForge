@@ -3,7 +3,7 @@ package tomaszewski.out.persistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import tomaszewski.model.UserModel;
-import tomaszewski.out.UserRepositoryPort;
+import tomaszewski.port.out.UserRepositoryPort;
 import tomaszewski.out.mapper.UserMapper;
 import tomaszewski.out.repositories.JpaUserRepository;
 

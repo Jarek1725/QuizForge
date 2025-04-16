@@ -41,6 +41,7 @@ paths:
 
   /users/{userId}/attempts:
     get:
+      x-principal: 'true'
       tags:
         - Attempt
       summary: Retrieves the last N attempts of a user

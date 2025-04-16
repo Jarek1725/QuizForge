@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public record AttemptModel(
         Long id,
-        UserModel user,
+//        UserModel user,
         ExamModel exam,
         LocalDateTime attemptDate,
         Integer score,
