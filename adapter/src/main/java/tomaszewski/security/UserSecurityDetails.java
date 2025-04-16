@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import tomaszewski.out.entities.UserEntity;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -51,5 +50,9 @@ public class UserSecurityDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getId() {
+        return userEntity.getId();
     }
 }

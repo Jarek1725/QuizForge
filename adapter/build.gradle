@@ -49,6 +49,7 @@ sourceSets {
 tasks.register("generateBackend", GenerateTask) {
     group = "openapi"
     generatorName.set("spring")
+    templateDir.set("$rootDir/templates".toString())
     inputSpecRootDirectory.set(openApiInputLocation)
     outputDir.set(openApiOutputLocationBackend)
     configOptions.set([
@@ -67,6 +68,7 @@ tasks.register("generateWebApp", GenerateTask) {
     generatorName.set("typescript-angular")
     inputSpecRootDirectory.set(openApiInputLocation)
     outputDir.set(openApiOutputLocationWebApp)
+    templateDir.set("$rootDir/templates".toString())
     configOptions.set([
         "ngVersion": "12.0.0",
         "useHttpClient": "true",

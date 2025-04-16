@@ -1,4 +1,4 @@
-package tomaszewski.out;
+package tomaszewski.port.out;
 
 import tomaszewski.model.AttemptModel;
 

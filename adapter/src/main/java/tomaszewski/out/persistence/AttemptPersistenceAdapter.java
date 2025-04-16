@@ -3,8 +3,8 @@ package tomaszewski.out.persistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tomaszewski.model.AttemptModel;
-import tomaszewski.out.AttemptRepositoryPort;
-import tomaszewski.out.ExamRepositoryPort;
+import tomaszewski.port.out.AttemptRepositoryPort;
+import tomaszewski.out.mapper.AttemptMapper;
 import tomaszewski.out.repositories.JpaAttemptRepository;
 
 import java.util.List;
@@ -13,9 +13,13 @@ import java.util.List;
 @Service
 public class AttemptPersistenceAdapter implements AttemptRepositoryPort {
     private final JpaAttemptRepository jpaAttemptRepository;
+    private final AttemptMapper attemptMapper;
 
     @Override
     public List<AttemptModel> findLastAttemptsByUser(Long userId, int limit) {
-        return List.of();
+        return jpaAttemptRepository.findAttemptEntitiesByUserIdOrderByStartTimeDesc(1L)
+                .stream()
+                .map(attemptMapper::toAttemptModel)
+                .toList();
     }
 }

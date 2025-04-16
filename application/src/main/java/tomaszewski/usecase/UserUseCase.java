@@ -1,4 +1,4 @@
-package tomaszewski.in;
+package tomaszewski.usecase;
 
 import tomaszewski.model.UserModel;
 

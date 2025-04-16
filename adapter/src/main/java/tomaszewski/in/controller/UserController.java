@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tomaszewski.in.UserUseCase;
+import tomaszewski.usecase.UserUseCase;
 import tomaszewski.in.mapper.SecurityUserMapper;
 import tomaszewski.openapi.api.UserApi;
 import tomaszewski.openapi.model.UserData;

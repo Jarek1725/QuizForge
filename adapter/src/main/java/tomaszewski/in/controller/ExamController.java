@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tomaszewski.in.ExamUseCase;
+import tomaszewski.usecase.ExamUseCase;
 import tomaszewski.openapi.api.ExamApi;
 import tomaszewski.openapi.model.ExamDTO;
 import tomaszewski.security.UserSecurityDetails;
@@ -26,7 +26,6 @@ public class ExamController implements ExamApi {
 
     @GetMapping("/api/exams")
     public ResponseEntity<List<ExamDTO>> getExams(@AuthenticationPrincipal UserSecurityDetails userSecurityDetails) {
-        System.out.println("BIORE EXAMY");
         ExamDTO examDTO = new ExamDTO();
         examDTO.setId(1L);
         ResponseEntity responseEntity = ResponseEntity.ok().build();
