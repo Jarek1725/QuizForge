@@ -11,9 +11,12 @@ import tomaszewski.out.entities.AnswerOptionEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {AnswerMapper.class})
 public interface QuestionMapper {
 
+    @Mappings({
+            @Mapping(target = "answers", source = "answers"),
+    })
     QuestionEntity toEntity(QuestionModel questionModel);
 
     @Mappings({
