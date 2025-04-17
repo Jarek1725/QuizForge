@@ -17,8 +17,8 @@ public class ExamPersistenceAdapter implements ExamRepositoryPort {
     private final ExamMapper examMapper;
 
     @Override
-    public void save(ExamModel examModel) {
+    public ExamModel save(ExamModel examModel) {
         ExamEntity examEntity = examMapper.toExamEntity(examModel);
-        jpaExamRepository.save(examEntity);
+        return examMapper.toModel(jpaExamRepository.save(examEntity));
     }
 }

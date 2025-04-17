@@ -12,6 +12,5 @@ public interface UniversityMapper {
         return new UniversityModel(null, name);
     }
 
-
     UniversityModel toModel(UniversityEntity universityEntity);
 }

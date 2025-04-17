@@ -5,6 +5,6 @@ import java.util.List;
 public record UserModel(
         Long id,
         String email,
-        List<Role> roles
+        List<RoleModel> roles
 ) {
 }

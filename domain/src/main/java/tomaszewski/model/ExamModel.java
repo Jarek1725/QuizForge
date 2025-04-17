@@ -8,6 +8,6 @@ public record ExamModel(
         List<QuestionModel> questions,
         UniversityModel university,
         List<CategoryModel> categories,
-        UserModel user
+        UserModel creator
 ) {
 }

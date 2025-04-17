@@ -5,5 +5,5 @@ import tomaszewski.model.ExamModel;
 import java.util.List;
 
 public interface ExamRepositoryPort {
-    void save(ExamModel examModel);
+    ExamModel save(ExamModel examModel);
 }

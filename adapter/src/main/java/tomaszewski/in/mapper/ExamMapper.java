@@ -13,4 +13,7 @@ public interface ExamMapper {
 
     @Mapping(target = "categories", source = "categories")
     ExamEntity toExamEntity(ExamModel examModel);
+
+    @Mapping(target = "categories", source = "categories")
+    ExamModel toModel(ExamEntity save);
 }
