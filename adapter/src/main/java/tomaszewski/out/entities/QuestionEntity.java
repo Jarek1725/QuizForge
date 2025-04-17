@@ -25,6 +25,6 @@ public class QuestionEntity {
     private ExamEntity exam;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AnswerOptionEntity> options = new ArrayList<>();
+    private List<AnswerOptionEntity> answers = new ArrayList<>();
 
 }

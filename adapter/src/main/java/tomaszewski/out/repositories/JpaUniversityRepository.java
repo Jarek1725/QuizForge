@@ -1,7 +1,6 @@
 package tomaszewski.out.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tomaszewski.out.entities.CategoryEntity;
 import tomaszewski.out.entities.UniversityEntity;
 
 import java.util.Optional;

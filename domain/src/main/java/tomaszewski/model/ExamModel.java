@@ -7,6 +7,7 @@ public record ExamModel(
         String name,
         List<QuestionModel> questions,
         UniversityModel university,
-        List<CategoryModel> categories
+        List<CategoryModel> categories,
+        UserModel user
 ) {
 }
