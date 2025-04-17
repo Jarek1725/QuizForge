@@ -8,7 +8,7 @@ import tomaszewski.port.out.UserRepositoryPort;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserUseCase {
+public class UserUseCaseImpl implements UserUseCase {
 
     private final UserRepositoryPort userRepositoryPort;
 

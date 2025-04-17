@@ -25,6 +25,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/ExamDTO"
     post:
+      x-principal: 'true'
       tags:
         - Exam
       summary: Creates a new exam
@@ -34,14 +35,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ExamDTO"
+              $ref: "#/components/schemas/CreateExamDTO"
       responses:
         "201":
           description: Exam created
 
   /users/{userId}/attempts:
     get:
-      x-principal: 'true'
       tags:
         - Attempt
       summary: Retrieves the last N attempts of a user
@@ -86,6 +86,28 @@ components:
         date:
           type: string
           format: date
+        categories:
+          type: array
+          items:
+            type: string
+        university:
+          type: string
+
+    CreateExamDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        university:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/CreateQuestionDTO"
 
     AttemptDTO:
       type: object
@@ -104,5 +126,31 @@ components:
           format: date-time
         score:
           type: integer
-        passed:
+
+    CreateQuestionDTO:
+      type: object
+      properties:
+        content:
+          type: string
+        examId:
+          type: integer
+          format: int64
+        score:
+          type: integer
+        type:
+          type: string
+          enum:
+            - MULTIPLE_CHOICE
+            - SINGLE_CHOICE
+        answers:
+          type: array
+          items:
+            $ref: "#/components/schemas/CreateAnswerDTO"
+
+    CreateAnswerDTO:
+      type: object
+      properties:
+        text:
+          type: string
+        isCorrect:
           type: boolean

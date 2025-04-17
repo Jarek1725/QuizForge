@@ -21,8 +21,8 @@ public class UserController implements UserApi {
     private final UserUseCase userUseCase;
     private final SecurityUserMapper securityUserMapper;
 
-    @GetMapping("api/user")
-    public ResponseEntity<UserData> getUserData(@AuthenticationPrincipal UserSecurityDetails userSecurityDetails) {
+    @Override
+    public ResponseEntity<UserData> getUserData(UserSecurityDetails userSecurityDetails) {
         UserData userData = securityUserMapper.toUserData(userSecurityDetails);
         return new ResponseEntity<>(userData, HttpStatus.OK);
     }

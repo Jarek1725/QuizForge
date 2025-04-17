@@ -5,6 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tomaszewski.in.mapper.ExamMapper;
+import tomaszewski.model.ExamModel;
+import tomaszewski.openapi.model.CreateExamDTO;
 import tomaszewski.usecase.ExamUseCase;
 import tomaszewski.openapi.api.ExamApi;
 import tomaszewski.openapi.model.ExamDTO;
@@ -17,26 +20,12 @@ import java.util.List;
 public class ExamController implements ExamApi {
 
     private final ExamUseCase examUseCase;
-
-
-    @Override
-    public ResponseEntity<Void> createExam(ExamDTO examDTO) {
-        return ExamApi.super.createExam(examDTO);
-    }
-
-    @GetMapping("/api/exams")
-    public ResponseEntity<List<ExamDTO>> getExams(@AuthenticationPrincipal UserSecurityDetails userSecurityDetails) {
-        ExamDTO examDTO = new ExamDTO();
-        examDTO.setId(1L);
-        ResponseEntity responseEntity = ResponseEntity.ok().build();
-        responseEntity = ResponseEntity.ok().body(examDTO);
-        return responseEntity;
-    }
+    private final ExamMapper examMapper;
 
     @Override
-    public ResponseEntity<List<ExamDTO>> getExams() {
-        return ExamApi.super.getExams();
+    public ResponseEntity<Void> createExam(CreateExamDTO createExamDTO, UserSecurityDetails userSecurityDetails) {
+        ExamModel examModel = examMapper.toExamModel(createExamDTO);
+        examUseCase.createExam(examModel, userSecurityDetails.getId());
+        return ResponseEntity.ok().build();
     }
-
-
 }

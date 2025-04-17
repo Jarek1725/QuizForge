@@ -2,6 +2,7 @@ package tomaszewski.out.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import tomaszewski.model.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,4 +31,7 @@ public class ExamEntity {
 
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionEntity> questions = new ArrayList<>();
+
+    @ManyToOne
+    private UserEntity creator;
 }

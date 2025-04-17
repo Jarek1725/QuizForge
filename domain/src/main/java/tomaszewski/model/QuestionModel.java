@@ -7,6 +7,6 @@ public record QuestionModel(
        String content,
        String type,
        Long examId,
-       List<Long> answerOptionIds
+       List<AnswerModel> answers
 ) {
 }

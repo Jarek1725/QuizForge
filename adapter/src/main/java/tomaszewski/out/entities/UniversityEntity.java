@@ -15,7 +15,6 @@ public class UniversityEntity {
 
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "university")
+    @OneToMany(mappedBy = "university")
     private List<ExamEntity> exams = new ArrayList<>();
 }
