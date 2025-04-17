@@ -11,6 +11,7 @@ servers:
 paths:
   /get-user-data:
     get:
+      x-principal: 'true'
       tags:
         - User
       summary: get user details
