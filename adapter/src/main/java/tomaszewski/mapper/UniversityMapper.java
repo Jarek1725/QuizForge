@@ -1,7 +1,8 @@
-package tomaszewski.in.mapper;
+package tomaszewski.mapper;
 
 
 import org.mapstruct.Mapper;
+import tomaszewski.model.CategoryModel;
 import tomaszewski.model.UniversityModel;
 import tomaszewski.out.entities.CategoryEntity;
 import tomaszewski.out.entities.UniversityEntity;
@@ -13,4 +14,8 @@ public interface UniversityMapper {
     }
 
     UniversityModel toModel(UniversityEntity universityEntity);
+
+    default String mapUniversityToString(UniversityModel universityModel) {
+        return universityModel != null ? universityModel.name() : null;
+    }
 }

@@ -1,4 +1,4 @@
-package tomaszewski.in.mapper;
+package tomaszewski.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,5 +9,10 @@ import tomaszewski.out.entities.AnswerOptionEntity;
 public interface AnswerMapper {
 
     @Mapping(target = "correct", source = "isCorrect")
+    @Mapping(target = "question", ignore = true)
     AnswerOptionEntity toEntity(AnswerModel answerModel);
+
+    @Mapping(target = "question", ignore = true)
+    AnswerModel toModel(AnswerOptionEntity answerOptionEntity);
+
 }

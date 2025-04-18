@@ -7,7 +7,6 @@ info:
 servers:
   - url: http://localhost:8080
     description: Local server
-
 paths:
   /exams:
     get:
@@ -15,6 +14,24 @@ paths:
         - Exam
       summary: Retrieves a list of exams
       operationId: getExams
+      parameters:
+        - in: query
+          name: category
+          schema:
+            type: string
+          description: Filter by category name
+        - in: query
+          name: university
+          schema:
+            type: string
+          description: Filter by university name
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+          description: Number of exams to return
       responses:
         "200":
           description: List of exams
@@ -83,15 +100,16 @@ components:
           format: int64
         name:
           type: string
-        date:
-          type: string
-          format: date
         categories:
           type: array
           items:
             type: string
         university:
           type: string
+        pointsNumber:
+          type: integer
+        attemptsNumber:
+          type: integer
 
     CreateExamDTO:
       type: object

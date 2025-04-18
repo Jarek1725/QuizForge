@@ -1,8 +1,6 @@
-package tomaszewski.out.mapper;
+package tomaszewski.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import tomaszewski.in.mapper.SecurityUserMapper;
 import tomaszewski.model.AttemptModel;
 import tomaszewski.openapi.model.AttemptDTO;
 import tomaszewski.out.entities.AttemptEntity;

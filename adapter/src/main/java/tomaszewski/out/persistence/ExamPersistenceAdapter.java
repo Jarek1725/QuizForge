@@ -2,7 +2,7 @@ package tomaszewski.out.persistence;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tomaszewski.in.mapper.ExamMapper;
+import tomaszewski.mapper.ExamMapper;
 import tomaszewski.model.ExamModel;
 import tomaszewski.out.entities.ExamEntity;
 import tomaszewski.port.out.ExamRepositoryPort;
@@ -19,6 +19,15 @@ public class ExamPersistenceAdapter implements ExamRepositoryPort {
     @Override
     public ExamModel save(ExamModel examModel) {
         ExamEntity examEntity = examMapper.toExamEntity(examModel);
-        return examMapper.toModel(jpaExamRepository.save(examEntity));
+        return examMapper.toExamModel(jpaExamRepository.save(examEntity));
+    }
+
+    @Override
+    public List<ExamModel> findExamsWithFilters(String category, String university, int effectiveLimit) {
+        return jpaExamRepository.findExamsWithFilters(category, university, effectiveLimit)
+                .stream()
+                .limit(effectiveLimit)
+                .map(examMapper::toExamModel)
+                .toList();
     }
 }

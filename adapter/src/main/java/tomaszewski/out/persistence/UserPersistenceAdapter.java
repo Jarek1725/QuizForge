@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import tomaszewski.model.UserModel;
 import tomaszewski.port.out.UserRepositoryPort;
-import tomaszewski.out.mapper.UserMapper;
+import tomaszewski.mapper.UserMapper;
 import tomaszewski.out.repositories.JpaUserRepository;
 
 import java.util.Optional;

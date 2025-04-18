@@ -2,7 +2,7 @@ package tomaszewski.out.persistence;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tomaszewski.in.mapper.UniversityMapper;
+import tomaszewski.mapper.UniversityMapper;
 import tomaszewski.model.UniversityModel;
 import tomaszewski.out.entities.UniversityEntity;
 import tomaszewski.out.repositories.JpaUniversityRepository;

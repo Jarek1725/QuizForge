@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tomaszewski.model.AttemptModel;
 import tomaszewski.port.out.AttemptRepositoryPort;
-import tomaszewski.out.mapper.AttemptMapper;
+import tomaszewski.mapper.AttemptMapper;
 import tomaszewski.out.repositories.JpaAttemptRepository;
 
 import java.util.List;
