@@ -1,12 +1,17 @@
-package tomaszewski.in.mapper;
+package tomaszewski.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import tomaszewski.model.CategoryModel;
 import tomaszewski.model.ExamModel;
 import tomaszewski.openapi.model.CreateExamDTO;
+import tomaszewski.openapi.model.ExamDTO;
 import tomaszewski.out.entities.ExamEntity;
 
-@Mapper(componentModel = "spring", uses = {UniversityMapper.class, CategoryMapper.class})
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Mapper(componentModel = "spring", uses = {UniversityMapper.class, CategoryMapper.class, QuestionMapper.class})
 public interface ExamMapper {
     @Mapping(target = "categories", source = "categories")
     ExamModel toExamModel(CreateExamDTO createExamDTO);
@@ -15,5 +20,10 @@ public interface ExamMapper {
     ExamEntity toExamEntity(ExamModel examModel);
 
     @Mapping(target = "categories", source = "categories")
-    ExamModel toModel(ExamEntity save);
+    ExamModel toExamModel(ExamEntity save);
+
+    @Mapping(target = "categories", source = "categories")
+    ExamDTO toExamDTO(ExamModel examModel);
+
+
 }

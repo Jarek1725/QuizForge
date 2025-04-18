@@ -1,4 +1,4 @@
-package tomaszewski.out.mapper;
+package tomaszewski.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

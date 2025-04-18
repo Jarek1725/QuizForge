@@ -1,4 +1,4 @@
-package tomaszewski.in.mapper;
+package tomaszewski.mapper;
 
 import org.mapstruct.Mapper;
 import tomaszewski.model.RoleModel;

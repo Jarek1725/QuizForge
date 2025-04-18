@@ -36,6 +36,13 @@ public class ExamUseCaseImpl implements ExamUseCase {
         questionRepositoryPort.createQuestions(examModel.questions(), savedExam.id());
     }
 
+    @Override
+    public List<ExamModel> getExams(String category, String university, Integer limit) {
+        int effectiveLimit = (limit != null && limit > 0) ? limit : 10;
+
+        return examRepositoryPort.findExamsWithFilters(category, university, effectiveLimit);
+    }
+
     private UserModel findUserById(Long userId) {
         return userRepositoryPort.findUserById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono użytkownika o ID: " + userId));

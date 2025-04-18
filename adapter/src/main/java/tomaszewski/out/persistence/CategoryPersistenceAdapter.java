@@ -2,7 +2,7 @@ package tomaszewski.out.persistence;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tomaszewski.in.mapper.CategoryMapper;
+import tomaszewski.mapper.CategoryMapper;
 import tomaszewski.model.CategoryModel;
 import tomaszewski.out.entities.CategoryEntity;
 import tomaszewski.out.repositories.JpaCategoryRepository;

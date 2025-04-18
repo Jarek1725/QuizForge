@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tomaszewski.model.AttemptModel;
 import tomaszewski.openapi.api.AttemptApi;
 import tomaszewski.openapi.model.AttemptDTO;
-import tomaszewski.out.mapper.AttemptMapper;
+import tomaszewski.mapper.AttemptMapper;
 import tomaszewski.usecase.AttemptUseCase;
 
 import java.util.List;

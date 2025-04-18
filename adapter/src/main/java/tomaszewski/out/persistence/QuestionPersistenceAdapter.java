@@ -2,8 +2,7 @@ package tomaszewski.out.persistence;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import tomaszewski.in.mapper.QuestionMapper;
-import tomaszewski.model.ExamModel;
+import tomaszewski.mapper.QuestionMapper;
 import tomaszewski.model.QuestionModel;
 import tomaszewski.out.entities.ExamEntity;
 import tomaszewski.out.entities.QuestionEntity;
@@ -11,7 +10,6 @@ import tomaszewski.out.repositories.JpaQuestionRepository;
 import tomaszewski.port.out.QuestionRepositoryPort;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
