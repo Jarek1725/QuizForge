@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import tomaszewski.model.QuestionModel;
 import tomaszewski.model.AnswerModel;
+import tomaszewski.openapi.model.CreateQuestionDTO;
 import tomaszewski.out.entities.QuestionEntity;
 import tomaszewski.out.entities.AnswerOptionEntity;
 

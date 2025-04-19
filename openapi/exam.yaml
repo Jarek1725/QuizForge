@@ -5,10 +5,10 @@ info:
   description: API for managing exams
 
 servers:
-  - url: http://localhost:8080
+  - url: /api
     description: Local server
 paths:
-  /exams:
+  /api/exams:
     get:
       tags:
         - Exam
@@ -57,7 +57,7 @@ paths:
         "201":
           description: Exam created
 
-  /users/{userId}/attempts:
+  /api/users/{userId}/attempts:
     get:
       tags:
         - Attempt
@@ -90,8 +90,82 @@ paths:
         "404":
           description: User not found or no attempts found
 
+  /api/exams/{examId}:
+    get:
+      tags:
+        - Exam
+      summary: Retrieves an exam by ID
+      operationId: getExamById
+      parameters:
+        - name: examId
+          in: path
+          description: The ID of the exam
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Exam details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExamDetailsDTO"
+        "404":
+          description: Exam not found
+
 components:
   schemas:
+    ExamDetailsDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        university:
+          type: string
+        pointsNumber:
+          type: integer
+        questions:
+            type: array
+            items:
+                $ref: "#/components/schemas/QuestionDetailsDTO"
+
+    QuestionDetailsDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        content:
+          type: string
+        score:
+          type: integer
+        type:
+          type: string
+          enum:
+            - MULTIPLE_CHOICE
+            - SINGLE_CHOICE
+        answers:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnswerDetailsDTO"
+
+    AnswerDetailsDTO:
+          type: object
+          properties:
+            id:
+              type: integer
+            text:
+              type: string
+            isCorrect:
+              type: boolean
+
     ExamDTO:
       type: object
       properties:
@@ -108,8 +182,6 @@ components:
           type: string
         pointsNumber:
           type: integer
-        attemptsNumber:
-          type: integer
 
     CreateExamDTO:
       type: object
@@ -122,6 +194,12 @@ components:
             type: string
         university:
           type: string
+        percentageToPass:
+            type: integer
+        questionsPerExam:
+            type: integer
+        timeLimit:
+            type: integer
         questions:
           type: array
           items:

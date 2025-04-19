@@ -5,11 +5,11 @@ info:
   description: API for managing users
 
 servers:
-  - url: http://localhost:8080
+  - url: /api
     description: Local server
 
 paths:
-  /get-user-data:
+  /api/get-user-data:
     get:
       x-principal: 'true'
       tags:

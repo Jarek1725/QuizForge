@@ -43,6 +43,16 @@ public class ExamUseCaseImpl implements ExamUseCase {
         return examRepositoryPort.findExamsWithFilters(category, university, effectiveLimit);
     }
 
+    @Override
+    public ExamModel getExamById(Long examId) {
+        if (examId == null) {
+            throw new IllegalArgumentException("ID egzaminu nie może być null");
+        }
+
+        return examRepositoryPort.findExamById(examId)
+                .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono egzaminu o ID: " + examId));
+    }
+
     private UserModel findUserById(Long userId) {
         return userRepositoryPort.findUserById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono użytkownika o ID: " + userId));
@@ -66,7 +76,10 @@ public class ExamUseCaseImpl implements ExamUseCase {
                 null,
                 university,
                 categories,
-                creator
+                creator,
+                examModel.percentageToPass(),
+                examModel.questionsPerExam(),
+                examModel.timeLimit()
         );
     }
 }

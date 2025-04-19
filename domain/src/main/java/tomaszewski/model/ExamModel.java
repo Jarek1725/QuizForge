@@ -8,6 +8,9 @@ public record ExamModel(
         List<QuestionModel> questions,
         UniversityModel university,
         List<CategoryModel> categories,
-        UserModel creator
+        UserModel creator,
+        Integer percentageToPass,
+        Integer questionsPerExam,
+        Integer timeLimit
 ) {
 }

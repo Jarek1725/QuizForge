@@ -21,6 +21,15 @@ public class ExamEntity {
     @JoinColumn(name = "university_id")
     private UniversityEntity university;
 
+    @Column(name = "questions_per_exam")
+    private Integer questionsPerExam;
+
+    @Column(name = "percentage_to_pass")
+    private Integer percentageToPass;
+
+    @Column(name = "time_limit")
+    private Integer timeLimit;
+
     @ManyToMany
     @JoinTable(
             name = "exam_categories",
