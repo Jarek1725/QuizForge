@@ -9,6 +9,7 @@ import tomaszewski.port.out.ExamRepositoryPort;
 import tomaszewski.out.repositories.JpaExamRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -29,5 +30,11 @@ public class ExamPersistenceAdapter implements ExamRepositoryPort {
                 .limit(effectiveLimit)
                 .map(examMapper::toExamModel)
                 .toList();
+    }
+
+    @Override
+    public Optional<ExamModel> findExamById(Long examId) {
+        return jpaExamRepository.findById(examId)
+                .map(examMapper::toExamModel);
     }
 }

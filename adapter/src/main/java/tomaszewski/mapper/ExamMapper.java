@@ -6,6 +6,7 @@ import tomaszewski.model.CategoryModel;
 import tomaszewski.model.ExamModel;
 import tomaszewski.openapi.model.CreateExamDTO;
 import tomaszewski.openapi.model.ExamDTO;
+import tomaszewski.openapi.model.ExamDetailsDTO;
 import tomaszewski.out.entities.ExamEntity;
 
 import java.util.List;
@@ -25,5 +26,6 @@ public interface ExamMapper {
     @Mapping(target = "categories", source = "categories")
     ExamDTO toExamDTO(ExamModel examModel);
 
-
+    @Mapping(target = "categories", source = "categories")
+    ExamDetailsDTO toExamDetailsDTO(ExamModel examById);
 }

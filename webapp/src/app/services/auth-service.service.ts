@@ -1,6 +1,7 @@
 import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {UserService} from '../openapi/tomaszewski/openapi';
 
 export interface UserData {
   id: number;
@@ -15,7 +16,7 @@ export class AuthServiceService {
   private currentUserSubject: BehaviorSubject<UserData | null>;
   public currentUser$: Observable<UserData | null>;
 
-  constructor(private httpClient: HttpClient,
+  constructor(private httpClient: HttpClient, private userService: UserService
   ) {
     const storedUser = localStorage.getItem('user');
     this.currentUserSubject = new BehaviorSubject<UserData | null>(
@@ -55,9 +56,10 @@ export class AuthServiceService {
   }
 
   private getUserInfo(): void {
-    this.httpClient.get<UserData>('/api/user').subscribe({
+    this.userService.getUserData().subscribe({
       next: (userData) => {
         localStorage.setItem('user', JSON.stringify(userData));
+        console.log(userData)
         this.currentUserSubject.next(userData);
       },
       error: (error) => {

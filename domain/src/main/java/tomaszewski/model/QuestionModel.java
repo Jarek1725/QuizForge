@@ -7,6 +7,7 @@ public record QuestionModel(
        String content,
        String type,
        Long examId,
+       Long score,
        List<AnswerModel> answers
 ) {
 }

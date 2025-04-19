@@ -7,6 +7,7 @@ import tomaszewski.mapper.ExamMapper;
 import tomaszewski.model.ExamModel;
 import tomaszewski.openapi.model.CreateExamDTO;
 import tomaszewski.openapi.model.ExamDTO;
+import tomaszewski.openapi.model.ExamDetailsDTO;
 import tomaszewski.usecase.ExamUseCase;
 import tomaszewski.openapi.api.ExamApi;
 import tomaszewski.security.UserSecurityDetails;
@@ -34,5 +35,12 @@ public class ExamController implements ExamApi {
                 .map(examMapper::toExamDTO)
                 .toList();
         return ResponseEntity.ok(exams);
+    }
+
+    @Override
+    public ResponseEntity<ExamDetailsDTO> getExamById(Long examId) {
+        ExamModel examById = examUseCase.getExamById(examId);
+        ExamDetailsDTO examDTO = examMapper.toExamDetailsDTO(examById);
+        return ResponseEntity.ok(examDTO);
     }
 }

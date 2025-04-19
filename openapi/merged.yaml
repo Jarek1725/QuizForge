@@ -3,12 +3,14 @@ servers:
 - url: "http://localhost:8080"
 openapi: "3.0.0"
 paths:
-  /get-user-data:
-    $ref: "./user.yaml#/paths/~1get-user-data"
-  /users/{userId}/attempts:
-    $ref: "./exam.yaml#/paths/~1users~1{userId}~1attempts"
-  /exams:
-    $ref: "./exam.yaml#/paths/~1exams"
+  /api/exams:
+    $ref: "./exam.yaml#/paths/~1api~1exams"
+  /api/get-user-data:
+    $ref: "./user.yaml#/paths/~1api~1get-user-data"
+  /api/users/{userId}/attempts:
+    $ref: "./exam.yaml#/paths/~1api~1users~1{userId}~1attempts"
+  /api/exams/{examId}:
+    $ref: "./exam.yaml#/paths/~1api~1exams~1{examId}"
 info:
   title: "merged spec"
   description: "merged spec"

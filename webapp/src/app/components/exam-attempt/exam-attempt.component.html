@@ -1,0 +1,37 @@
+<div id="exam-attempt-container">
+  <div *ngIf="currentStep === 0">
+    <h2>Egzamin składa się z 3 pytań.</h2>
+    <h2>Na rozwiązanie masz 30 minut i 20 sekund.</h2>
+    <h2>Pytania mogą być zarówno jednokrotnego, jak i wielokrotnego wyboru.</h2>
+    <h2>Możesz cofać się do poprzednich pytań.</h2>
+    <h2>Aby zaliczyć egzamin, musisz zdobyć co najmniej 60% punktów.</h2>
+    <h2>Poszczególne pytania mogą mieć różną punktację.</h2>
+    <h2>Powodzenia!</h2>
+    <div id="exam-attempt-button-container">
+      <button mat-flat-button class="start-exam-button">Rozpocznij egzamin</button>
+    </div>
+  </div>
+
+  <!--  <div *ngIf="currentStep > 0 && currentStep <= exam.questions.length">-->
+  <!--    <p>Pytanie {{ currentStep }} z {{ exam.questions.length }}</p>-->
+  <!--    <p>{{ currentQuestion.content }}</p>-->
+  <!---->
+  <!--    <ul>-->
+  <!--      <li *ngFor="let ans of currentQuestion.answers">-->
+  <!--        <label>-->
+  <!--          <input type="checkbox" [(ngModel)]="ans.selected" *ngIf="currentQuestion.type === 'MULTIPLE_CHOICE'">-->
+  <!--          <input type="radio" name="q" [(ngModel)]="selectedAnswer" [value]="ans" *ngIf="currentQuestion.type === 'SINGLE_CHOICE'">-->
+  <!--          {{ ans.text }}-->
+  <!--        </label>-->
+  <!--      </li>-->
+  <!--    </ul>-->
+  <!---->
+  <!--    <button (click)="next()">Dalej</button>-->
+  <!--  </div>-->
+  <!---->
+  <!--  <div *ngIf="currentStep > exam.questions.length">-->
+  <!--    <h2>Egzamin ukończony!</h2>-->
+  <!--    <p>Twoje odpowiedzi zostaną przesłane / ocenione</p>-->
+  <!--  </div>-->
+  <!---->
+</div>
