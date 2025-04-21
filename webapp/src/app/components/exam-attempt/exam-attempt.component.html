@@ -11,19 +11,22 @@
 
     <div *ngIf="currentQuestion">
       <p>Pytanie {{ currentStep }} z {{ examDetails?.questions?.length }}</p>
-      <p>{{ currentQuestion.content }}</p>
+      <mat-card-content>
+        <h2>{{ currentQuestion.content }}</h2>
 
-      <ul>
-        <li *ngFor="let ans of currentQuestion.answers">
-          <label>
-            <input type="checkbox" *ngIf="currentQuestion.type === 'MULTIPLE_CHOICE'">
-            <input type="radio" name="q" [(ngModel)]="selectedAnswer" [value]="ans"
-                   *ngIf="currentQuestion.type === 'SINGLE_CHOICE'">
+        <mat-selection-list *ngIf="currentQuestion.type === 'MULTIPLE_CHOICE'">
+          <mat-list-option *ngFor="let ans of currentQuestion.answers">
+            <!--                           [(ngModel)]="ans.selected"-->
             {{ ans.text }}
-          </label>
-        </li>
-      </ul>
+          </mat-list-option>
+        </mat-selection-list>
 
+        <mat-radio-group *ngIf="currentQuestion.type === 'SINGLE_CHOICE'" [(ngModel)]="selectedAnswer">
+          <mat-radio-button *ngFor="let ans of currentQuestion.answers" [value]="ans" class="single-answer-container">
+            {{ ans.text }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </mat-card-content>
     </div>
 
     <div *ngIf="questionCount > 0 && currentStep > questionCount">
@@ -32,7 +35,7 @@
     </div>
   </div>
   <div *ngIf="currentStep > 0" class="exam-attempt-button-container">
-    <button mat-flat-button class="prev-question-button">Poprzednie pytanie</button>
+    <button mat-flat-button class="prev-question-button" (click)="prev()">Poprzednie pytanie</button>
     <button mat-flat-button class="next-question-button" (click)="next()">Następne pytanie</button>
   </div>
 

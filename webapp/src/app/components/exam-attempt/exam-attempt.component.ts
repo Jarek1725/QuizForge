@@ -4,6 +4,9 @@ import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {ExamDetailsDTO, ExamService} from '../../openapi/tomaszewski/openapi';
 import {ActivatedRoute} from '@angular/router';
+import {MatCardContent} from '@angular/material/card';
+import {MatListOption, MatSelectionList} from '@angular/material/list';
+import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
 
 @Component({
   selector: 'app-exam-attempt',
@@ -12,6 +15,11 @@ import {ActivatedRoute} from '@angular/router';
     CommonModule,
     FormsModule,
     MatButtonModule,
+    MatCardContent,
+    MatSelectionList,
+    MatListOption,
+    MatRadioGroup,
+    MatRadioButton,
   ],
   templateUrl: './exam-attempt.component.html',
   styleUrls: ['./exam-attempt.component.scss']
@@ -69,5 +77,15 @@ export class ExamAttemptComponent implements OnInit {
       return this.examDetails.questions[this.currentStep - 1];
     }
     return null;
+  }
+
+  prev() {
+    const questions = this.examDetails?.questions;
+    if (!questions) return;
+
+    if (this.currentStep < questions.length) {
+      this.saveAnswer();
+      this.currentStep--;
+    }
   }
 }
