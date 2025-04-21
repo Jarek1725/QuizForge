@@ -36,6 +36,10 @@ export class LoginPanelComponent {
     if (this.loginForm.valid) {
       const {username, password} = this.loginForm.value;
       this.authService.login(username, password).subscribe({
+        next: () => {
+          this.loginError = false;
+          this.router.navigate(['/home']);
+        },
         error: (error) => {
           this.loginError = true
         }
