@@ -8,14 +8,23 @@
   padding: 30px 40px;
 }
 
-#exam-attempt-button-container {
+.exam-attempt-button-container {
   width: 100%;
   margin-top: 80px;
   justify-content: end;
   display: flex;
 }
 
-.start-exam-button {
+#exam-options-container{
+  height: 68%;
+}
+
+.next-question-button, .prev-question-button {
   padding: 5px 20px !important;
   border-radius: 10px;
+  margin-right: 20px;
+}
+
+.prev-question-button{
+  background-color: #67A9FF !important;
 }
