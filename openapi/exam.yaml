@@ -56,6 +56,11 @@ paths:
       responses:
         "201":
           description: Exam created
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int64
 
   /api/users/{userId}/attempts:
     get:

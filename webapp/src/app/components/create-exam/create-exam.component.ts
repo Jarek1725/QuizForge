@@ -5,6 +5,10 @@ import {NgForOf} from '@angular/common';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import {MatOption} from '@angular/material/core';
+import {MatSelect} from '@angular/material/select';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create-exam',
@@ -18,6 +22,9 @@ import {MatIcon} from '@angular/material/icon';
     MatFormField,
     MatButton,
     MatIcon,
+    MatSelect,
+    MatOption,
+    MatCheckbox,
   ],
   templateUrl: './create-exam.component.html',
   styleUrl: './create-exam.component.scss'
@@ -28,7 +35,7 @@ export class CreateExamComponent {
   };
   categoryInput: string = '';
 
-  constructor(private examService: ExamService) {
+  constructor(private examService: ExamService, private router: Router) {
   }
 
   addQuestion(): void {
@@ -75,7 +82,7 @@ export class CreateExamComponent {
     console.log('Exam to submit:', this.createExamDTO);
     this.examService.createExam(this.createExamDTO).subscribe({
       next: (response) => {
-        console.log('Exam created successfully:', response);
+        this.router.navigate(['/exams/' + response]);
       },
       error: (error) => {
         console.error('Error creating exam:', error);

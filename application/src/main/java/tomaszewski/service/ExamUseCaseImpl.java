@@ -21,7 +21,7 @@ public class ExamUseCaseImpl implements ExamUseCase {
     private final UserRepositoryPort userRepositoryPort;
 
     @Override
-    public void createExam(ExamModel examModel, Long userId) {
+    public Long createExam(ExamModel examModel, Long userId) {
         if (examModel == null || userId == null) {
             throw new IllegalArgumentException("Model egzaminu i ID użytkownika nie mogą być null");
         }
@@ -34,6 +34,8 @@ public class ExamUseCaseImpl implements ExamUseCase {
         ExamModel savedExam = examRepositoryPort.save(finalExamModel);
 
         questionRepositoryPort.createQuestions(examModel.questions(), savedExam.id());
+
+        return savedExam.id();
     }
 
     @Override
