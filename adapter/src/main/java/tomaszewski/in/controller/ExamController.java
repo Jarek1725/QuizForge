@@ -21,11 +21,19 @@ public class ExamController implements ExamApi {
     private final ExamUseCase examUseCase;
     private final ExamMapper examMapper;
 
+//    @Override
+//    public ResponseEntity<Void> createExam(CreateExamDTO createExamDTO, UserSecurityDetails userSecurityDetails) {
+//        ExamModel examModel = examMapper.toExamModel(createExamDTO);
+//        examUseCase.createExam(examModel, userSecurityDetails.getId());
+//        return ResponseEntity.ok().build();
+//    }
+
+
     @Override
-    public ResponseEntity<Void> createExam(CreateExamDTO createExamDTO, UserSecurityDetails userSecurityDetails) {
+    public ResponseEntity<Long> createExam(CreateExamDTO createExamDTO, UserSecurityDetails userSecurityDetails) {
         ExamModel examModel = examMapper.toExamModel(createExamDTO);
-        examUseCase.createExam(examModel, userSecurityDetails.getId());
-        return ResponseEntity.ok().build();
+        Long examId = examUseCase.createExam(examModel, userSecurityDetails.getId());
+        return ResponseEntity.ok(examId);
     }
 
     @Override

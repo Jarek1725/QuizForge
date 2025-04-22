@@ -1,0 +1,72 @@
+#create-exam-container {
+  h2 {
+    margin-top: 0;
+  }
+
+  mat-form-field {
+    margin-left: 20px;
+  }
+
+  height: 100%;
+  overflow: auto;
+}
+
+.add-category-button {
+  padding: 5px 20px !important;
+  border-radius: 10px;
+  margin-left: 20px;
+}
+
+.categories-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  gap: 20px;
+}
+
+.category {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.remove-category {
+  border-radius: 10px;
+  margin-left: 20px;
+  background-color: #FF6767 !important;
+  text-align: center !important;
+
+  mat-icon {
+    color: white !important;
+    margin: 0;
+  }
+}
+
+#create-exam-button-container {
+  width: 100%;
+  text-align: right;
+}
+
+.add-question-button {
+  background-color: #67A9FF !important;
+}
+
+.question-block {
+  display: grid;
+  grid-template-columns: 50% 20% 10% 10%;
+  gap: 20px;
+}
+
+.answer-block {
+  display: grid;
+  grid-template-columns: 80% 7% 5%;
+  gap: 20px;
+}

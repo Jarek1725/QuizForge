@@ -1,0 +1,88 @@
+<div id="create-exam-container">
+  <h2>Stwórz egzamin</h2>
+
+  <mat-form-field>
+    <mat-label>Nazwa</mat-label>
+    <input matInput [(ngModel)]="createExamDTO.name" placeholder="Nazwa">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Uczelnia</mat-label>
+    <input matInput [(ngModel)]="createExamDTO.university" placeholder="Uczelnia">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>% do zaliczenia</mat-label>
+    <input type="number" matInput placeholder=">% do zaliczenia" [(ngModel)]="createExamDTO.percentageToPass" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Liczba pytań na egzamin</mat-label>
+    <input type="number" matInput placeholder="Liczba pytań na egzamin" [(ngModel)]="createExamDTO.questionsPerExam" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Limit czasu (minuty)</mat-label>
+    <input type="number" matInput placeholder="Limit czasu (minuty)" [(ngModel)]="createExamDTO.timeLimit" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Kategoria</mat-label>
+    <input matInput placeholder="Dodaj kategorię" [(ngModel)]="categoryInput" (keyup.enter)="addCategory()" />
+  </mat-form-field>
+
+  <button mat-flat-button class="add-category-button" (click)="addCategory()">Dodaj kategorię</button>
+
+  <button mat-flat-button class="add-category-button add-question-button" (click)="addQuestion()">Dodaj pytanie</button>
+
+  <div class="categories-container">
+    <div class="category" *ngFor="let cat of createExamDTO.categories; let i = index">
+      <p>{{cat}}</p>
+      <button mat-flat-button class="remove-category" (click)="removeCategory(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+
+  <div *ngFor="let q of createExamDTO.questions; let qi = index">
+    <div class="question-block">
+      <mat-form-field>
+        <mat-label>Treść</mat-label>
+        <input matInput [(ngModel)]="q.content" placeholder="Treść">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Typ pytania</mat-label>
+        <mat-select [(ngModel)]="q.type">
+          <mat-option [value]="CreateQuestionDTO.TypeEnum.SingleChoice">Jednokrotny wybór</mat-option>
+          <mat-option [value]="CreateQuestionDTO.TypeEnum.MultipleChoice">Wielokrotny wybór</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Punktacja</mat-label>
+        <input type="number" matInput placeholder="Punktacja" [(ngModel)]="q.score" />
+      </mat-form-field>
+      <button mat-flat-button class="remove-category" (click)="removeQuestion(qi)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <div>
+        <button mat-flat-button class="add-category-button add-question-button" (click)="addAnswerToQuestion(q)">Dodaj odpowiedź</button>
+      </div>
+    </div>
+      <div *ngFor="let a of q.answers; let ai = index" class="answer-block">
+        <mat-form-field>
+          <mat-label>Treść odpowiedzi</mat-label>
+          <input matInput [(ngModel)]="a.text" placeholder="Treść odpowiedzi">
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="a.isCorrect">Poprawna</mat-checkbox>
+        <button mat-flat-button class="remove-category" (click)="removeAnswerFromQuestion(q, ai)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+</div>
+<div id="create-exam-button-container">
+  <button mat-flat-button class="add-category-button" (click)="submitExam()">Zapisz egzamin</button>
+</div>

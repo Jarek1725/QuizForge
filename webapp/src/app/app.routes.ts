@@ -3,6 +3,7 @@ import {HomeGuestComponentComponent} from './components/home-guest-component/hom
 import {HomeComponent} from './components/logged-user/home/home.component';
 import {ExamDetailsComponent} from './components/exam-details/exam-details.component';
 import {ExamAttemptComponent} from './components/exam-attempt/exam-attempt.component';
+import {CreateExamComponent} from './components/create-exam/create-exam.component';
 
 export const routes: Routes = [
   {
@@ -14,12 +15,19 @@ export const routes: Routes = [
         component: HomeComponent, canActivate: []
       },
       {
-        path: 'exams/:examId',
-        component: ExamDetailsComponent, canActivate: []
+        path: 'exams/create',
+        component: CreateExamComponent,
+        canActivate: []
       },
       {
         path: 'exams/:examId/attempt',
-        component: ExamAttemptComponent, canActivate: []
+        component: ExamAttemptComponent,
+        canActivate: []
+      },
+      {
+        path: 'exams/:examId',
+        component: ExamDetailsComponent,
+        canActivate: []
       }
     ]
   }
