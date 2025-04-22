@@ -1,0 +1,84 @@
+<div id="create-exam-container">
+  <h2>Stwórz egzamin</h2>
+
+  <mat-form-field>
+    <mat-label>Nazwa</mat-label>
+    <input matInput [(ngModel)]="createExamDTO.name" placeholder="Nazwa">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Uczelnia</mat-label>
+    <input matInput [(ngModel)]="createExamDTO.university" placeholder="Uczelnia">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>% do zaliczenia</mat-label>
+    <input type="number" matInput placeholder=">% do zaliczenia" [(ngModel)]="createExamDTO.percentageToPass" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Liczba pytań na egzamin</mat-label>
+    <input type="number" matInput placeholder="Liczba pytań na egzamin" [(ngModel)]="createExamDTO.questionsPerExam" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Limit czasu (minuty)</mat-label>
+    <input type="number" matInput placeholder="Limit czasu (minuty)" [(ngModel)]="createExamDTO.timeLimit" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Kategoria</mat-label>
+    <input matInput placeholder="Dodaj kategorię" [(ngModel)]="categoryInput" (keyup.enter)="addCategory()" />
+  </mat-form-field>
+
+  <button mat-flat-button class="add-category-button" (click)="addCategory()">Dodaj kategorię</button>
+
+  <div class="categories-container">
+    <div class="category" *ngFor="let cat of createExamDTO.categories; let i = index">
+      <p>{{cat}}</p>
+      <button mat-flat-button class="remove-category" (click)="removeCategory(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <h3>Pytania</h3>
+  <button (click)="addQuestion()">+ Dodaj pytanie</button>
+
+  <div *ngFor="let q of createExamDTO.questions; let qi = index" class="question-block">
+    <hr />
+    <h4>Pytanie {{ qi + 1 }}</h4>
+    <button (click)="removeQuestion(qi)">🗑️ Usuń pytanie</button>
+
+    <label>Treść:
+      <input [(ngModel)]="q.content" />
+    </label>
+
+    <label>Typ:
+      <select [(ngModel)]="q.type">
+        <option [ngValue]="CreateQuestionDTO.TypeEnum.SingleChoice">Jednokrotny wybór</option>
+        <option [ngValue]="CreateQuestionDTO.TypeEnum.MultipleChoice">Wielokrotny wybór</option>
+      </select>
+    </label>
+
+    <label>Punktacja:
+      <input type="number" [(ngModel)]="q.score" />
+    </label>
+
+    <div>
+      <h5>Odpowiedzi</h5>
+      <button (click)="addAnswerToQuestion(q)">+ Dodaj odpowiedź</button>
+
+      <div *ngFor="let a of q.answers; let ai = index">
+        <input [(ngModel)]="a.text" placeholder="Treść odpowiedzi" />
+        <label>
+          <input type="checkbox" [(ngModel)]="a.isCorrect" /> Poprawna
+        </label>
+        <button (click)="removeAnswerFromQuestion(q, ai)">🗑️</button>
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+  <button (click)="submitExam()">✅ Zapisz egzamin</button>
+</div>
