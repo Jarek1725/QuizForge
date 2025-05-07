@@ -30,7 +30,8 @@ export class ExamAttemptComponent implements OnInit {
   selectedAnswer: any = null;
   examId!: number;
 
-  constructor(private route: ActivatedRoute, private examService: ExamService) {}
+  constructor(private route: ActivatedRoute, private examService: ExamService) {
+  }
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('examId');

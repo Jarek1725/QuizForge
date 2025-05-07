@@ -95,6 +95,32 @@ paths:
         "404":
           description: User not found or no attempts found
 
+  /api/attempt/start:
+    post:
+      x-principal: 'true'
+      tags:
+        - Attempt
+      summary: Starts an exam attempt
+      operationId: startAttempt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StartAttemptDTO"
+      responses:
+        "200":
+          description: Attempt started successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StartAttemptResponseDTO"
+        "400":
+          description: Invalid request data
+        "404":
+          description: Exam not found
+
+
   /api/exams/{examId}:
     get:
       tags:
@@ -116,6 +142,27 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ExamDetailsDTO"
+        "404":
+          description: Exam not found
+
+  /api/attempts/submit:
+    post:
+      x-principal: 'true'
+      tags:
+        - Attempt
+      summary: Submits an exam attempt with user answers
+      operationId: submitAttempt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitAttemptDTO"
+      responses:
+        "200":
+          description: Attempt submitted successfully
+        "400":
+          description: Invalid request data
         "404":
           description: Exam not found
 
@@ -255,3 +302,34 @@ components:
           type: string
         isCorrect:
           type: boolean
+
+    SubmitAttemptDTO:
+      type: object
+      properties:
+        attemptId:
+          type: integer
+          format: int64
+        answers:
+          type: array
+          items:
+            type: integer
+            format: int64
+
+    StartAttemptDTO:
+        type: object
+        properties:
+            examId:
+                type: integer
+                format: int64
+    StartAttemptResponseDTO:
+        type: object
+        properties:
+            attemptId:
+                type: integer
+                format: int64
+            timeLimit:
+                type: integer
+            questions:
+                type: array
+                items:
+                    $ref: "#/components/schemas/QuestionDetailsDTO"

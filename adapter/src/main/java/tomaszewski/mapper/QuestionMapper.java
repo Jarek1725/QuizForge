@@ -21,7 +21,7 @@ public interface QuestionMapper {
     QuestionEntity toEntity(QuestionModel questionModel);
 
     @Mappings({
-            @Mapping(target = "answers", source = "answers")
+            @Mapping(target = "answers", source = "answers"),
     })
     QuestionModel toModel(QuestionEntity savedEntity);
 
@@ -36,7 +36,8 @@ public interface QuestionMapper {
                 answerOptionEntity.getId(),
                 answerOptionEntity.getText(),
                 null,
-                answerOptionEntity.isCorrect()
+                null
+//                answerOptionEntity.isCorrect()
         );
     }
 }

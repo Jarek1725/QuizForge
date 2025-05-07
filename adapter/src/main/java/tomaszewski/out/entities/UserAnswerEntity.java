@@ -1,5 +1,6 @@
 package tomaszewski.out.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -21,10 +22,7 @@ public class UserAnswerEntity {
     private List<AnswerOptionEntity> selectedOptions = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id")
-    private QuestionEntity question;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "attempt_id")
+    @JsonIgnore
     private AttemptEntity attempt;
 }
