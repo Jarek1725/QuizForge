@@ -13,6 +13,7 @@ public interface AnswerMapper {
     AnswerOptionEntity toEntity(AnswerModel answerModel);
 
     @Mapping(target = "question", ignore = true)
+    @Mapping(target = "isCorrect", ignore = true)
     AnswerModel toModel(AnswerOptionEntity answerOptionEntity);
 
 }

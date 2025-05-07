@@ -38,7 +38,7 @@ public class ExamEntity {
     )
     private List<CategoryEntity> categories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<QuestionEntity> questions = new ArrayList<>();
 
     @ManyToOne

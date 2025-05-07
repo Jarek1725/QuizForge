@@ -10,6 +10,7 @@ import tomaszewski.out.repositories.JpaQuestionRepository;
 import tomaszewski.port.out.QuestionRepositoryPort;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -47,4 +48,32 @@ public class QuestionPersistenceAdapter implements QuestionRepositoryPort {
                 .map(model -> createQuestion(model, examId))
                 .toList();
     }
+
+    @Override
+    public QuestionModel findQuestionByAnswerIdIn(List<Long> answerIds) {
+        if (answerIds == null) {
+            throw new IllegalArgumentException("answerId nie może być null");
+        }
+
+        Optional<QuestionEntity> questionEntity = jpaQuestionRepository.findQuestionByAnswers(answerIds);
+        if (questionEntity.isPresent()) {
+            return questionMapper.toModel(questionEntity.get());
+        } else {
+            throw new IllegalArgumentException("Nie znaleziono pytania dla podanego answerId");
+        }
+    }
+
+    @Override
+    public List<QuestionModel> getRandomQuestions(int limit) {
+        if (limit <= 0) {
+            throw new IllegalArgumentException("Limit musi być większy od 0");
+        }
+
+        List<QuestionEntity> questionEntities = jpaQuestionRepository.findRandomQuestionsLimit(limit);
+        return questionEntities.stream()
+                .map(questionMapper::toModel)
+                .toList();
+    }
+
+
 }

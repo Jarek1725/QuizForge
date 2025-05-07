@@ -1,13 +1,15 @@
 package tomaszewski.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record AttemptModel(
         Long id,
         UserModel user,
         ExamModel exam,
-        LocalDateTime attemptDate,
+        LocalDateTime startTime,
         Integer score,
-        Boolean passed
+        Boolean passed,
+        List<UserAnswersModel> userAnswerModels
 ) {
 }

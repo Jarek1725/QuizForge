@@ -8,4 +8,6 @@ import java.util.List;
 public interface QuestionRepositoryPort {
     QuestionModel createQuestion(QuestionModel questionModel, Long examId);
     List<QuestionModel> createQuestions(List<QuestionModel> questionModel, Long examId);
+    QuestionModel findQuestionByAnswerIdIn(List<Long> answerIds);
+    List<QuestionModel> getRandomQuestions(int limit);
 }
