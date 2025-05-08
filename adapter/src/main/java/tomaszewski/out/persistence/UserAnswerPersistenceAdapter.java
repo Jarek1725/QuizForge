@@ -19,4 +19,9 @@ public class UserAnswerPersistenceAdapter implements UserAnswerRepositoryPort {
     public void saveAll(List<UserAnswersModel> userAnswersModels) {
         userAnswerRepository.saveAll(userAnswerMapper.toUserAnswerEntities(userAnswersModels));
     }
+
+    @Override
+    public List<UserAnswersModel> findAllByAttemptId(Long attemptId) {
+        return userAnswerMapper.toUserAnswerModels(userAnswerRepository.findAllByAttemptId(attemptId));
+    }
 }

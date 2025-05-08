@@ -49,29 +49,23 @@ public class QuestionPersistenceAdapter implements QuestionRepositoryPort {
                 .toList();
     }
 
-    @Override
-    public QuestionModel findQuestionByAnswerIdIn(List<Long> answerIds) {
-        if (answerIds == null) {
-            throw new IllegalArgumentException("answerId nie może być null");
-        }
-
-        Optional<QuestionEntity> questionEntity = jpaQuestionRepository.findQuestionByAnswers(answerIds);
-        if (questionEntity.isPresent()) {
-            return questionMapper.toModel(questionEntity.get());
-        } else {
-            throw new IllegalArgumentException("Nie znaleziono pytania dla podanego answerId");
-        }
-    }
 
     @Override
-    public List<QuestionModel> getRandomQuestions(int limit) {
+    public List<QuestionModel> getRandomQuestions(int limit, Long examId) {
         if (limit <= 0) {
             throw new IllegalArgumentException("Limit musi być większy od 0");
         }
 
-        List<QuestionEntity> questionEntities = jpaQuestionRepository.findRandomQuestionsLimit(limit);
+        List<QuestionEntity> questionEntities = jpaQuestionRepository.findRandomQuestionsLimit(limit, examId);
         return questionEntities.stream()
                 .map(questionMapper::toModel)
                 .toList();
     }
+
+    @Override
+    public List<QuestionModel> findAllQuestionsByAttemptId(Long attemptId) {
+        List<QuestionEntity> allQuestionsByAttemptId = jpaQuestionRepository.findAllQuestionsByAttemptId(attemptId);
+        return questionMapper.toModels(allQuestionsByAttemptId);
+    }
+
 }

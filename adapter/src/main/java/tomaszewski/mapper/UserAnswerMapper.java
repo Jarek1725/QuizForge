@@ -14,4 +14,6 @@ public interface UserAnswerMapper {
     UserAnswerEntity toUserAnswerEntity(UserAnswersModel answersModel);
 
     List<UserAnswerEntity> toUserAnswerEntities(List<UserAnswersModel> userAnswersModels);
+
+    List<UserAnswersModel> toUserAnswerModels(List<UserAnswerEntity> userAnswerEntities);
 }
