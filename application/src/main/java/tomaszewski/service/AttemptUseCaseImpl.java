@@ -27,8 +27,8 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
     }
 
     @Override
-    public void submitAttempt(List<UserAnswersModel> userAnswerModels, Long attemptId) {
-        Optional<AttemptModel> optionalAttemptModel = attemptRepositoryPort.findAttemptById(attemptId);
+    public void submitAttempt(UserSelectedAnswers userSelectedAnswers) {
+        Optional<AttemptModel> optionalAttemptModel = attemptRepositoryPort.findAttemptById(userSelectedAnswers.attemptId());
         if (optionalAttemptModel.isEmpty()) {
             throw new IllegalArgumentException("Attempt not found");
         }
@@ -37,17 +37,26 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
             throw new IllegalStateException("Attempt already submitted");
         }
 
-        AttemptModel updatedAttempt = new AttemptModel(
-                attemptModel.id(),
-                attemptModel.user(),
-                attemptModel.exam(),
-                attemptModel.startTime(),
-                attemptModel.score(),
-                true,
-                userAnswerModels
-        );
-
-        attemptRepositoryPort.save(updatedAttempt);
+        List<QuestionModel> allQuestionsByAttemptId = questionRepositoryPort.findAllQuestionsByAttemptId(userSelectedAnswers.attemptId());
+        int score = 0;
+        for (QuestionModel questionModel : allQuestionsByAttemptId) {
+            List<Long> correctAnswers = new ArrayList<>();
+            List<Long> userAnswers = new ArrayList<>();
+            for (AnswerModel answer : questionModel.answers()) {
+                if (answer.isCorrect()) {
+                    correctAnswers.add(answer.id());
+                }
+                for (Long answerId : userSelectedAnswers.answerIds()) {
+                    if (answer.id().equals(answerId)) {
+                        userAnswers.add(answer.id());
+                    }
+                }
+            }
+            if (correctAnswers.containsAll(userAnswers) && userAnswers.containsAll(correctAnswers)) {
+                score++;
+            }
+        }
+        System.out.println("Score: " + score);
     }
 
     @Override
@@ -60,7 +69,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
             throw new IllegalArgumentException("Invalid exam or user ID");
         }
 
-        List<QuestionModel> randomQuestions = questionRepositoryPort.getRandomQuestions(3);
+        List<QuestionModel> randomQuestions = questionRepositoryPort.getRandomQuestions(3, startAttemptModel.examId());
         if (randomQuestions.isEmpty()) {
             throw new IllegalStateException("No questions available");
         }

@@ -8,6 +8,7 @@ import tomaszewski.mapper.SelectedAnswerMapper;
 import tomaszewski.model.AttemptModel;
 import tomaszewski.model.StartAttemptModel;
 import tomaszewski.model.UserAnswersModel;
+import tomaszewski.model.UserSelectedAnswers;
 import tomaszewski.openapi.api.AttemptApi;
 import tomaszewski.openapi.model.AttemptDTO;
 import tomaszewski.openapi.model.StartAttemptDTO;
@@ -34,8 +35,9 @@ public class AttemptController implements AttemptApi {
 
     @Override
     public ResponseEntity<Void> submitAttempt(SubmitAttemptDTO submitAttemptDTO, UserSecurityDetails userSecurityDetails) {
-        List<UserAnswersModel> userAnswerModels = selectedAnswerMapper.toUserSelectedAnswers(userSecurityDetails.getId(), submitAttemptDTO.getAnswers());
-        attemptUseCase.submitAttempt(userAnswerModels, submitAttemptDTO.getAttemptId());
+        UserSelectedAnswers userAnswerModels = selectedAnswerMapper
+                .toUserSelectedAnswers(userSecurityDetails.getId(), submitAttemptDTO.getAttemptId(), submitAttemptDTO.getAnswers());
+        attemptUseCase.submitAttempt(userAnswerModels);
         return ResponseEntity.ok().build();
     }
 

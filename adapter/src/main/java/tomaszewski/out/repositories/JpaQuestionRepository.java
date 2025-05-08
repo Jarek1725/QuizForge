@@ -12,6 +12,15 @@ public interface JpaQuestionRepository extends JpaRepository<QuestionEntity, Lon
     @Query("SELECT a.question FROM answer_option a WHERE a.id IN ( :answerId )")
     Optional<QuestionEntity> findQuestionByAnswers(@Param("answerId") List<Long> answerId);
 
-    @Query(value = "SELECT * FROM question ORDER BY RANDOM() LIMIT :limit", nativeQuery = true)
-    List<QuestionEntity> findRandomQuestionsLimit(@Param("limit") int limit);
+    @Query(value = """
+            SELECT q.*
+            FROM question q
+            JOIN exam e ON e.id = q.exam_id
+            WHERE e.id = :examId
+            ORDER BY RANDOM()
+            LIMIT :limit
+            """, nativeQuery = true)    List<QuestionEntity> findRandomQuestionsLimit(@Param("limit") int limit, @Param("examId") Long examId);
+
+    @Query("SELECT q FROM question q JOIN UserAnswerEntity ua ON ua.question.id = q.id WHERE ua.attempt.id = :attemptId")
+    List<QuestionEntity> findAllQuestionsByAttemptId(@Param("attemptId") Long attemptId);
 }
