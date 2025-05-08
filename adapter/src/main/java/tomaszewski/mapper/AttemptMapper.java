@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {SecurityUserMapper.class})
+@Mapper(componentModel = "spring", uses = {SecurityUserMapper.class, UserAnswerMapper.class})
 public interface AttemptMapper {
     @Mapping(target = "exam.questions", ignore = true)
     AttemptModel toAttemptModel(AttemptEntity attemptEntity);
@@ -30,6 +30,7 @@ public interface AttemptMapper {
     @Mapping(target = "userId", source = "userId")
     StartAttemptModel toStartAttemptModel(StartAttemptDTO dto, Long userId);
 
+    @Mapping(target = "userAnswers", source = "userAnswerModels")
     AttemptEntity toAttemptEntity(AttemptModel attemptModel);
 
     StartAttemptResponseDTO toStartAttemptResponseDTO(StartAttemptModel startAttempt);

@@ -1,13 +1,14 @@
 package tomaszewski.out.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "user_answers")
+@Data
 public class UserAnswerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,10 @@ public class UserAnswerEntity {
     private List<AnswerOptionEntity> selectedOptions = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
+    private QuestionEntity question;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "attempt_id")
-    @JsonIgnore
     private AttemptEntity attempt;
 }

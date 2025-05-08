@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tomaszewski.mapper.SelectedAnswerMapper;
 import tomaszewski.model.AttemptModel;
+import tomaszewski.out.entities.AttemptEntity;
 import tomaszewski.port.out.AttemptRepositoryPort;
 import tomaszewski.mapper.AttemptMapper;
 import tomaszewski.out.repositories.JpaAttemptRepository;
@@ -27,9 +28,10 @@ public class AttemptPersistenceAdapter implements AttemptRepositoryPort {
     }
 
     @Override
-    public Long save(AttemptModel attemptModel) {
-        return jpaAttemptRepository
-                .save(attemptMapper.toAttemptEntity(attemptModel)).getId();
+    public AttemptModel save(AttemptModel attemptModel) {
+        AttemptEntity saved = jpaAttemptRepository
+                .save(attemptMapper.toAttemptEntity(attemptModel));
+        return attemptMapper.toAttemptModel(saved);
     }
 
     @Override

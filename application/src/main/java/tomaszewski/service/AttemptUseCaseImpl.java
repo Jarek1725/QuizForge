@@ -1,15 +1,14 @@
 package tomaszewski.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tomaszewski.model.*;
-import tomaszewski.port.out.ExamRepositoryPort;
-import tomaszewski.port.out.QuestionRepositoryPort;
-import tomaszewski.port.out.UserRepositoryPort;
+import tomaszewski.port.out.*;
 import tomaszewski.usecase.AttemptUseCase;
-import tomaszewski.port.out.AttemptRepositoryPort;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +19,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
     private final ExamRepositoryPort examRepositoryPort;
     private final UserRepositoryPort userRepositoryPort;
     private final QuestionRepositoryPort questionRepositoryPort;
+    private final UserAnswerRepositoryPort userAnswerRepositoryPort;
 
     @Override
     public List<AttemptModel> getLastAttempts(Long userId, int limit) {
@@ -51,32 +51,48 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
     }
 
     @Override
+    @Transactional
     public StartAttemptModel startAttempt(StartAttemptModel startAttemptModel) {
         Optional<ExamModel> examById = examRepositoryPort.findExamById(startAttemptModel.examId());
         Optional<UserModel> userById = userRepositoryPort.findUserById(startAttemptModel.userId());
 
-        if (examById.isPresent() && userById.isPresent()) {
-            AttemptModel attemptModel = new AttemptModel(
-                    null,
-                    userById.get(),
-                    examById.get(),
-                    LocalDateTime.now(),
-                    -1,
-                    false,
-                    null
-            );
-
-            List<QuestionModel> randomQuestions = questionRepositoryPort.getRandomQuestions(3);
-
-            Long savedAttemptId = attemptRepositoryPort.save(attemptModel);
-            return new StartAttemptModel(
-                    null,
-                    null,
-                    savedAttemptId,
-                    randomQuestions
-            );
-        } else {
+        if (examById.isEmpty() || userById.isEmpty()) {
             throw new IllegalArgumentException("Invalid exam or user ID");
         }
+
+        List<QuestionModel> randomQuestions = questionRepositoryPort.getRandomQuestions(3);
+        if (randomQuestions.isEmpty()) {
+            throw new IllegalStateException("No questions available");
+        }
+
+        AttemptModel attemptToSave = new AttemptModel(
+                null,
+                userById.get(),
+                examById.get(),
+                LocalDateTime.now(),
+                -1,
+                false,
+                new ArrayList<>()
+        );
+        AttemptModel savedAttemptModel = attemptRepositoryPort.save(attemptToSave);
+
+        List<UserAnswersModel> userAnswersModels = new ArrayList<>();
+        for (QuestionModel question : randomQuestions) {
+            userAnswersModels.add(new UserAnswersModel(
+                    null,
+                    null,
+                    savedAttemptModel,
+                    question
+            ));
+        }
+
+        userAnswerRepositoryPort.saveAll(userAnswersModels);
+
+        return new StartAttemptModel(
+                savedAttemptModel.user().id(),
+                savedAttemptModel.exam().id(),
+                savedAttemptModel.id(),
+                randomQuestions
+        );
     }
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface AttemptRepositoryPort {
     List<AttemptModel> findLastAttemptsByUser(Long userId, int limit);
 
-    Long save(AttemptModel attemptModel);
+    AttemptModel save(AttemptModel attemptModel);
 
     Optional<AttemptModel> findAttemptById(Long attemptId);
 }

@@ -12,11 +12,8 @@ public interface SelectedAnswerMapper {
 
     default List<UserAnswersModel> toUserSelectedAnswers(Long userId, List<Long> answerIds) {
         return answerIds.stream()
-                .map(answerId -> new UserAnswersModel(userId, answerId, null))
+                .map(answerId -> new UserAnswersModel(userId, answerId, null, null))
                 .toList();
     }
-
-    @Mapping(target = "attempt", ignore = true)
-    UserAnswersModel toUserSelectedAnswersModel(UserAnswerEntity userAnswerEntity);
 
 }
