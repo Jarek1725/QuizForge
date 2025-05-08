@@ -74,6 +74,4 @@ public class QuestionPersistenceAdapter implements QuestionRepositoryPort {
                 .map(questionMapper::toModel)
                 .toList();
     }
-
-
 }
