@@ -34,9 +34,9 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
             throw new IllegalArgumentException("Attempt not found");
         }
         AttemptModel attemptModel = optionalAttemptModel.get();
-//        if (attemptModel.getScore() != -1) {
-//            throw new IllegalStateException("Attempt already submitted");
-//        }
+        if (attemptModel.getScore() != -1) {
+            throw new IllegalStateException("Attempt already submitted");
+        }
 
         List<QuestionModel> allQuestionsByAttemptId = questionRepositoryPort.findAllQuestionsByAttemptId(userSelectedAnswers.attemptId());
         int score = 0;
