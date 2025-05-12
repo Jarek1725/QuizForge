@@ -62,6 +62,30 @@ paths:
                 type: integer
                 format: int64
 
+  /api/attempt/{attemptId}:
+    get:
+      tags:
+        - Attempt
+      summary: Retrieves an exam by ID
+      operationId: getExamById
+      parameters:
+        - name: attemptId
+          in: path
+          description: The ID of the attempt
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Attempt details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExamDetailsDTO"
+        "404":
+          description: Attempt not found
+
   /api/users/{userId}/attempts:
     get:
       tags:
@@ -316,6 +340,23 @@ components:
           items:
             type: integer
             format: int64
+
+    AttemptSummaryDTO:
+        type: object
+        properties:
+          attemptId:
+            type: integer
+            format: int64
+          score:
+            type: integer
+          percentageToPass:
+            type: integer
+          passed:
+            type: boolean
+          questions:
+            type: array
+            items:
+              $ref: "#/components/schemas/QuestionDetailsDTO"
 
     StartAttemptDTO:
         type: object

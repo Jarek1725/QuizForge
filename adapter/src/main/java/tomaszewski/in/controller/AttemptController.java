@@ -7,7 +7,6 @@ import tomaszewski.mapper.AttemptMapper;
 import tomaszewski.mapper.SelectedAnswerMapper;
 import tomaszewski.model.AttemptModel;
 import tomaszewski.model.StartAttemptModel;
-import tomaszewski.model.UserAnswersModel;
 import tomaszewski.model.UserSelectedAnswers;
 import tomaszewski.openapi.api.AttemptApi;
 import tomaszewski.openapi.model.AttemptDTO;
@@ -48,4 +47,8 @@ public class AttemptController implements AttemptApi {
         return ResponseEntity.ok(attemptMapper.toStartAttemptResponseDTO(startAttempt));
     }
 
+//    @Override
+//    public ResponseEntity<ExamDetailsDTO> getExamById(Long attemptId) {
+//        AttemptModel attemptModel = attemptUseCase.getAttemptById(attemptId);
+//    }
 }

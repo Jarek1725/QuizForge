@@ -14,13 +14,8 @@ public class UserAnswerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_answer_selected_options",
-            joinColumns = @JoinColumn(name = "user_answer_id"),
-            inverseJoinColumns = @JoinColumn(name = "answer_option_id")
-    )
-    private List<AnswerOptionEntity> selectedOptions = new ArrayList<>();
+    @OneToMany(mappedBy = "userAnswerId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserAnswerSelectedOptionEntity> selectedOptions = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
