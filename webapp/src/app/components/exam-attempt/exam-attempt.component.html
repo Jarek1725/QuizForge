@@ -14,12 +14,12 @@
       <mat-card-content>
         <h2>{{ currentQuestion.content }}</h2>
 
-        <mat-selection-list *ngIf="currentQuestion.type === 'MULTIPLE_CHOICE'">
-          <mat-list-option *ngFor="let ans of currentQuestion.answers">
-            <!--                           [(ngModel)]="ans.selected"-->
+        <mat-selection-list *ngIf="currentQuestion.type === 'MULTIPLE_CHOICE'" [(ngModel)]="selectedAnswersMultiple">
+          <mat-list-option *ngFor="let ans of currentQuestion.answers" [value]="ans.id">
             {{ ans.text }}
           </mat-list-option>
         </mat-selection-list>
+
 
         <mat-radio-group *ngIf="currentQuestion.type === 'SINGLE_CHOICE'" [(ngModel)]="selectedAnswer">
           <mat-radio-button *ngFor="let ans of currentQuestion.answers" [value]="ans" class="single-answer-container">
@@ -34,11 +34,14 @@
       <p>Twoje odpowiedzi zostaną przesłane / ocenione</p>
     </div>
   </div>
-  <div *ngIf="currentStep > 0" class="exam-attempt-button-container">
-    <button mat-flat-button class="prev-question-button" (click)="prev()">Poprzednie pytanie</button>
+  <div *ngIf="currentStep > 0 && currentStep < questionCount" class="exam-attempt-button-container">
     <button mat-flat-button class="next-question-button" (click)="next()">Następne pytanie</button>
   </div>
 
+  <div *ngIf="currentStep > 0 && currentStep >= questionCount" class="exam-attempt-button-container">
+    <!--    <button mat-flat-button class="prev-question-button" (click)="prev()">Poprzednie pytanie</button>-->
+    <button mat-flat-button class="next-question-button" (click)="submitAttempt()">Zakończ egzamin</button>
+  </div>
   <div *ngIf="currentStep == 0" class="exam-attempt-button-container">
     <button mat-flat-button class="next-question-button" (click)="next()">Rozpocznij egzamin</button>
   </div>
