@@ -18,6 +18,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {SecurityUserMapper.class, UserAnswerMapper.class})
 public interface AttemptMapper {
     @Mapping(target = "exam.questions", ignore = true)
+    @Mapping(target = "userAnswerModels", source = "userAnswers")
     AttemptModel toAttemptModel(AttemptEntity attemptEntity);
 
     AttemptDTO toAttemptDTO(AttemptModel attemptModel);

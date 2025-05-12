@@ -20,6 +20,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
     private final UserRepositoryPort userRepositoryPort;
     private final QuestionRepositoryPort questionRepositoryPort;
     private final UserAnswerRepositoryPort userAnswerRepositoryPort;
+    private final AnswerOptionRepositoryPort answerOptionRepositoryPort;
 
     @Override
     public List<AttemptModel> getLastAttempts(Long userId, int limit) {
@@ -33,12 +34,13 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
             throw new IllegalArgumentException("Attempt not found");
         }
         AttemptModel attemptModel = optionalAttemptModel.get();
-        if (attemptModel.score() != -1) {
+        if (attemptModel.getScore() != -1) {
             throw new IllegalStateException("Attempt already submitted");
         }
 
         List<QuestionModel> allQuestionsByAttemptId = questionRepositoryPort.findAllQuestionsByAttemptId(userSelectedAnswers.attemptId());
         int score = 0;
+        List<Long> userAnswersIds = new ArrayList<>();
         for (QuestionModel questionModel : allQuestionsByAttemptId) {
             List<Long> correctAnswers = new ArrayList<>();
             List<Long> userAnswers = new ArrayList<>();
@@ -55,8 +57,28 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
             if (correctAnswers.containsAll(userAnswers) && userAnswers.containsAll(correctAnswers)) {
                 score++;
             }
+            userAnswersIds.addAll(userAnswers);
         }
-        System.out.println("Score: " + score);
+
+        attemptModel.setScore(score);
+        List<AnswerOptionModel> selectedAnswers = answerOptionRepositoryPort.findAllByIdIn(userAnswersIds);
+        List<UserAnswersModel> userAnswersModels = userAnswerRepositoryPort.findAllByAttemptId(userSelectedAnswers.attemptId());
+
+        for (UserAnswersModel userAnswersModel : userAnswersModels) {
+            List<SelectedOptionModel> selectedOptionModels = new ArrayList<>();
+            for (AnswerModel answer : userAnswersModel.getQuestion().answers()) {
+                if(userAnswersIds.contains(answer.id())) {
+                    selectedOptionModels.add(new SelectedOptionModel(
+                            userAnswersModel.getId(),
+                            answer.id()
+                    ));
+                }
+            }
+            userAnswersModel.setSelectedOptions(selectedOptionModels);
+        }
+
+        attemptRepositoryPort.save(attemptModel);
+        userAnswerRepositoryPort.saveAll(userAnswersModels);
     }
 
     @Override
@@ -98,9 +120,9 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
         userAnswerRepositoryPort.saveAll(userAnswersModels);
 
         return new StartAttemptModel(
-                savedAttemptModel.user().id(),
-                savedAttemptModel.exam().id(),
-                savedAttemptModel.id(),
+                savedAttemptModel.getUser().id(),
+                savedAttemptModel.getExam().id(),
+                savedAttemptModel.getId(),
                 randomQuestions
         );
     }
