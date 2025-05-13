@@ -67,7 +67,7 @@ paths:
       tags:
         - Attempt
       summary: Retrieves an exam by ID
-      operationId: getExamById
+      operationId: getAttemptById
       parameters:
         - name: attemptId
           in: path
@@ -82,7 +82,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExamDetailsDTO"
+                $ref: "#/components/schemas/AttemptSummaryDTO"
         "404":
           description: Attempt not found
 
@@ -344,19 +344,21 @@ components:
     AttemptSummaryDTO:
         type: object
         properties:
-          attemptId:
-            type: integer
-            format: int64
           score:
-            type: integer
-          percentageToPass:
             type: integer
           passed:
             type: boolean
-          questions:
+          exam:
+            $ref: "#/components/schemas/ExamDetailsDTO"
+          startTime:
+            type: string
+            format: date-time
+          userAnswerDetails:
             type: array
             items:
-              $ref: "#/components/schemas/QuestionDetailsDTO"
+              $ref: "#/components/schemas/UserAnswerDetails"
+
+
 
     StartAttemptDTO:
         type: object
@@ -376,3 +378,13 @@ components:
                 type: array
                 items:
                     $ref: "#/components/schemas/QuestionDetailsDTO"
+    UserAnswerDetails:
+        type: object
+        properties:
+          question:
+            $ref: "#/components/schemas/QuestionDetailsDTO"
+          selectedOptions:
+            type: array
+            items:
+              type: integer
+              format: int64

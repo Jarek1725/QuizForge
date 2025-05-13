@@ -3,19 +3,18 @@ package tomaszewski.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import tomaszewski.model.AttemptModel;
+import tomaszewski.model.SelectedOptionModel;
 import tomaszewski.model.StartAttemptModel;
-import tomaszewski.openapi.model.AttemptDTO;
-import tomaszewski.openapi.model.StartAttemptDTO;
-import tomaszewski.openapi.model.StartAttemptResponseDTO;
-import tomaszewski.openapi.model.SubmitAttemptDTO;
+import tomaszewski.openapi.model.*;
 import tomaszewski.out.entities.AttemptEntity;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", uses = {SecurityUserMapper.class, UserAnswerMapper.class})
+@Mapper(componentModel = "spring", uses = {SecurityUserMapper.class, UserAnswerMapper.class, ExamMapper.class})
 public interface AttemptMapper {
     @Mapping(target = "exam.questions", ignore = true)
     @Mapping(target = "userAnswerModels", source = "userAnswers")
@@ -36,4 +35,15 @@ public interface AttemptMapper {
 
     StartAttemptResponseDTO toStartAttemptResponseDTO(StartAttemptModel startAttempt);
 
+    @Mapping(target = "userAnswerDetails", source = "userAnswerModels")
+    AttemptSummaryDTO toAttemptSummaryDTO(AttemptModel attemptModel);
+
+    default List<Long> map(List<SelectedOptionModel> selectedOptions) {
+        if (selectedOptions == null) {
+            return null;
+        }
+        return selectedOptions.stream()
+                .map(SelectedOptionModel::getAnswerOptionId)
+                .collect(Collectors.toList());
+    }
 }

@@ -126,4 +126,10 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
                 randomQuestions
         );
     }
+
+    @Override
+    public AttemptModel getAttemptById(Long attemptId) {
+        Optional<AttemptModel> attemptById = attemptRepositoryPort.findAttemptById(attemptId);
+        return attemptById.get();
+    }
 }
