@@ -3,6 +3,7 @@ package tomaszewski.out.persistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tomaszewski.mapper.QuestionMapper;
+import tomaszewski.model.ExamModel;
 import tomaszewski.model.QuestionModel;
 import tomaszewski.out.entities.ExamEntity;
 import tomaszewski.out.entities.QuestionEntity;
@@ -18,6 +19,7 @@ public class QuestionPersistenceAdapter implements QuestionRepositoryPort {
 
     private final JpaQuestionRepository jpaQuestionRepository;
     private final QuestionMapper questionMapper;
+    private final ExamPersistenceAdapter examPersistenceAdapter;
 
     @Override
     public QuestionModel createQuestion(QuestionModel questionModel, Long examId) {
@@ -51,13 +53,14 @@ public class QuestionPersistenceAdapter implements QuestionRepositoryPort {
 
 
     @Override
-    public List<QuestionModel> getRandomQuestions(int limit, Long examId) {
-        if (limit <= 0) {
-            throw new IllegalArgumentException("Limit musi być większy od 0");
+    public List<QuestionModel> getRandomQuestions(Long limit, Long examId) {
+        Optional<ExamModel> examById = examPersistenceAdapter.findExamById(examId);
+        if (examById.isEmpty()) {
+            throw new IllegalArgumentException("Nie znaleziono egzaminu o podanym ID");
         }
-
-        List<QuestionEntity> questionEntities = jpaQuestionRepository.findRandomQuestionsLimit(limit, examId);
-        return questionEntities.stream()
+        long effectiveLimit = (limit != null) ? limit : examById.get().questionsPerExam();
+        List<QuestionEntity> randomQuestionsLimit = jpaQuestionRepository.findRandomQuestionsLimit(effectiveLimit, examId);
+        return randomQuestionsLimit.stream()
                 .map(questionMapper::toModel)
                 .toList();
     }

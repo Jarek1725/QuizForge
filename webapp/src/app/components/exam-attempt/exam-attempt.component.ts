@@ -10,7 +10,7 @@ import {
   SubmitAttemptDTO,
   StartAttemptDTO
 } from '../../openapi/tomaszewski/openapi';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MatCardContent} from '@angular/material/card';
 import {MatListOption, MatSelectionList} from '@angular/material/list';
 import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
@@ -40,8 +40,8 @@ export class ExamAttemptComponent implements OnInit {
   submitAttemptDTO: SubmitAttemptDTO = {};
 
   constructor(private route: ActivatedRoute,
-              private examService: ExamService,
-              private attemptService: AttemptService) {
+              private attemptService: AttemptService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -107,21 +107,11 @@ export class ExamAttemptComponent implements OnInit {
     return null;
   }
 
-  prev() {
-    const questions = this.examDetails?.questions;
-    if (!questions) return;
-
-    if (this.currentStep < questions.length) {
-      this.saveAnswer();
-      this.currentStep--;
-    }
-  }
-
   submitAttempt() {
     this.saveAnswer();
     this.attemptService.submitAttempt(this.submitAttemptDTO).subscribe({
-      next: (response) => {
-        console.log('Wynik egzaminu:', response);
+      next: () => {
+        this.router.navigate(['/attempt', this.submitAttemptDTO.attemptId]);
       },
       error: (err) => {
         console.error('Błąd podczas przesyłania odpowiedzi:', err);
