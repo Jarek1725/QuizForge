@@ -13,4 +13,6 @@ public interface AttemptUseCase {
     void submitAttempt(UserSelectedAnswers userSelectedAnswers);
 
     StartAttemptModel startAttempt(StartAttemptModel startAttemptModel);
+
+    AttemptModel getAttemptById(Long attemptId);
 }
