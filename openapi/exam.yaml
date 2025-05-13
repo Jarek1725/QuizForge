@@ -364,8 +364,11 @@ components:
         type: object
         properties:
             examId:
-                type: integer
-                format: int64
+              type: integer
+              format: int64
+            questionCount:
+              type: integer
+              format: int64
     StartAttemptResponseDTO:
         type: object
         properties:
@@ -383,8 +386,3 @@ components:
         properties:
           question:
             $ref: "#/components/schemas/QuestionDetailsDTO"
-          selectedOptions:
-            type: array
-            items:
-              type: integer
-              format: int64

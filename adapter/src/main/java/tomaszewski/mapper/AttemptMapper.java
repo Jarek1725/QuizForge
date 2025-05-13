@@ -1,10 +1,10 @@
 package tomaszewski.mapper;
 
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import tomaszewski.model.AttemptModel;
-import tomaszewski.model.SelectedOptionModel;
-import tomaszewski.model.StartAttemptModel;
+import org.mapstruct.MappingTarget;
+import tomaszewski.model.*;
 import tomaszewski.openapi.model.*;
 import tomaszewski.out.entities.AttemptEntity;
 
@@ -38,12 +38,25 @@ public interface AttemptMapper {
     @Mapping(target = "userAnswerDetails", source = "userAnswerModels")
     AttemptSummaryDTO toAttemptSummaryDTO(AttemptModel attemptModel);
 
-    default List<Long> map(List<SelectedOptionModel> selectedOptions) {
-        if (selectedOptions == null) {
-            return null;
-        }
-        return selectedOptions.stream()
+    List<UserAnswerDetails> mapUserAnswerModels(List<UserAnswersModel> models);
+
+    @Mapping(target = "question", source = "question")
+    UserAnswerDetails mapUserAnswer(UserAnswersModel model);
+
+    default List<Long> toSelectedOptions(List<SelectedOptionModel> models) {
+        if (models == null) return null;
+        return models.stream()
                 .map(SelectedOptionModel::getAnswerOptionId)
                 .collect(Collectors.toList());
+    }
+
+    @AfterMapping
+    default void setIsSelected(UserAnswersModel source, @MappingTarget UserAnswerDetails target) {
+        List<Long> selectedIds = toSelectedOptions(source.getSelectedOptions());
+        if (target.getQuestion() != null && target.getQuestion().getAnswers() != null) {
+            for (AnswerDetailsDTO answer : target.getQuestion().getAnswers()) {
+                answer.setIsSelected(selectedIds != null && selectedIds.contains(Long.valueOf(answer.getId())));
+            }
+        }
     }
 }

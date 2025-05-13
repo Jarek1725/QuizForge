@@ -10,7 +10,8 @@ import tomaszewski.usecase.AttemptUseCase;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,8 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
     private final UserRepositoryPort userRepositoryPort;
     private final QuestionRepositoryPort questionRepositoryPort;
     private final UserAnswerRepositoryPort userAnswerRepositoryPort;
-    private final AnswerOptionRepositoryPort answerOptionRepositoryPort;
+
+    private static final int UNGRADED_ATTEMPT_SCORE = -1;
 
     @Override
     public List<AttemptModel> getLastAttempts(Long userId, int limit) {
@@ -29,107 +31,172 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
 
     @Override
     public void submitAttempt(UserSelectedAnswers userSelectedAnswers) {
-        Optional<AttemptModel> optionalAttemptModel = attemptRepositoryPort.findAttemptById(userSelectedAnswers.attemptId());
-        if (optionalAttemptModel.isEmpty()) {
-            throw new IllegalArgumentException("Attempt not found");
-        }
-        AttemptModel attemptModel = optionalAttemptModel.get();
-        if (attemptModel.getScore() != -1) {
-            throw new IllegalStateException("Attempt already submitted");
-        }
+        AttemptModel attemptModel = validateAndGetAttempt(userSelectedAnswers.attemptId());
 
-        List<QuestionModel> allQuestionsByAttemptId = questionRepositoryPort.findAllQuestionsByAttemptId(userSelectedAnswers.attemptId());
-        int score = 0;
-        List<Long> userAnswersIds = new ArrayList<>();
-        for (QuestionModel questionModel : allQuestionsByAttemptId) {
-            List<Long> correctAnswers = new ArrayList<>();
-            List<Long> userAnswers = new ArrayList<>();
-            for (AnswerModel answer : questionModel.answers()) {
-                if (answer.isCorrect()) {
-                    correctAnswers.add(answer.id());
-                }
-                for (Long answerId : userSelectedAnswers.answerIds()) {
-                    if (answer.id().equals(answerId)) {
-                        userAnswers.add(answer.id());
-                    }
-                }
-            }
-            if (correctAnswers.containsAll(userAnswers) && userAnswers.containsAll(correctAnswers)) {
-                score++;
-            }
-            userAnswersIds.addAll(userAnswers);
-        }
-
+        int score = calculateScore(userSelectedAnswers);
         attemptModel.setScore(score);
-        List<AnswerOptionModel> selectedAnswers = answerOptionRepositoryPort.findAllByIdIn(userAnswersIds);
-        List<UserAnswersModel> userAnswersModels = userAnswerRepositoryPort.findAllByAttemptId(userSelectedAnswers.attemptId());
 
-        for (UserAnswersModel userAnswersModel : userAnswersModels) {
-            List<SelectedOptionModel> selectedOptionModels = new ArrayList<>();
-            for (AnswerModel answer : userAnswersModel.getQuestion().answers()) {
-                if(userAnswersIds.contains(answer.id())) {
-                    selectedOptionModels.add(new SelectedOptionModel(
-                            userAnswersModel.getId(),
-                            answer.id()
-                    ));
-                }
-            }
-            userAnswersModel.setSelectedOptions(selectedOptionModels);
-        }
+        updateUserAnswers(userSelectedAnswers);
 
         attemptRepositoryPort.save(attemptModel);
+    }
+
+    private AttemptModel validateAndGetAttempt(Long attemptId) {
+        return attemptRepositoryPort.findAttemptById(attemptId)
+                .map(attempt -> {
+//                    if (attempt.getScore() != UNGRADED_ATTEMPT_SCORE) {
+//                        throw new IllegalStateException("Attempt already submitted");
+//                    }
+                    return attempt;
+                })
+                .orElseThrow(() -> new IllegalArgumentException("Attempt not found"));
+    }
+
+    private int calculateScore(UserSelectedAnswers userSelectedAnswers) {
+        List<QuestionModel> questions = questionRepositoryPort
+                .findAllQuestionsByAttemptId(userSelectedAnswers.attemptId());
+
+        int score = 0;
+        for (QuestionModel question : questions) {
+            List<Long> correctAnswerIds = getCorrectAnswerIds(question);
+            List<Long> userAnswerIds = getUserAnswerIdsForQuestion(question, userSelectedAnswers.answerIds());
+
+            if (areAnswersCorrect(correctAnswerIds, userAnswerIds)) {
+                score++;
+            }
+        }
+
+        return score;
+    }
+
+    private List<Long> getCorrectAnswerIds(QuestionModel question) {
+        return question.answers().stream()
+                .filter(AnswerModel::isCorrect)
+                .map(AnswerModel::id)
+                .collect(Collectors.toList());
+    }
+
+    private List<Long> getUserAnswerIdsForQuestion(QuestionModel question, List<Long> allUserAnswerIds) {
+        List<Long> questionAnswerIds = question.answers().stream()
+                .map(AnswerModel::id)
+                .collect(Collectors.toList());
+
+        return allUserAnswerIds.stream()
+                .filter(questionAnswerIds::contains)
+                .collect(Collectors.toList());
+    }
+
+    private boolean areAnswersCorrect(List<Long> correctAnswerIds, List<Long> userAnswerIds) {
+        return correctAnswerIds.containsAll(userAnswerIds) &&
+                userAnswerIds.containsAll(correctAnswerIds);
+    }
+
+    private void updateUserAnswers(UserSelectedAnswers userSelectedAnswers) {
+        List<UserAnswersModel> userAnswersModels = userAnswerRepositoryPort
+                .findAllByAttemptId(userSelectedAnswers.attemptId());
+
+        Map<Long, List<Long>> questionToAnswerIdsMap = createQuestionToAnswerIdsMap(userAnswersModels);
+
+        for (UserAnswersModel userAnswersModel : userAnswersModels) {
+            Long questionId = userAnswersModel.getQuestion().id();
+            List<Long> selectedAnswerIds = filterAnswerIdsForQuestion(
+                    questionId, questionToAnswerIdsMap, userSelectedAnswers.answerIds());
+
+            userAnswersModel.setSelectedOptions(
+                    createSelectedOptionModels(userAnswersModel.getId(), selectedAnswerIds));
+        }
+
         userAnswerRepositoryPort.saveAll(userAnswersModels);
+    }
+
+    private Map<Long, List<Long>> createQuestionToAnswerIdsMap(List<UserAnswersModel> userAnswersModels) {
+        return userAnswersModels.stream()
+                .collect(Collectors.toMap(
+                        model -> model.getQuestion().id(),
+                        model -> model.getQuestion().answers().stream()
+                                .map(AnswerModel::id)
+                                .collect(Collectors.toList())
+                ));
+    }
+
+    private List<Long> filterAnswerIdsForQuestion(Long questionId,
+                                                  Map<Long, List<Long>> questionToAnswerIdsMap,
+                                                  List<Long> userAnswerIds) {
+        List<Long> possibleAnswerIds = questionToAnswerIdsMap.getOrDefault(questionId, new ArrayList<>());
+        return userAnswerIds.stream()
+                .filter(possibleAnswerIds::contains)
+                .collect(Collectors.toList());
+    }
+
+    private List<SelectedOptionModel> createSelectedOptionModels(Long userAnswerModelId, List<Long> selectedAnswerIds) {
+        return selectedAnswerIds.stream()
+                .map(answerId -> new SelectedOptionModel(userAnswerModelId, answerId))
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public StartAttemptModel startAttempt(StartAttemptModel startAttemptModel) {
-        Optional<ExamModel> examById = examRepositoryPort.findExamById(startAttemptModel.examId());
-        Optional<UserModel> userById = userRepositoryPort.findUserById(startAttemptModel.userId());
+        ExamModel exam = getExamOrThrow(startAttemptModel.examId());
+        UserModel user = getUserOrThrow(startAttemptModel.userId());
 
-        if (examById.isEmpty() || userById.isEmpty()) {
-            throw new IllegalArgumentException("Invalid exam or user ID");
-        }
+        List<QuestionModel> randomQuestions = getRandomQuestionsForExam(startAttemptModel.examId(), startAttemptModel.questionCount());
 
-        List<QuestionModel> randomQuestions = questionRepositoryPort.getRandomQuestions(3, startAttemptModel.examId());
-        if (randomQuestions.isEmpty()) {
-            throw new IllegalStateException("No questions available");
-        }
+        AttemptModel attemptModel = createAndSaveAttempt(user, exam);
 
-        AttemptModel attemptToSave = new AttemptModel(
-                null,
-                userById.get(),
-                examById.get(),
-                LocalDateTime.now(),
-                -1,
-                false,
-                new ArrayList<>()
-        );
-        AttemptModel savedAttemptModel = attemptRepositoryPort.save(attemptToSave);
-
-        List<UserAnswersModel> userAnswersModels = new ArrayList<>();
-        for (QuestionModel question : randomQuestions) {
-            userAnswersModels.add(new UserAnswersModel(
-                    null,
-                    null,
-                    savedAttemptModel,
-                    question
-            ));
-        }
-
-        userAnswerRepositoryPort.saveAll(userAnswersModels);
+        createAndSaveUserAnswers(attemptModel, randomQuestions);
 
         return new StartAttemptModel(
-                savedAttemptModel.getUser().id(),
-                savedAttemptModel.getExam().id(),
-                savedAttemptModel.getId(),
+                attemptModel.getUser().id(),
+                attemptModel.getExam().id(),
+                attemptModel.getId(),
+                (long) randomQuestions.size(),
                 randomQuestions
         );
     }
 
+    private ExamModel getExamOrThrow(Long examId) {
+        return examRepositoryPort.findExamById(examId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid exam ID"));
+    }
+
+    private UserModel getUserOrThrow(Long userId) {
+        return userRepositoryPort.findUserById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user ID"));
+    }
+
+    private List<QuestionModel> getRandomQuestionsForExam(Long examId, Long questionCount) {
+        List<QuestionModel> questions = questionRepositoryPort.getRandomQuestions(questionCount, examId);
+        if (questions.isEmpty()) {
+            throw new IllegalStateException("No questions available");
+        }
+        return questions;
+    }
+
+    private AttemptModel createAndSaveAttempt(UserModel user, ExamModel exam) {
+        AttemptModel attemptToSave = new AttemptModel(
+                null,
+                user,
+                exam,
+                LocalDateTime.now(),
+                UNGRADED_ATTEMPT_SCORE,
+                false,
+                new ArrayList<>()
+        );
+        return attemptRepositoryPort.save(attemptToSave);
+    }
+
+    private void createAndSaveUserAnswers(AttemptModel attemptModel, List<QuestionModel> questions) {
+        List<UserAnswersModel> userAnswersModels = questions.stream()
+                .map(question -> new UserAnswersModel(null, null, attemptModel, question))
+                .collect(Collectors.toList());
+
+        userAnswerRepositoryPort.saveAll(userAnswersModels);
+    }
+
     @Override
     public AttemptModel getAttemptById(Long attemptId) {
-        Optional<AttemptModel> attemptById = attemptRepositoryPort.findAttemptById(attemptId);
-        return attemptById.get();
+        return attemptRepositoryPort.findAttemptById(attemptId)
+                .orElseThrow(() -> new IllegalArgumentException("Attempt not found with ID: " + attemptId));
     }
 }

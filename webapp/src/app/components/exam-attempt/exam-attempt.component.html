@@ -39,7 +39,6 @@
   </div>
 
   <div *ngIf="currentStep > 0 && currentStep >= questionCount" class="exam-attempt-button-container">
-    <!--    <button mat-flat-button class="prev-question-button" (click)="prev()">Poprzednie pytanie</button>-->
     <button mat-flat-button class="next-question-button" (click)="submitAttempt()">Zakończ egzamin</button>
   </div>
   <div *ngIf="currentStep == 0" class="exam-attempt-button-container">
