@@ -1,0 +1,16 @@
+<div class="expandable-box"
+     [class.expanded]="isHovered"
+     (mouseenter)="isHovered = true"
+     (mouseleave)="isHovered = false">
+  <div class="main-text">
+    <h3 class="expandable-box-main-texts">{{ questionDetailsDTO?.id }}</h3>
+    <h3 class="expandable-box-main-texts-content">{{ questionDetailsDTO?.content }}</h3>
+    <h3 class="expandable-box-main-texts">{{ questionDetailsDTO?.score }}</h3>
+    <h3 class="passed-container expandable-box-main-texts" *ngIf="passed"> {{ questionDetailsDTO?.score }} </h3>
+    <h3 class="failed-container expandable-box-main-texts" *ngIf="!passed">0</h3>
+  </div>
+
+  <div class="extra-content">
+    <p>{{ questionDetailsDTO?.id }}</p>
+  </div>
+</div>

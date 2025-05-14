@@ -1,0 +1,49 @@
+@use '../../../styles/variables' as *;
+
+
+.expandable-box {
+  overflow: hidden;
+  height: 76px;
+  transition: height 0.4s ease;
+  background: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+
+  .extra-content {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &.expanded {
+    height: 200px;
+
+    .extra-content {
+      opacity: 1;
+    }
+  }
+}
+
+.main-text{
+  display: grid;
+  grid-template-columns: 1fr 12fr 1fr 1fr;
+}
+
+.expandable-box-main-texts{
+  text-align: center;
+  padding: 10px;
+  border-radius: 7px;
+}
+
+.expandable-box-main-texts-content{
+  padding: 10px;
+}
+
+.passed-container{
+  background-color: $color-success;
+}
+
+.failed-container{
+  background-color: $color-danger;
+}

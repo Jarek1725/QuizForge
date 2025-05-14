@@ -1,1 +1,8 @@
-<p>attempt-details works!</p>
+<div id="exam-details-container">
+  <h1 id="exam-details-name">{{ attemptSummary?.exam?.name }}</h1>
+  <div id="attempt-questions-container">
+    <div *ngFor="let q of attemptSummary?.userAnswerDetails;let qi = index" class="attempt-question-container">
+      <app-expendable-box [questionDetailsDTO]="q?.question"></app-expendable-box>
+    </div>
+  </div>
+</div>
