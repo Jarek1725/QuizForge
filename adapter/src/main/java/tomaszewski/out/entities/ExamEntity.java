@@ -25,7 +25,7 @@ public class ExamEntity {
     private Integer questionsPerExam;
 
     @Column(name = "percentage_to_pass")
-    private Integer percentageToPass;
+    private Integer percentageToPass = 50;
 
     @Column(name = "time_limit")
     private Integer timeLimit;

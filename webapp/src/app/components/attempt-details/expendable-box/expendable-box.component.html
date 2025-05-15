@@ -1,0 +1,29 @@
+<div class="expandable-box"
+     [ngStyle]="{ height: isHovered ? getExpandedHeight() : '76px' }"
+     (mouseenter)="isHovered = true"
+     (mouseleave)="isHovered = false">
+  <div class="main-text">
+    <h3 class="expandable-box-main-texts-content">{{ questionDetailsDTO?.content }}</h3>
+    <h3 class="expandable-box-main-texts">{{ questionDetailsDTO?.score }}</h3>
+    <h3 class="passed-container expandable-box-main-texts" *ngIf="passed">{{ questionDetailsDTO?.score }}</h3>
+    <h3 class="failed-container expandable-box-main-texts" *ngIf="!passed">0</h3>
+  </div>
+
+  <div class="extra-content" [class.visible]="isHovered">
+    <div class="answers-container">
+      <div
+        *ngFor="let answer of questionDetailsDTO?.answers"
+        class="answer-container"
+        [ngClass]="{
+          'correct-selected': answer.isCorrect && answer.isSelected,
+          'correct-missed': answer.isCorrect && !answer.isSelected,
+          'incorrect-selected': !answer.isCorrect && answer.isSelected
+        }"
+      >
+        <mat-checkbox [checked]="answer.isSelected" disabled></mat-checkbox>
+        <span>{{ answer.text }}</span>
+        <span class="hint-text">{{ getHintText(answer) }}</span>
+      </div>
+    </div>
+  </div>
+</div>
