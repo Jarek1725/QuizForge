@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 
 public interface JpaAttemptRepository extends JpaRepository<AttemptEntity, Long> {
-    List<AttemptEntity> findAttemptEntitiesByUserIdOrderByStartTimeDesc(Long userId);
+    List<AttemptEntity> findTop30ByUserIdOrderByStartTimeDesc(Long userId);
 }

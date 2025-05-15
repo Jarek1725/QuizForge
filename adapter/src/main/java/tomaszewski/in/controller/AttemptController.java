@@ -24,9 +24,9 @@ public class AttemptController implements AttemptApi {
     private final SelectedAnswerMapper selectedAnswerMapper;
 
     @Override
-    public ResponseEntity<List<AttemptDTO>> getUserLastAttempts(Long userId, Integer limit) {
+    public ResponseEntity<List<AttemptSummaryDTO>> getUserLastAttempts(Long userId, Integer limit) {
         List<AttemptModel> lastAttempts = attemptUseCase.getLastAttempts(userId, limit);
-        return ResponseEntity.ok(attemptMapper.toAttemptDTOs(lastAttempts));
+        return ResponseEntity.ok(attemptMapper.toAttemptSummaryDTOs(lastAttempts));
     }
 
     @Override

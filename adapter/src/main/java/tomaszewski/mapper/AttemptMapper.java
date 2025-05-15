@@ -20,9 +20,6 @@ public interface AttemptMapper {
     @Mapping(target = "userAnswerModels", source = "userAnswers")
     AttemptModel toAttemptModel(AttemptEntity attemptEntity);
 
-    AttemptDTO toAttemptDTO(AttemptModel attemptModel);
-    List<AttemptDTO> toAttemptDTOs(List<AttemptModel> attemptModel);
-
     default OffsetDateTime map(LocalDateTime value) {
         return value != null ? value.atOffset(ZoneOffset.UTC) : null;
     }
@@ -59,4 +56,6 @@ public interface AttemptMapper {
             }
         }
     }
+
+    List<AttemptSummaryDTO> toAttemptSummaryDTOs(List<AttemptModel> lastAttempts);
 }

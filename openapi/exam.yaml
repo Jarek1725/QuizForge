@@ -115,7 +115,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/AttemptDTO"
+                  $ref: "#/components/schemas/AttemptSummaryDTO"
         "404":
           description: User not found or no attempts found
 
