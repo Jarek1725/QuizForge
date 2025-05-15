@@ -206,7 +206,7 @@ components:
             type: string
         university:
           type: string
-        pointsNumber:
+        percentageToPass:
           type: integer
         questions:
             type: array

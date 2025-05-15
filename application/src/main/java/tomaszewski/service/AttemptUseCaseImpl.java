@@ -57,7 +57,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
                 }
             }
             if (correctAnswers.containsAll(userAnswers) && userAnswers.containsAll(correctAnswers)) {
-                score++;
+                score += questionModel.score();
             }
             userAnswersIds.addAll(userAnswers);
         }
@@ -67,7 +67,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
         for (UserAnswersModel userAnswersModel : userAnswersModels) {
             List<SelectedOptionModel> selectedOptionModels = new ArrayList<>();
             for (AnswerModel answer : userAnswersModel.getQuestion().answers()) {
-                if(userAnswersIds.contains(answer.id())) {
+                if (userAnswersIds.contains(answer.id())) {
                     selectedOptionModels.add(new SelectedOptionModel(
                             userAnswersModel.getId(),
                             answer.id()

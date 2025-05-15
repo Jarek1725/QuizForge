@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {AttemptService, AttemptSummaryDTO} from '../../openapi/tomaszewski/openapi';
 import {ActivatedRoute} from '@angular/router';
-import {MatButton} from '@angular/material/button';
-import {NgForOf} from '@angular/common';
+import {DatePipe, NgClass, NgForOf} from '@angular/common';
 import {ExpendableBoxComponent} from './expendable-box/expendable-box.component';
 
 @Component({
   selector: 'app-attempt-details',
   imports: [
-    MatButton,
     NgForOf,
-    ExpendableBoxComponent
+    ExpendableBoxComponent,
+    DatePipe,
+    NgClass
   ],
   templateUrl: './attempt-details.component.html',
   styleUrl: './attempt-details.component.scss'
@@ -38,5 +38,12 @@ export class AttemptDetailsComponent implements OnInit {
     } else {
       console.error('Brak parametru attempt w ścieżce.');
     }
+  }
+
+  passed():boolean {
+    if (this.attemptSummary && this.attemptSummary.passed !== undefined) {
+      return this.attemptSummary.passed;
+    }
+    return false;
   }
 }

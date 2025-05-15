@@ -1,9 +1,49 @@
-#exam-details-name {
-  margin-top: 0;
-  padding-bottom: 5px;
-  height: 100%;
-  overflow-y: hidden;
+@use '../../styles/variables' as *;
+
+#attempt-summary-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
 }
 
-.attempt-questions-container{
+h3{
+  font-weight: normal;
+}
+
+.attempt-score-passed{
+  background-color: $color-success;
+}
+.attempt-score-failed{
+  background-color: $color-danger;
+}
+
+#attempt-details-container {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px 25px;
+  align-self: start;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#attempt-details-container h1,
+#attempt-details-container h3 {
+  margin: 15px 0;
+  line-height: 1.4;
+}
+
+#attempt-details-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0;
+}
+
+.attempt-score {
+  border-radius: 8px;
+  padding: 15px 10px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  width: 70%;
+  margin: 30px auto !important;
+  font-size: 1.2rem;
 }

@@ -1,8 +1,24 @@
-<div id="exam-details-container">
-  <h1 id="exam-details-name">{{ attemptSummary?.exam?.name }}</h1>
+<div id="attempt-summary-container">
   <div id="attempt-questions-container">
     <div *ngFor="let q of attemptSummary?.userAnswerDetails;let qi = index" class="attempt-question-container">
       <app-expendable-box [questionDetailsDTO]="q?.question"></app-expendable-box>
     </div>
   </div>
+  <div id="attempt-details-container">
+    <h1 id="attempt-details-name">{{ attemptSummary?.exam?.name }}</h1>
+
+    <h3><strong>Uczelnia:</strong> {{ attemptSummary?.exam?.university }}</h3>
+    <h3><strong>Kategorie:</strong> {{ attemptSummary?.exam?.categories }}</h3>
+    <h3><strong>Data podejścia:</strong> {{ attemptSummary?.startTime | date:'yyyy-MM-dd HH:mm:ss':'UTC' }}</h3>
+    <h3><strong>Wymagane:</strong> {{ attemptSummary?.exam?.percentageToPass }}%</h3>
+
+    <h1 [ngClass]="{
+    'attempt-score': true,
+    'attempt-score-passed': passed(),
+    'attempt-score-failed': !passed(),
+  }">
+      {{ attemptSummary?.score }}/{{ attemptSummary?.exam?.percentageToPass }}
+    </h1>
+  </div>
+
 </div>
