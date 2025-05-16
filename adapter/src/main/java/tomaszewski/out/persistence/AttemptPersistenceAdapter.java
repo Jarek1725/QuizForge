@@ -20,8 +20,8 @@ public class AttemptPersistenceAdapter implements AttemptRepositoryPort {
     private final SelectedAnswerMapper selectedAnswerMapper;
 
     @Override
-    public List<AttemptModel> findLastAttemptsByUser(Long userId, int limit) {
-        return jpaAttemptRepository.findAttemptEntitiesByUserIdOrderByStartTimeDesc(1L)
+    public List<AttemptModel> findLastAttemptsByUser(Long userId) {
+        return jpaAttemptRepository.findTop30ByUserIdOrderByStartTimeDesc(userId)
                 .stream()
                 .map(attemptMapper::toAttemptModel)
                 .toList();

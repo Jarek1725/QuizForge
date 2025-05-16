@@ -12,7 +12,6 @@ import {RouterLink} from '@angular/router';
     MatCardContent,
     MatCardHeader,
     MatListItem,
-    MatList,
     NgForOf,
     RouterLink
   ],

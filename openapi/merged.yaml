@@ -3,6 +3,8 @@ servers:
 - url: "http://localhost:8080"
 openapi: "3.0.0"
 paths:
+  /api/user/attempts:
+    $ref: "./exam.yaml#/paths/~1api~1user~1attempts"
   /api/attempt/{attemptId}:
     $ref: "./exam.yaml#/paths/~1api~1attempt~1{attemptId}"
   /api/exams:
@@ -11,8 +13,6 @@ paths:
     $ref: "./exam.yaml#/paths/~1api~1attempt~1start"
   /api/get-user-data:
     $ref: "./user.yaml#/paths/~1api~1get-user-data"
-  /api/users/{userId}/attempts:
-    $ref: "./exam.yaml#/paths/~1api~1users~1{userId}~1attempts"
   /api/exams/{examId}:
     $ref: "./exam.yaml#/paths/~1api~1exams~1{examId}"
   /api/attempts/submit:

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AttemptRepositoryPort {
-    List<AttemptModel> findLastAttemptsByUser(Long userId, int limit);
+    List<AttemptModel> findLastAttemptsByUser(Long userId);
 
     AttemptModel save(AttemptModel attemptModel);
 

@@ -1,0 +1,44 @@
+import {Component, Input, OnInit} from '@angular/core';
+import {AttemptSummaryDTO} from '../../../openapi/tomaszewski/openapi';
+import {DatePipe, NgClass, NgIf} from '@angular/common';
+
+@Component({
+  selector: 'app-attempt-history-list-element',
+  imports: [
+    DatePipe,
+    NgClass,
+    NgIf
+  ],
+  templateUrl: './attempt-history-list-element.component.html',
+  styleUrl: './attempt-history-list-element.component.scss'
+})
+export class AttemptHistoryListElementComponent implements OnInit {
+  maxScore = 0;
+  passed: boolean = false;
+
+  @Input() attemptResult?: AttemptSummaryDTO;
+
+  ngOnInit(): void {
+    if (this.attemptResult?.userAnswerDetails) {
+      this.maxScore = this.attemptResult.userAnswerDetails
+        .map(q => q.question?.score ?? 0)
+        .reduce((acc, curr) => acc + curr, 0);
+    }
+
+    const score = this.attemptResult?.score;
+    const percentageToPass = this.attemptResult?.exam?.percentageToPass;
+
+    if (
+      score !== undefined &&
+      percentageToPass !== undefined &&
+      this.maxScore > 0
+    ) {
+      const requiredScore = (this.maxScore * percentageToPass) / 100;
+      console.log(this.attemptResult)
+      console.log(requiredScore)
+      this.passed = score >= requiredScore;
+    }
+  }
+
+
+}

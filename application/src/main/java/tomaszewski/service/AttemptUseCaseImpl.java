@@ -26,8 +26,8 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
     private static final int UNGRADED_ATTEMPT_SCORE = -1;
 
     @Override
-    public List<AttemptModel> getLastAttempts(Long userId, int limit) {
-        return attemptRepositoryPort.findLastAttemptsByUser(userId, limit);
+    public List<AttemptModel> getLastAttempts(Long userId) {
+        return attemptRepositoryPort.findLastAttemptsByUser(userId);
     }
 
     @Override

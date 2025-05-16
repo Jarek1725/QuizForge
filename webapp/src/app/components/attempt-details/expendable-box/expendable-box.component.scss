@@ -58,19 +58,19 @@ h3{
   background: #f5f5f5;
 
   &.correct-selected {
-    background-color: #d4edda;
+    background-color: $color-success;
     border: 1px solid #28a745;
     color: #155724;
   }
 
   &.correct-missed {
-    background-color: #fff3cd;
+    background-color: $color-warning;
     border: 1px solid #ffc107;
     color: #856404;
   }
 
   &.incorrect-selected {
-    background-color: #f8d7da;
+    background-color: $color-danger-light;
     border: 1px solid #dc3545;
     color: #721c24;
   }
