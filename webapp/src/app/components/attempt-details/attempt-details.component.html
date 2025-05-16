@@ -14,10 +14,10 @@
 
     <h1 [ngClass]="{
     'attempt-score': true,
-    'attempt-score-passed': passed(),
-    'attempt-score-failed': !passed(),
+    'attempt-score-passed': passed,
+    'attempt-score-failed': !passed,
   }">
-      {{ attemptSummary?.score }}/{{ attemptSummary?.exam?.percentageToPass }}
+      {{ attemptSummary?.score }}/{{ maxScore }}
     </h1>
   </div>
 

@@ -5,12 +5,13 @@ import {ExamDetailsComponent} from './components/exam-details/exam-details.compo
 import {ExamAttemptComponent} from './components/exam-attempt/exam-attempt.component';
 import {CreateExamComponent} from './components/create-exam/create-exam.component';
 import {AttemptDetailsComponent} from './components/attempt-details/attempt-details.component';
+import {AttemptHistoryComponent} from './components/attempt-history/attempt-history.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomeGuestComponentComponent, canActivate: [],
-    children:[
+    children: [
       {
         path: 'home',
         component: HomeComponent, canActivate: []
@@ -28,6 +29,11 @@ export const routes: Routes = [
       {
         path: 'exams/:examId',
         component: ExamDetailsComponent,
+        canActivate: []
+      },
+      {
+        path: 'attempt/history',
+        component: AttemptHistoryComponent,
         canActivate: []
       },
       {

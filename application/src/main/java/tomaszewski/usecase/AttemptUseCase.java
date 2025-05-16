@@ -8,7 +8,7 @@ import tomaszewski.model.UserSelectedAnswers;
 import java.util.List;
 
 public interface AttemptUseCase {
-    List<AttemptModel> getLastAttempts(Long userId, int limit);
+    List<AttemptModel> getLastAttempts(Long userId);
 
     void submitAttempt(UserSelectedAnswers userSelectedAnswers);
 

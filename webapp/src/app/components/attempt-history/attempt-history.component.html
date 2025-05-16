@@ -1,0 +1,11 @@
+<div id="attempt-history-container">
+  <h2>Twoje ostatnie egzaminy</h2>
+  <div id="attempt-history-list-container">
+    <div *ngFor="let a of attempts;let ai = index">
+      <app-attempt-history-list-element
+        [attemptResult]="a"
+        (click)="onAttemptClick(a)"
+      ></app-attempt-history-list-element>
+    </div>
+  </div>
+</div>

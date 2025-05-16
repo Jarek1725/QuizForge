@@ -1,0 +1,33 @@
+@use '../../../styles/variables' as *;
+
+.attempt-history-element {
+  max-width: 100%;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1fr 210px 90px;
+  margin-bottom: 30px;
+  height: 76px;
+  line-height: 76px;
+  padding: 0 20px;
+  cursor: pointer;
+
+  &.passed {
+    background-color: $color-success;
+    border: 1px solid #28a745;
+    color: #155724;
+  }
+
+  &.failed {
+    background-color: $color-danger-light;
+    border: 1px solid #dc3545;
+    color: #721c24;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.attempt-history-element-center{
+  text-align: center;
+}

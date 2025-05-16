@@ -33,6 +33,7 @@ public interface AttemptMapper {
     StartAttemptResponseDTO toStartAttemptResponseDTO(StartAttemptModel startAttempt);
 
     @Mapping(target = "userAnswerDetails", source = "userAnswerModels")
+    @Mapping(target = "attemptId", source = "id")
     AttemptSummaryDTO toAttemptSummaryDTO(AttemptModel attemptModel);
 
     List<UserAnswerDetails> mapUserAnswerModels(List<UserAnswersModel> models);
