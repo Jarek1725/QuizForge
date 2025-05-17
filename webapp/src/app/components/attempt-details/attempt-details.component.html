@@ -11,14 +11,18 @@
     <h3><strong>Kategorie:</strong> {{ attemptSummary?.exam?.categories }}</h3>
     <h3><strong>Data podejścia:</strong> {{ attemptSummary?.startTime | date:'yyyy-MM-dd HH:mm:ss':'UTC' }}</h3>
     <h3><strong>Wymagane:</strong> {{ attemptSummary?.exam?.percentageToPass }}%</h3>
+    <h3><strong>Tryb:</strong> {{ mode }}</h3>
 
-    <h1 [ngClass]="{
+    <h2 [ngClass]="{
     'attempt-score': true,
     'attempt-score-passed': passed,
     'attempt-score-failed': !passed,
   }">
       {{ attemptSummary?.score }}/{{ maxScore }}
-    </h1>
+    </h2>
+    <div id="button-container">
+      <button mat-flat-button class="add-category-button add-question-button" (click)="tryAgain()">Spróbuj ponownie</button>
+    </div>
   </div>
 
 </div>

@@ -11,19 +11,30 @@ public class AttemptModel {
     private LocalDateTime startTime;
     private Integer score;
     private Boolean passed;
+    private Boolean isAttemptExam;
     private List<UserAnswersModel> userAnswerModels;
 
     public AttemptModel() {
     }
 
-    public AttemptModel(Long id, UserModel user, ExamModel exam, LocalDateTime startTime,
-                        Integer score, Boolean passed, List<UserAnswersModel> userAnswerModels) {
+    public AttemptModel(Long id, UserModel user, ExamModel exam, LocalDateTime startTime, Integer score, Boolean passed, List<UserAnswersModel> userAnswerModels) {
         this.id = id;
         this.user = user;
         this.exam = exam;
         this.startTime = startTime;
         this.score = score;
         this.passed = passed;
+        this.userAnswerModels = userAnswerModels;
+    }
+
+    public AttemptModel(Long id, UserModel user, ExamModel exam, LocalDateTime startTime, Integer score, Boolean passed, Boolean isAttemptExam, List<UserAnswersModel> userAnswerModels) {
+        this.id = id;
+        this.user = user;
+        this.exam = exam;
+        this.startTime = startTime;
+        this.score = score;
+        this.passed = passed;
+        this.isAttemptExam = isAttemptExam;
         this.userAnswerModels = userAnswerModels;
     }
 
@@ -41,10 +52,6 @@ public class AttemptModel {
 
     public void setUser(UserModel user) {
         this.user = user;
-    }
-
-    public ExamModel getExam() {
-        return exam;
     }
 
     public void setExam(ExamModel exam) {
@@ -83,6 +90,18 @@ public class AttemptModel {
         this.userAnswerModels = userAnswerModels;
     }
 
+    public ExamModel getExam() {
+        return exam;
+    }
+
+    public Boolean getAttemptExam() {
+        return isAttemptExam;
+    }
+
+    public void setAttemptExam(Boolean attemptExam) {
+        isAttemptExam = attemptExam;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -96,5 +115,4 @@ public class AttemptModel {
                 Objects.equals(passed, that.passed) &&
                 Objects.equals(userAnswerModels, that.userAnswerModels);
     }
-
 }

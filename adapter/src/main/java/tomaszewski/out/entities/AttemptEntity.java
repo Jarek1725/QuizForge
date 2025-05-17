@@ -24,6 +24,9 @@ public class AttemptEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
+    @Column(name = "is_exam")
+    private Boolean isExam;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exam_id", nullable = false)
     private ExamEntity exam;

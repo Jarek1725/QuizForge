@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AttemptService, AttemptSummaryDTO} from '../../openapi/tomaszewski/openapi';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DatePipe, NgClass, NgForOf} from '@angular/common';
 import {ExpendableBoxComponent} from './expendable-box/expendable-box.component';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-attempt-details',
@@ -10,7 +11,8 @@ import {ExpendableBoxComponent} from './expendable-box/expendable-box.component'
     NgForOf,
     ExpendableBoxComponent,
     DatePipe,
-    NgClass
+    NgClass,
+    MatButton,
   ],
   templateUrl: './attempt-details.component.html',
   styleUrl: './attempt-details.component.scss'
@@ -20,9 +22,9 @@ export class AttemptDetailsComponent implements OnInit {
   attemptSummary: AttemptSummaryDTO | null = null;
   maxScore = 0;
   passed: boolean = false;
+  mode: string = 'Egzamin'
 
-  constructor(private route: ActivatedRoute, private attemptService: AttemptService) {
-  }
+  constructor(private route: ActivatedRoute, private attemptService: AttemptService, private router: Router) {}
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('attemptId');
@@ -36,6 +38,10 @@ export class AttemptDetailsComponent implements OnInit {
             this.maxScore = this.attemptSummary.userAnswerDetails
               .map(q => q.question?.score ?? 0)
               .reduce((acc, curr) => acc + curr, 0);
+          }
+
+          if(!this.attemptSummary?.isExam){
+            this.mode = 'Powtórka'
           }
 
           const score = this.attemptSummary?.score;
@@ -56,5 +62,10 @@ export class AttemptDetailsComponent implements OnInit {
     } else {
       console.error('Brak parametru attempt w ścieżce.');
     }
+  }
+
+  tryAgain() {
+    this.router.navigate(['/exams', this.attemptSummary?.exam?.id]).then(r =>
+    console.log('Navigating to exam:', r))
   }
 }
