@@ -39,10 +39,10 @@ public class ExamUseCaseImpl implements ExamUseCase {
     }
 
     @Override
-    public List<ExamModel> getExams(String category, String university, Integer limit) {
+    public List<ExamModel> getExams(String name, String category, String university, Integer limit) {
         int effectiveLimit = (limit != null && limit > 0) ? limit : 10;
 
-        return examRepositoryPort.findExamsWithFilters(category, university, effectiveLimit);
+        return examRepositoryPort.findExamsWithFilters(name, category, university, effectiveLimit);
     }
 
     @Override
