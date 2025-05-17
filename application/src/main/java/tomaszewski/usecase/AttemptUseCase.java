@@ -14,4 +14,6 @@ public interface AttemptUseCase {
     AttemptModel getAttemptById(Long attemptId);
 
     ProgressDataModel getAttemptProgressData(Long id);
+
+    StartAttemptModel startReview(StartAttemptModel startAttemptModel);
 }

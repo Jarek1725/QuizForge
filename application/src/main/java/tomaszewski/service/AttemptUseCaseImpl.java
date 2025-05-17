@@ -99,6 +99,27 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
         );
     }
 
+    @Override
+    public StartAttemptModel startReview(StartAttemptModel startAttemptModel) {
+        ExamModel exam = getExamOrThrow(startAttemptModel.examId());
+        UserModel user = getUserOrThrow(startAttemptModel.userId());
+
+        List<QuestionModel> randomQuestions = questionRepositoryPort.getRandomQuestionsForReview(
+                startAttemptModel.examId(),
+                startAttemptModel.questionCount(),
+                user.id()
+        );
+
+
+        return new StartAttemptModel(
+                startAttemptModel.userId(),
+                startAttemptModel.examId(),
+                null,
+                (long) randomQuestions.size(),
+                randomQuestions
+        );
+    }
+
     private ExamModel getExamOrThrow(Long examId) {
         return examRepositoryPort.findExamById(examId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid exam ID"));

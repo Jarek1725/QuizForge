@@ -136,6 +136,32 @@ paths:
           description: Exam not found
 
 
+  /api/review/start:
+    post:
+      x-principal: 'true'
+      tags:
+        - Review
+      summary: Starts an exam review
+      operationId: startReview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StartAttemptDTO"
+      responses:
+        "200":
+          description: Attempt started successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StartAttemptResponseDTO"
+        "400":
+          description: Invalid request data
+        "404":
+          description: Exam not found
+
+
   /api/exams/{examId}:
     get:
       tags:
