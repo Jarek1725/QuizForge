@@ -21,13 +21,6 @@ public class ExamController implements ExamApi {
     private final ExamUseCase examUseCase;
     private final ExamMapper examMapper;
 
-//    @Override
-//    public ResponseEntity<Void> createExam(CreateExamDTO createExamDTO, UserSecurityDetails userSecurityDetails) {
-//        ExamModel examModel = examMapper.toExamModel(createExamDTO);
-//        examUseCase.createExam(examModel, userSecurityDetails.getId());
-//        return ResponseEntity.ok().build();
-//    }
-
 
     @Override
     public ResponseEntity<Long> createExam(CreateExamDTO createExamDTO, UserSecurityDetails userSecurityDetails) {
@@ -36,14 +29,14 @@ public class ExamController implements ExamApi {
         return ResponseEntity.ok(examId);
     }
 
+
     @Override
-    public ResponseEntity<List<ExamDTO>> getExams(String category, String university, Integer limit) {
-        List<ExamModel> examsModels = examUseCase.getExams(category, university, limit);
+    public ResponseEntity<List<ExamDTO>> getExams(String name, String category, String university, Integer limit) {
+        List<ExamModel> examsModels = examUseCase.getExams(name, category, university, limit);
         List<ExamDTO> exams = examsModels.stream()
                 .map(examMapper::toExamDTO)
                 .toList();
-        return ResponseEntity.ok(exams);
-    }
+        return ResponseEntity.ok(exams);    }
 
     @Override
     public ResponseEntity<ExamDetailsDTO> getExamById(Long examId) {

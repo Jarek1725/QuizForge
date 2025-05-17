@@ -37,7 +37,7 @@ body {
     filled-container-color: $color-primary,
     text-label-text-color: $default-text-color,
     text-label-text-weight: 400,
-    filled-label-text-weight: 400
+    filled-label-text-weight: 400,
   ));
 }
 
@@ -48,7 +48,8 @@ body {
 .mat-mdc-button-base,
 .mat-mdc-fab,
 .mat-mdc-mini-fab {
-  padding: 24px !important;
+  padding: 22px !important;
+  border-radius: 8px !important
 }
 
 a {

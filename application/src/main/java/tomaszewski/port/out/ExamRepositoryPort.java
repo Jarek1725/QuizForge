@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface ExamRepositoryPort {
     ExamModel save(ExamModel examModel);
 
-    List<ExamModel> findExamsWithFilters(String category, String university, int effectiveLimit);
+    List<ExamModel> findExamsWithFilters(String name, String category, String university, int effectiveLimit);
 
     Optional<ExamModel> findExamById(Long examId);
 }

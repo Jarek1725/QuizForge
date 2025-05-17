@@ -24,8 +24,8 @@ public class ExamPersistenceAdapter implements ExamRepositoryPort {
     }
 
     @Override
-    public List<ExamModel> findExamsWithFilters(String category, String university, int effectiveLimit) {
-        return jpaExamRepository.findExamsWithFilters(category, university, effectiveLimit)
+    public List<ExamModel> findExamsWithFilters(String name, String category, String university, int effectiveLimit) {
+        return jpaExamRepository.findExamsWithFilters(name, category, university, effectiveLimit)
                 .stream()
                 .limit(effectiveLimit)
                 .map(examMapper::toExamModel)

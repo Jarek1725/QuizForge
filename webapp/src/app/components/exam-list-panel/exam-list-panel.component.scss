@@ -1,0 +1,44 @@
+#exam-list-panel-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap:20px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+#filter-list-container{
+  background-color: white;
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 30px;
+  text-align: center;
+  align-self: start;
+  border-radius: 8px;
+  border: none;
+
+  button{
+    width: 170px;
+    margin: 20px auto 0 auto;
+  }
+}
+
+.exam-list-item{
+  cursor: pointer;
+  display: grid;
+  max-width: 100%;
+  grid-template-columns: 2fr 250px 200px;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  background-color: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}

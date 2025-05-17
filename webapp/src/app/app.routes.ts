@@ -6,6 +6,7 @@ import {ExamAttemptComponent} from './components/exam-attempt/exam-attempt.compo
 import {CreateExamComponent} from './components/create-exam/create-exam.component';
 import {AttemptDetailsComponent} from './components/attempt-details/attempt-details.component';
 import {AttemptHistoryComponent} from './components/attempt-history/attempt-history.component';
+import {ExamListPanelComponent} from './components/exam-list-panel/exam-list-panel.component';
 
 export const routes: Routes = [
   {
@@ -39,6 +40,11 @@ export const routes: Routes = [
       {
         path: 'attempt/:attemptId',
         component: AttemptDetailsComponent,
+        canActivate: []
+      },
+      {
+        path: 'exams',
+        component: ExamListPanelComponent,
         canActivate: []
       }
     ]

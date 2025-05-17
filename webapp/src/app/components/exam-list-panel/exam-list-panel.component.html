@@ -1,0 +1,33 @@
+<h2>Lista egzaminów</h2>
+<div id="exam-list-panel-container">
+  <div id="exam-list-container">
+    <div *ngFor="let exam of exams">
+      <div class="exam-list-item" (click)="goToExam(exam.id)">
+        <div class="exam-list-item-text">
+          <p class="truncate-text">{{ exam.name }}</p>
+        </div>
+        <div class="exam-list-item-text">
+          <p class="truncate-text">{{ exam.categories }}</p>
+        </div>
+        <div class="exam-list-item-text">
+          <p class="truncate-text">{{ exam.university }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="filter-list-container">
+    <mat-form-field class="filter-list-text-field">
+      <mat-label>Nazwa</mat-label>
+      <input matInput [(ngModel)]="name" placeholder="Nazwa">
+    </mat-form-field>
+    <mat-form-field class="filter-list-text-field">
+      <mat-label>Kategoria</mat-label>
+      <input matInput [(ngModel)]="category" placeholder="Kategoria">
+    </mat-form-field>
+    <mat-form-field class="filter-list-text-field">
+      <mat-label>Uczelnia</mat-label>
+      <input matInput [(ngModel)]="university" placeholder="Uczelnia">
+    </mat-form-field>
+    <button mat-flat-button class="add-category-button add-question-button" (click)="filterList()">Szukaj</button>
+  </div>
+</div>
