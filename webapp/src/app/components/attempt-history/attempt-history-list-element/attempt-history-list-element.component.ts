@@ -34,8 +34,6 @@ export class AttemptHistoryListElementComponent implements OnInit {
       this.maxScore > 0
     ) {
       const requiredScore = (this.maxScore * percentageToPass) / 100;
-      console.log(this.attemptResult)
-      console.log(requiredScore)
       this.passed = score >= requiredScore;
     }
   }

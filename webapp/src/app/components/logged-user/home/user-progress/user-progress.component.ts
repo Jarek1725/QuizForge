@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -10,6 +10,7 @@ import {
   NgApexchartsModule
 } from 'ng-apexcharts';
 import {MatCard, MatCardContent, MatCardHeader} from '@angular/material/card';
+import {AttemptService, ProgressDataDTO} from '../../../../openapi/tomaszewski/openapi';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -33,26 +34,15 @@ export type ChartOptions = {
 })
 
 
-
-
-export class UserProgressComponent {
+export class UserProgressComponent implements OnInit {
   @ViewChild("chart") chart?: ChartComponent;
   public chartOptions: Partial<ChartOptions> | any;
 
-  constructor() {
+  constructor(private attemptService: AttemptService) {
     this.chartOptions = {
-      series: [
-        {
-          name: "Twoje wyniki",
-          data: [31, 40, 28, 51, 42, 74, 82]
-        },
-        {
-          name: "Wyniki innych użytkowników",
-          data: [11, 32, 45, 32, 34, 52, 41]
-        }
-      ],
+      series: [],
       chart: {
-        toolbar:{
+        toolbar: {
           show: false
         },
         height: '190px',
@@ -64,15 +54,24 @@ export class UserProgressComponent {
       stroke: {
         curve: "smooth"
       },
-      xaxis: {
-        type: "numeric",
-      },
       tooltip: {
         x: {
           format: "dd/MM/yy HH:mm"
         }
       }
     };
+  }
+
+  ngOnInit(): void {
+    this.attemptService.getAttemptProgressData()
+      .subscribe((data: ProgressDataDTO) => {
+        this.chartOptions.series = [
+          {
+            name: "Twoje wyniki",
+            data: data.progressData
+          }
+        ];
+      });
   }
 
 }

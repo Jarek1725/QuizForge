@@ -180,6 +180,22 @@ paths:
           description: Invalid request data
         "404":
           description: Exam not found
+  /api/attempts/progress-data:
+    get:
+      x-principal: 'true'
+      tags:
+        - Attempt
+      summary: Retrieves progress data for an attempt
+      operationId: getAttemptProgressData
+      responses:
+        "200":
+          description: Progress data retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProgressDataDTO"
+        "404":
+          description: Attempt not found
 
 components:
   schemas:
@@ -377,3 +393,11 @@ components:
         properties:
           question:
             $ref: "#/components/schemas/QuestionDetailsDTO"
+    ProgressDataDTO:
+      type: object
+      properties:
+        progressData:
+          type: array
+          items:
+            type: number
+            format: double

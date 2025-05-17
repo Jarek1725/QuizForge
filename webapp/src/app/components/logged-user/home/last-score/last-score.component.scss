@@ -3,16 +3,28 @@
   align-items: center;
   font-size: 60px;
   gap: 15px;
-  width: 45%;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .last-exam-container{
-  display: flex;
-  justify-content: space-between;
-  padding-left: 40px;
-  padding-right: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  width: 100%;
+}
+
+.last-score-info-container{
+  width: 100%;
 }
 
 .last-score-info-container > button{
   right: 0;
+}
+.truncate-text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 310px;
 }

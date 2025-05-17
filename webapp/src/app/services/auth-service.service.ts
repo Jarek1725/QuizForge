@@ -59,7 +59,6 @@ export class AuthServiceService {
     this.userService.getUserData().subscribe({
       next: (userData) => {
         localStorage.setItem('user', JSON.stringify(userData));
-        console.log(userData)
         this.currentUserSubject.next(userData);
       },
       error: (error) => {

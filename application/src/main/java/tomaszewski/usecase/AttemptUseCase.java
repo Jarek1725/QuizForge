@@ -1,9 +1,6 @@
 package tomaszewski.usecase;
 
-import tomaszewski.model.AttemptModel;
-import tomaszewski.model.StartAttemptModel;
-import tomaszewski.model.UserAnswersModel;
-import tomaszewski.model.UserSelectedAnswers;
+import tomaszewski.model.*;
 
 import java.util.List;
 
@@ -15,4 +12,6 @@ public interface AttemptUseCase {
     StartAttemptModel startAttempt(StartAttemptModel startAttemptModel);
 
     AttemptModel getAttemptById(Long attemptId);
+
+    ProgressDataModel getAttemptProgressData(Long id);
 }

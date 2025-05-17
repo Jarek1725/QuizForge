@@ -8,10 +8,7 @@ import tomaszewski.port.out.*;
 import tomaszewski.usecase.AttemptUseCase;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -145,5 +142,65 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
     public AttemptModel getAttemptById(Long attemptId) {
         return attemptRepositoryPort.findAttemptById(attemptId)
                 .orElseThrow(() -> new IllegalArgumentException("Attempt not found with ID: " + attemptId));
+    }
+
+    @Override
+    public ProgressDataModel getAttemptProgressData(Long id) {
+        List<AttemptModel> attempts = attemptRepositoryPort.findLastAttemptsByUserAndScoreMoreThan0(id);
+        Map<Long, List<AttemptModel>> groupedByExam = attempts.stream()
+                .collect(Collectors.groupingBy(
+                        a -> a.getExam().id(),
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                list -> list.stream()
+                                        .sorted(Comparator.comparing(AttemptModel::getStartTime))
+                                        .collect(Collectors.toList())
+                        )
+                ));
+
+        Map<Integer, List<Double>> percentByAttemptIndex = new HashMap<>();
+
+        for (List<AttemptModel> examAttempts : groupedByExam.values()) {
+            for (int i = 0; i < examAttempts.size(); i++) {
+                AttemptModel attempt = examAttempts.get(i);
+                Long maxPoints = maxPointsForAttempt(attempt);
+                if (maxPoints != null && maxPoints > 0 && attempt.getScore() != null) {
+                    double percent = (attempt.getScore() * 100.0) / maxPoints;
+                    percentByAttemptIndex
+                            .computeIfAbsent(i, k -> new ArrayList<>())
+                            .add(percent);
+                }
+            }
+        }
+
+        Map<Integer, Double> averagePercentByIndex = percentByAttemptIndex.entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        e -> e.getValue().stream()
+                                .mapToDouble(Double::doubleValue)
+                                .average()
+                                .orElse(0.0)
+                ));
+
+        ProgressDataModel progressDataModel = new ProgressDataModel();
+        for (Map.Entry<Integer, Double> entry : averagePercentByIndex.entrySet()) {
+            double averagePercent = entry.getValue();
+            double roundedPercent = Math.round(averagePercent);
+
+            List<Double> progressData = progressDataModel.getProgressData();
+            if (progressData == null) {
+                progressData = new ArrayList<>();
+                progressDataModel.setProgressData(progressData);
+            }
+            progressData.add(roundedPercent);
+        }
+
+
+        return progressDataModel;
+    }
+
+    private Long maxPointsForAttempt(AttemptModel attemptModel) {
+        List<Long> list = attemptModel.getUserAnswerModels().stream().map(e -> e.getQuestion().score()).toList();
+        return (Long) (long) list.stream().mapToInt(Long::intValue).sum();
     }
 }
