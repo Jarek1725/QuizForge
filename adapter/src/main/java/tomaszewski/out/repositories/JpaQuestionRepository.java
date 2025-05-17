@@ -35,6 +35,7 @@ public interface JpaQuestionRepository extends JpaRepository<QuestionEntity, Lon
                   FROM user_answers ua
                   JOIN attempt a ON ua.attempt_id = a.id
                   WHERE a.user_id = :userId
+                  AND a.is_exam = true
               )
             ORDER BY RANDOM()
             LIMIT :limit

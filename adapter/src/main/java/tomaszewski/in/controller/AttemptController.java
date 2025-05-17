@@ -34,7 +34,7 @@ public class AttemptController implements AttemptApi {
     public ResponseEntity<Void> submitAttempt(SubmitAttemptDTO submitAttemptDTO, UserSecurityDetails userSecurityDetails) {
         UserSelectedAnswers userAnswerModels = selectedAnswerMapper
                 .toUserSelectedAnswers(userSecurityDetails.getId(), submitAttemptDTO.getAttemptId(), submitAttemptDTO.getAnswers());
-        attemptUseCase.submitAttempt(userAnswerModels);
+        attemptUseCase.submitAttempt(userAnswerModels, true);
         return ResponseEntity.ok().build();
     }
 

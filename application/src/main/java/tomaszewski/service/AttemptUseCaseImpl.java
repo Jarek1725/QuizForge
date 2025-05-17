@@ -28,7 +28,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
     }
 
     @Override
-    public void submitAttempt(UserSelectedAnswers userSelectedAnswers) {
+    public void submitAttempt(UserSelectedAnswers userSelectedAnswers, boolean isExam) {
         Optional<AttemptModel> optionalAttemptModel = attemptRepositoryPort.findAttemptById(userSelectedAnswers.attemptId());
         if (optionalAttemptModel.isEmpty()) {
             throw new IllegalArgumentException("Attempt not found");
@@ -74,7 +74,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
             userAnswersModel.setSelectedOptions(selectedOptionModels);
         }
 
-        attemptRepositoryPort.save(attemptModel);
+        attemptRepositoryPort.save(attemptModel, isExam);
         userAnswerRepositoryPort.saveAll(userAnswersModels);
     }
 
@@ -86,7 +86,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
 
         List<QuestionModel> randomQuestions = getRandomQuestionsForExam(startAttemptModel.examId(), startAttemptModel.questionCount());
 
-        AttemptModel attemptModel = createAndSaveAttempt(user, exam);
+        AttemptModel attemptModel = createAndSaveAttempt(user, exam, true);
 
         createAndSaveUserAnswers(attemptModel, randomQuestions);
 
@@ -110,11 +110,14 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
                 user.id()
         );
 
+        AttemptModel attemptModel = createAndSaveAttempt(user, exam, false);
+
+        createAndSaveUserAnswers(attemptModel, randomQuestions);
 
         return new StartAttemptModel(
-                startAttemptModel.userId(),
-                startAttemptModel.examId(),
-                null,
+                attemptModel.getUser().id(),
+                attemptModel.getExam().id(),
+                attemptModel.getId(),
                 (long) randomQuestions.size(),
                 randomQuestions
         );
@@ -138,7 +141,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
         return questions;
     }
 
-    private AttemptModel createAndSaveAttempt(UserModel user, ExamModel exam) {
+    private AttemptModel createAndSaveAttempt(UserModel user, ExamModel exam, boolean isExam) {
         AttemptModel attemptToSave = new AttemptModel(
                 null,
                 user,
@@ -148,7 +151,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
                 false,
                 new ArrayList<>()
         );
-        return attemptRepositoryPort.save(attemptToSave);
+        return attemptRepositoryPort.save(attemptToSave, isExam);
     }
 
     private void createAndSaveUserAnswers(AttemptModel attemptModel, List<QuestionModel> questions) {

@@ -22,7 +22,7 @@
     </div>
   </div>
   <div id="exam-details-buttons-container">
-    <button mat-flat-button class="start-review-button">Rozpocznij powtórkę</button>
+    <button mat-flat-button class="start-review-button" [routerLink]="['/review',examId,'attempt']">Rozpocznij powtórkę</button>
     <button mat-flat-button class="start-exam-button" [routerLink]="['/exams',examId,'attempt']">Rozpocznij egzamin</button>
   </div>
 </div>

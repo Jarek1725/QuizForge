@@ -206,6 +206,29 @@ paths:
           description: Invalid request data
         "404":
           description: Exam not found
+
+  /api/review/submit:
+    post:
+      x-principal: 'true'
+      tags:
+        - Review
+      summary: Submits an exam attempt with user answers
+      operationId: submitAttempt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitAttemptDTO"
+      responses:
+        "200":
+          description: Attempt submitted successfully
+        "400":
+          description: Invalid request data
+        "404":
+          description: Exam not found
+
+
   /api/attempts/progress-data:
     get:
       x-principal: 'true'
@@ -377,6 +400,8 @@ components:
     AttemptSummaryDTO:
         type: object
         properties:
+          isExam:
+            type: boolean
           attemptId:
             type: integer
           score:

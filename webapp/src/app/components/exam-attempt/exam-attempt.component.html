@@ -1,11 +1,19 @@
 <div id="exam-attempt-container">
   <div id="exam-options-container">
-    <div *ngIf="currentStep === 0">
+    <div *ngIf="currentStep === 0 && isExam">
       <h2>Egzamin składa się z {{ examDetails?.questions?.length ?? '...' }} pytań.</h2>
       <h2>Na rozwiązanie masz 30 minut i 20 sekund.</h2>
       <h2>Pytania mogą być zarówno jednokrotnego, jak i wielokrotnego wyboru.</h2>
-      <h2>Możesz cofać się do poprzednich pytań.</h2>
+      <h2>Nie możesz cofać się do poprzednich pytań.</h2>
       <h2>Aby zaliczyć egzamin, musisz zdobyć co najmniej 60% punktów.</h2>
+      <h2>Powodzenia!</h2>
+    </div>
+
+    <div *ngIf="currentStep === 0 && !isExam">
+      <h2>Powtórka składa się z {{ examDetails?.questions?.length ?? '...' }} pytań.</h2>
+      <h2>Nie ma limitu czasowego</h2>
+      <h2>Pytania mogą być zarówno jednokrotnego, jak i wielokrotnego wyboru.</h2>
+      <h2>Możesz cofać się do poprzednich pytań.</h2>
       <h2>Powodzenia!</h2>
     </div>
 
@@ -35,6 +43,7 @@
     </div>
   </div>
   <div *ngIf="currentStep > 0 && currentStep < questionCount" class="exam-attempt-button-container">
+    <button mat-flat-button class="next-question-button" (click)="prev()">Następne pytanie</button>
     <button mat-flat-button class="next-question-button" (click)="next()">Następne pytanie</button>
   </div>
 

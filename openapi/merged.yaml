@@ -11,6 +11,8 @@ paths:
     $ref: "./exam.yaml#/paths/~1api~1exams"
   /api/attempt/start:
     $ref: "./exam.yaml#/paths/~1api~1attempt~1start"
+  /api/review/submit:
+    $ref: "./exam.yaml#/paths/~1api~1review~1submit"
   /api/get-user-data:
     $ref: "./user.yaml#/paths/~1api~1get-user-data"
   /api/review/start:

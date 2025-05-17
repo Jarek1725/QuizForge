@@ -22,6 +22,7 @@ export class AttemptDetailsComponent implements OnInit {
   attemptSummary: AttemptSummaryDTO | null = null;
   maxScore = 0;
   passed: boolean = false;
+  mode: string = 'Egzamin'
 
   constructor(private route: ActivatedRoute, private attemptService: AttemptService, private router: Router) {}
 
@@ -37,6 +38,10 @@ export class AttemptDetailsComponent implements OnInit {
             this.maxScore = this.attemptSummary.userAnswerDetails
               .map(q => q.question?.score ?? 0)
               .reduce((acc, curr) => acc + curr, 0);
+          }
+
+          if(!this.attemptSummary?.isExam){
+            this.mode = 'Powtórka'
           }
 
           const score = this.attemptSummary?.score;

@@ -7,6 +7,7 @@ import {CreateExamComponent} from './components/create-exam/create-exam.componen
 import {AttemptDetailsComponent} from './components/attempt-details/attempt-details.component';
 import {AttemptHistoryComponent} from './components/attempt-history/attempt-history.component';
 import {ExamListPanelComponent} from './components/exam-list-panel/exam-list-panel.component';
+import {ReviewAttemptComponent} from './components/review-attempt/review-attempt.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,11 @@ export const routes: Routes = [
       },
       {
         path: 'exams/:examId/attempt',
+        component: ExamAttemptComponent,
+        canActivate: []
+      },
+      {
+        path: 'review/:examId/attempt',
         component: ExamAttemptComponent,
         canActivate: []
       },

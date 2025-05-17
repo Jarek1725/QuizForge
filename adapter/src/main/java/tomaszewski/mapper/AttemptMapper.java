@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public interface AttemptMapper {
     @Mapping(target = "exam.questions", ignore = true)
     @Mapping(target = "userAnswerModels", source = "userAnswers")
+    @Mapping(target = "attemptExam", source = "isExam")
     AttemptModel toAttemptModel(AttemptEntity attemptEntity);
 
     default OffsetDateTime map(LocalDateTime value) {
@@ -34,6 +35,7 @@ public interface AttemptMapper {
 
     @Mapping(target = "userAnswerDetails", source = "userAnswerModels")
     @Mapping(target = "attemptId", source = "id")
+    @Mapping(target = "isExam", source = "attemptExam")
     AttemptSummaryDTO toAttemptSummaryDTO(AttemptModel attemptModel);
 
     List<UserAnswerDetails> mapUserAnswerModels(List<UserAnswersModel> models);

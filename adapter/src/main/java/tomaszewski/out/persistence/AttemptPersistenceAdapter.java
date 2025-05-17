@@ -36,9 +36,11 @@ public class AttemptPersistenceAdapter implements AttemptRepositoryPort {
     }
 
     @Override
-    public AttemptModel save(AttemptModel attemptModel) {
+    public AttemptModel save(AttemptModel attemptModel, Boolean isExam) {
+        AttemptEntity attemptEntity = attemptMapper.toAttemptEntity(attemptModel);
+        attemptEntity.setIsExam(isExam);
         AttemptEntity saved = jpaAttemptRepository
-                .save(attemptMapper.toAttemptEntity(attemptModel));
+                .save(attemptEntity);
         return attemptMapper.toAttemptModel(saved);
     }
 

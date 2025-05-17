@@ -7,7 +7,7 @@ import java.util.List;
 public interface AttemptUseCase {
     List<AttemptModel> getLastAttempts(Long userId);
 
-    void submitAttempt(UserSelectedAnswers userSelectedAnswers);
+    void submitAttempt(UserSelectedAnswers userSelectedAnswers, boolean isExam);
 
     StartAttemptModel startAttempt(StartAttemptModel startAttemptModel);
 

@@ -15,6 +15,7 @@ import {DatePipe, NgClass, NgIf} from '@angular/common';
 export class AttemptHistoryListElementComponent implements OnInit {
   maxScore = 0;
   passed: boolean = false;
+  mode: string = 'Egzamin'
 
   @Input() attemptResult?: AttemptSummaryDTO;
 
@@ -27,6 +28,10 @@ export class AttemptHistoryListElementComponent implements OnInit {
 
     const score = this.attemptResult?.score;
     const percentageToPass = this.attemptResult?.exam?.percentageToPass;
+
+    if(!this.attemptResult?.isExam){
+      this.mode = 'Powtórka'
+    }
 
     if (
       score !== undefined &&

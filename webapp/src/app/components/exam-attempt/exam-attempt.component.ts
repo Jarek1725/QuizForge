@@ -4,11 +4,10 @@ import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {
   AttemptService,
-  ExamDetailsDTO,
-  ExamService,
+  ReviewService,
+  StartAttemptDTO,
   StartAttemptResponseDTO,
-  SubmitAttemptDTO,
-  StartAttemptDTO
+  SubmitAttemptDTO
 } from '../../openapi/tomaszewski/openapi';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatCardContent} from '@angular/material/card';
@@ -38,18 +37,52 @@ export class ExamAttemptComponent implements OnInit {
   selectedAnswersMultiple: number[] = [];
   examId!: number;
   submitAttemptDTO: SubmitAttemptDTO = {};
+  isExam: boolean = true;
 
   constructor(private route: ActivatedRoute,
               private attemptService: AttemptService,
+              private reviewService: ReviewService,
               private router: Router) {
   }
 
   ngOnInit(): void {
+    this.isExam = this.router.url.includes('exam');
+
+    if (this.isExam) {
+      this.getExamData();
+    } else {
+      this.getReviewData();
+    }
+  }
+
+  getExamData() {
     const idParam = this.route.snapshot.paramMap.get('examId');
     if (idParam) {
       this.examId = +idParam;
       const startAttemptDTO: StartAttemptDTO = {examId: this.examId};
       this.attemptService.startAttempt(startAttemptDTO).subscribe({
+        next: (exam) => {
+          this.examDetails = exam
+          this.submitAttemptDTO = {
+            attemptId: exam.attemptId,
+            answers: []
+          };
+        },
+        error: (err) => {
+          console.error('Błąd pobierania egzaminu:', err);
+        }
+      });
+    } else {
+      console.error('Brak parametru examId w ścieżce.');
+    }
+  }
+
+  getReviewData() {
+    const idParam = this.route.snapshot.paramMap.get('examId');
+    if (idParam) {
+      this.examId = +idParam;
+      const startAttemptDTO: StartAttemptDTO = {examId: this.examId};
+      this.reviewService.startReview(startAttemptDTO).subscribe({
         next: (exam) => {
           this.examDetails = exam
           this.submitAttemptDTO = {
@@ -107,14 +140,33 @@ export class ExamAttemptComponent implements OnInit {
   }
 
   submitAttempt() {
-    this.saveAnswer();
-    this.attemptService.submitAttempt(this.submitAttemptDTO).subscribe({
-      next: () => {
-        this.router.navigate(['/attempt', this.submitAttemptDTO.attemptId]);
-      },
-      error: (err) => {
-        console.error('Błąd podczas przesyłania odpowiedzi:', err);
-      }
-    });
+    if (this.isExam) {
+      this.saveAnswer();
+      this.attemptService.submitAttempt(this.submitAttemptDTO).subscribe({
+        next: () => {
+          this.router.navigate(['/attempt', this.submitAttemptDTO.attemptId]);
+        },
+        error: (err) => {
+          console.error('Błąd podczas przesyłania odpowiedzi:', err);
+        }
+      });
+    } else {
+      this.saveAnswer();
+      this.reviewService.submitAttempt(this.submitAttemptDTO).subscribe({
+        next: () => {
+          this.router.navigate(['/attempt', this.submitAttemptDTO.attemptId]);
+        },
+        error: (err) => {
+          console.error('Błąd podczas przesyłania odpowiedzi:', err);
+        }
+      });
+    }
+
+  }
+
+  prev() {
+    if (this.currentStep > 0) {
+      this.currentStep--;
+    }
   }
 }

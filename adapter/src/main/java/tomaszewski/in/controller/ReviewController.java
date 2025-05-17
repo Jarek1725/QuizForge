@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 import tomaszewski.mapper.AttemptMapper;
 import tomaszewski.mapper.SelectedAnswerMapper;
 import tomaszewski.model.StartAttemptModel;
+import tomaszewski.model.UserSelectedAnswers;
 import tomaszewski.openapi.api.ReviewApi;
 import tomaszewski.openapi.model.StartAttemptDTO;
 import tomaszewski.openapi.model.StartAttemptResponseDTO;
+import tomaszewski.openapi.model.SubmitAttemptDTO;
 import tomaszewski.security.UserSecurityDetails;
 import tomaszewski.usecase.AttemptUseCase;
 
@@ -26,5 +28,13 @@ public class ReviewController implements ReviewApi {
         StartAttemptModel startAttemptModel = attemptMapper.toStartAttemptModel(startAttemptDTO, userSecurityDetails.getId());
         StartAttemptModel startAttempt = attemptUseCase.startReview(startAttemptModel);
         return ResponseEntity.ok(attemptMapper.toStartAttemptResponseDTO(startAttempt));
+    }
+
+    @Override
+    public ResponseEntity<Void> submitAttempt(SubmitAttemptDTO submitAttemptDTO, UserSecurityDetails userSecurityDetails) {
+        UserSelectedAnswers userAnswerModels = selectedAnswerMapper
+                .toUserSelectedAnswers(userSecurityDetails.getId(), submitAttemptDTO.getAttemptId(), submitAttemptDTO.getAnswers());
+        attemptUseCase.submitAttempt(userAnswerModels, false);
+        return ResponseEntity.ok().build();
     }
 }
