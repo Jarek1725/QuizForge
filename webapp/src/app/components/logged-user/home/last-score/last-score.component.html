@@ -1,4 +1,4 @@
-<mat-card appearance="outlined" >
+<mat-card appearance="outlined">
   <mat-card-header>
     Ostatni egzamin
   </mat-card-header>
@@ -6,18 +6,19 @@
     <div class="last-score-spinner-container">
       <mat-progress-spinner
         mode="determinate"
-        [value]="70"
+        [value]="percentageScore"
         diameter="100"
         strokeWidth="8"
         color="primary">
       </mat-progress-spinner>
-      73%
+      {{ percentageScore }}%
     </div>
     <div class="last-score-info-container">
-      <p>Ostatni egzamin: Matura 2023</p>
-      <p>Próg zdawalności: 30%</p>
-      <p>Data: 20.04.2025</p>
-      <button mat-flat-button class="login-button">Spróbuj ponownie</button>
+      <p class="truncate-text">Ostatni egzamin: {{ attemptSummary?.exam?.name }}</p>
+      <p class="truncate-text">Próg zdawalności: {{ attemptSummary?.exam?.percentageToPass }}%</p>
+      <p class="truncate-text">Data: {{ attemptSummary?.startTime | date:'yyyy-MM-dd HH:mm:ss':'UTC' }}</p>
+      <button mat-flat-button class="login-button" (click)="goToExam(attemptSummary?.exam?.id)">Spróbuj ponownie</button>
     </div>
+
   </mat-card-content>
 </mat-card>
