@@ -32,7 +32,6 @@ export class LastScoreComponent implements OnInit {
   ngOnInit(): void {
     this.attemptService.getUserLastAttempts().subscribe({
       next: (attempts) => {
-        console.log('Attempt:', attempts);
         this.attemptSummary = attempts[0];
         if (this.attemptSummary) {
           if (this.attemptSummary?.userAnswerDetails) {
@@ -41,24 +40,16 @@ export class LastScoreComponent implements OnInit {
               .reduce((acc, curr) => acc + curr, 0);
           }
 
-          this.attemptSummary?.userAnswerDetails?.forEach(e => {
-            console.log(e.question?.score)
-          })
-
           const score = this.attemptSummary?.score;
           const percentageToPass = this.attemptSummary?.exam?.percentageToPass;
-          console.log(this.attemptSummary?.userAnswerDetails)
-          console.log(this.maxScore)
           if (
             score !== undefined &&
             percentageToPass !== undefined &&
             this.maxScore > 0
           ) {
             const requiredScore = (this.maxScore * percentageToPass) / 100;
-            console.log(this.attemptSummary)
-            console.log(requiredScore)
             this.passed = score >= requiredScore;
-            this.percentageScore = (score / this.maxScore) * 100;
+            this.percentageScore = Math.round((score / this.maxScore) * 100);
           }
         }
       },

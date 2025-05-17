@@ -79,7 +79,6 @@ export class CreateExamComponent {
   }
 
   submitExam(): void {
-    console.log('Exam to submit:', this.createExamDTO);
     this.examService.createExam(this.createExamDTO).subscribe({
       next: (response) => {
         this.router.navigate(['/exams/' + response]);

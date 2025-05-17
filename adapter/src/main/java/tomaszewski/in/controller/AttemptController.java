@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tomaszewski.mapper.AttemptMapper;
 import tomaszewski.mapper.SelectedAnswerMapper;
 import tomaszewski.model.AttemptModel;
+import tomaszewski.model.ProgressDataModel;
 import tomaszewski.model.StartAttemptModel;
 import tomaszewski.model.UserSelectedAnswers;
 import tomaszewski.openapi.api.AttemptApi;
@@ -50,4 +51,13 @@ public class AttemptController implements AttemptApi {
         AttemptSummaryDTO attemptDTO = attemptMapper.toAttemptSummaryDTO(attemptModel);
         return ResponseEntity.ok(attemptDTO);
     }
+
+    @Override
+    public ResponseEntity<ProgressDataDTO> getAttemptProgressData(UserSecurityDetails userSecurityDetails) {
+        ProgressDataModel progressDataModel = attemptUseCase.getAttemptProgressData(userSecurityDetails.getId());
+        ProgressDataDTO progressDataDTO = attemptMapper.toProgressDataDTO(progressDataModel);
+        return ResponseEntity.ok(progressDataDTO);
+    }
+
+
 }

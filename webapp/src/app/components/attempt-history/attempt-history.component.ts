@@ -26,7 +26,6 @@ export class AttemptHistoryComponent implements OnInit {
   ngOnInit(): void {
     this.attemptService.getUserLastAttempts().subscribe({
       next: (attempts) => {
-        console.log('Attempt:', attempts);
         this.attempts = attempts
       },
       error: (err) => {

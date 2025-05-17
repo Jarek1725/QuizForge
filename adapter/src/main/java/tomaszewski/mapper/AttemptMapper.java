@@ -59,4 +59,6 @@ public interface AttemptMapper {
     }
 
     List<AttemptSummaryDTO> toAttemptSummaryDTOs(List<AttemptModel> lastAttempts);
+
+    ProgressDataDTO toProgressDataDTO(ProgressDataModel progressDataModel);
 }

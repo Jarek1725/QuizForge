@@ -93,7 +93,6 @@ export class ExamAttemptComponent implements OnInit {
         this.submitAttemptDTO.answers.push(...this.selectedAnswersMultiple);
       }
     }
-    console.log(this.submitAttemptDTO)
   }
 
   get currentQuestion() {
