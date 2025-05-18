@@ -3,6 +3,8 @@ servers:
 - url: "http://localhost:8080"
 openapi: "3.0.0"
 paths:
+  /api/auth/register:
+    $ref: "./user.yaml#/paths/~1api~1auth~1register"
   /api/user/attempts:
     $ref: "./exam.yaml#/paths/~1api~1user~1attempts"
   /api/attempt/{attemptId}:

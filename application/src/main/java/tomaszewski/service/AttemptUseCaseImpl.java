@@ -91,7 +91,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
         createAndSaveUserAnswers(attemptModel, randomQuestions);
 
         return new StartAttemptModel(
-                attemptModel.getUser().id(),
+                attemptModel.getUser().getId(),
                 attemptModel.getExam().id(),
                 attemptModel.getId(),
                 (long) randomQuestions.size(),
@@ -107,7 +107,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
         List<QuestionModel> randomQuestions = questionRepositoryPort.getRandomQuestionsForReview(
                 startAttemptModel.examId(),
                 startAttemptModel.questionCount(),
-                user.id()
+                user.getId()
         );
 
         AttemptModel attemptModel = createAndSaveAttempt(user, exam, false);
@@ -115,7 +115,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
         createAndSaveUserAnswers(attemptModel, randomQuestions);
 
         return new StartAttemptModel(
-                attemptModel.getUser().id(),
+                attemptModel.getUser().getId(),
                 attemptModel.getExam().id(),
                 attemptModel.getId(),
                 (long) randomQuestions.size(),

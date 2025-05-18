@@ -12,7 +12,7 @@ import tomaszewski.out.entities.ExamEntity;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", uses = {UniversityMapper.class, CategoryMapper.class, QuestionMapper.class})
+@Mapper(componentModel = "spring", uses = {UniversityMapper.class, CategoryMapper.class, QuestionMapper.class, UserMapper.class})
 public interface ExamMapper {
     @Mapping(target = "categories", source = "categories")
     ExamModel toExamModel(CreateExamDTO createExamDTO);

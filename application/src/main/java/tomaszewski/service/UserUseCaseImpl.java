@@ -17,4 +17,9 @@ public class UserUseCaseImpl implements UserUseCase {
         return userRepositoryPort.findUserById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
+
+    @Override
+    public void registerUser(UserModel userModel) {
+        userRepositoryPort.save(userModel);
+    }
 }
