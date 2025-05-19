@@ -3,7 +3,7 @@
     Ostatni egzamin
   </mat-card-header>
   <mat-card-content class="center-vertically last-exam-container">
-    <div class="last-score-spinner-container">
+    <div class="last-score-spinner-container" *ngIf="percentageScore>=0">
       <mat-progress-spinner
         mode="determinate"
         [value]="percentageScore"
@@ -12,6 +12,9 @@
         color="primary">
       </mat-progress-spinner>
       {{ percentageScore }}%
+    </div>
+    <div class="last-score-spinner-container-text" *ngIf="percentageScore<0">
+      N/U
     </div>
     <div class="last-score-info-container">
       <p class="truncate-text">Ostatni egzamin: {{ attemptSummary?.exam?.name }}</p>

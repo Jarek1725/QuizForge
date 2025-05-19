@@ -3,6 +3,8 @@ package tomaszewski.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.security.core.GrantedAuthority;
+import tomaszewski.model.UserModel;
+import tomaszewski.openapi.model.RegisterRequest;
 import tomaszewski.openapi.model.UserData;
 import tomaszewski.security.UserSecurityDetails;
 
@@ -22,4 +24,6 @@ public interface SecurityUserMapper {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
     }
+
+    UserModel toUserModel(RegisterRequest registerRequest);
 }

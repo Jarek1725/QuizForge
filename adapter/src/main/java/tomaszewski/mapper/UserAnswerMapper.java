@@ -16,5 +16,6 @@ public interface UserAnswerMapper {
     @Mapping(target = "selectedOptions", source = "selectedOptions")
     List<UserAnswerEntity> toUserAnswerEntities(List<UserAnswersModel> userAnswersModels);
 
+    @Mapping(target = "password", ignore = true)
     List<UserAnswersModel> toUserAnswerModels(List<UserAnswerEntity> userAnswerEntities);
 }

@@ -7,7 +7,9 @@ import tomaszewski.port.out.*;
 import tomaszewski.usecase.ExamUseCase;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -19,6 +21,7 @@ public class ExamUseCaseImpl implements ExamUseCase {
     private final UniversityRepositoryPort universityRepositoryPort;
     private final QuestionRepositoryPort questionRepositoryPort;
     private final UserRepositoryPort userRepositoryPort;
+    private final AttemptRepositoryPort attemptRepositoryPort;
 
     @Override
     public Long createExam(ExamModel examModel, Long userId) {
@@ -53,6 +56,22 @@ public class ExamUseCaseImpl implements ExamUseCase {
 
         return examRepositoryPort.findExamById(examId)
                 .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono egzaminu o ID: " + examId));
+    }
+
+    @Override
+    public ExamStatistics getStatsForUser(Long userId, Long examId) {
+        Double averageExamScore = attemptRepositoryPort.findAverageExamScore(examId);
+        AttemptModel lastAttemptsByUser = attemptRepositoryPort.findLastAttemptByUser(userId);
+        Long attemptSum = attemptRepositoryPort.findAttemptSumForExam(examId);
+        Long passedExams = attemptRepositoryPort.findPassedExamCount(examId);
+        Optional<ExamModel> examById = examRepositoryPort.findExamById(examId);
+
+        double lastScore = lastAttemptsByUser != null ? (double) lastAttemptsByUser.getScore() /lastAttemptsByUser.getMaxScore() : 0;
+        int attemptSumInt = attemptSum != null ? attemptSum.intValue() : 0;
+        double successRate = (passedExams != null && attemptSum != null && attemptSum > 0) ? (double) passedExams / attemptSum : 0.0;
+        int questionPoolSize = examById.map(exam -> exam.questions().size()).orElse(0);
+
+        return new ExamStatistics(averageExamScore, lastScore, attemptSumInt, successRate, questionPoolSize);
     }
 
     private UserModel findUserById(Long userId) {

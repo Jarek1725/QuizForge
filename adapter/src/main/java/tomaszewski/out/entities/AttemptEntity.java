@@ -27,6 +27,9 @@ public class AttemptEntity {
     @Column(name = "is_exam")
     private Boolean isExam;
 
+    @Column(name = "max_score")
+    private Integer maxScore;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exam_id", nullable = false)
     private ExamEntity exam;

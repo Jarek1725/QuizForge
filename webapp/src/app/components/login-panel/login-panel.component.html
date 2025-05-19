@@ -12,9 +12,6 @@
           <mat-label>Hasło</mat-label>
           <input matInput type="password" formControlName="password" placeholder="Hasło">
         </mat-form-field>
-        <div id="reset-password-remember-me">
-          <mat-checkbox formControlName="rememberMe">Zapamiętaj mnie</mat-checkbox>
-        </div>
         <button mat-flat-button type="submit" [disabled]="loginForm.invalid">Logowanie</button>
       </div>
     </form>

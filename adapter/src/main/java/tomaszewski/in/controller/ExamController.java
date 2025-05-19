@@ -5,9 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import tomaszewski.mapper.ExamMapper;
 import tomaszewski.model.ExamModel;
+import tomaszewski.model.ExamStatistics;
 import tomaszewski.openapi.model.CreateExamDTO;
 import tomaszewski.openapi.model.ExamDTO;
 import tomaszewski.openapi.model.ExamDetailsDTO;
+import tomaszewski.openapi.model.UserExamStatsDTO;
 import tomaszewski.usecase.ExamUseCase;
 import tomaszewski.openapi.api.ExamApi;
 import tomaszewski.security.UserSecurityDetails;
@@ -43,5 +45,12 @@ public class ExamController implements ExamApi {
         ExamModel examById = examUseCase.getExamById(examId);
         ExamDetailsDTO examDTO = examMapper.toExamDetailsDTO(examById);
         return ResponseEntity.ok(examDTO);
+    }
+
+    @Override
+    public ResponseEntity<UserExamStatsDTO> getUserExamStats(Long examId, UserSecurityDetails userSecurityDetails) {
+        ExamStatistics statsForUser = examUseCase.getStatsForUser(userSecurityDetails.getId(), examId);
+        UserExamStatsDTO userExamStatsDTO = examMapper.toUserExamStatsDTO(statsForUser);
+        return ResponseEntity.ok(userExamStatsDTO);
     }
 }

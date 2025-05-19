@@ -24,9 +24,36 @@ paths:
               schema:
                 $ref: "#/components/schemas/UserData"
 
+  /api/auth/register:
+    post:
+      tags:
+        - User
+      summary: Register a new user
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "200":
+          description: Registration successful
+          content:
+            text/plain:
+              schema:
+                type: string
+        "400":
+          description: Registration failed
+          content:
+            text/plain:
+              schema:
+                type: string
+
 components:
   schemas:
     UserData:
+      type: object
       properties:
         email:
           type: string
@@ -34,3 +61,19 @@ components:
           type: array
           items:
             type: string
+
+    RegisterRequest:
+      type: object
+      required:
+        - email
+        - password
+        - fullName
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        fullName:
+          type: string

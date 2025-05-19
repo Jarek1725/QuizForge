@@ -39,6 +39,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
         }
         List<QuestionModel> allQuestionsByAttemptId = questionRepositoryPort.findAllQuestionsByAttemptId(userSelectedAnswers.attemptId());
         int score = 0;
+        int maxScore = 0;
         List<Long> userAnswersIds = new ArrayList<>();
         for (QuestionModel questionModel : allQuestionsByAttemptId) {
             List<Long> correctAnswers = new ArrayList<>();
@@ -71,8 +72,11 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
                     ));
                 }
             }
+            maxScore += userAnswersModel.getQuestion().score();
             userAnswersModel.setSelectedOptions(selectedOptionModels);
         }
+
+        attemptModel.setMaxScore(maxScore);
 
         attemptRepositoryPort.save(attemptModel, isExam);
         userAnswerRepositoryPort.saveAll(userAnswersModels);
@@ -91,7 +95,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
         createAndSaveUserAnswers(attemptModel, randomQuestions);
 
         return new StartAttemptModel(
-                attemptModel.getUser().id(),
+                attemptModel.getUser().getId(),
                 attemptModel.getExam().id(),
                 attemptModel.getId(),
                 (long) randomQuestions.size(),
@@ -107,7 +111,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
         List<QuestionModel> randomQuestions = questionRepositoryPort.getRandomQuestionsForReview(
                 startAttemptModel.examId(),
                 startAttemptModel.questionCount(),
-                user.id()
+                user.getId()
         );
 
         AttemptModel attemptModel = createAndSaveAttempt(user, exam, false);
@@ -115,7 +119,7 @@ public class AttemptUseCaseImpl implements AttemptUseCase {
         createAndSaveUserAnswers(attemptModel, randomQuestions);
 
         return new StartAttemptModel(
-                attemptModel.getUser().id(),
+                attemptModel.getUser().getId(),
                 attemptModel.getExam().id(),
                 attemptModel.getId(),
                 (long) randomQuestions.size(),

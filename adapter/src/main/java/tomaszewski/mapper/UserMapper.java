@@ -9,7 +9,9 @@ import tomaszewski.out.entities.UserEntity;
 public interface UserMapper {
 
     @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "password", ignore = true)
     UserModel toUserModel(UserEntity userEntity);
 
 
+    UserEntity toUserEntity(UserModel userModel);
 }
