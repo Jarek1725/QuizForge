@@ -28,6 +28,12 @@ public class AttemptPersistenceAdapter implements AttemptRepositoryPort {
     }
 
     @Override
+    public AttemptModel findLastAttemptByUser(Long userId) {
+        AttemptEntity topByUserIdOrderByStartTimeDesc = jpaAttemptRepository.findFirstByUserIdOrderByStartTimeDesc(userId);
+        return attemptMapper.toAttemptModel(topByUserIdOrderByStartTimeDesc);
+    }
+
+    @Override
     public List<AttemptModel> findLastAttemptsByUserAndScoreMoreThan0(Long userId) {
         return jpaAttemptRepository.findByUserIdAndScoreGreaterThan(userId, -1)
                 .stream()
@@ -47,5 +53,20 @@ public class AttemptPersistenceAdapter implements AttemptRepositoryPort {
     @Override
     public Optional<AttemptModel> findAttemptById(Long attemptId) {
         return jpaAttemptRepository.findById(attemptId).map(attemptMapper::toAttemptModel);
+    }
+
+    @Override
+    public Long findAttemptSumForExam(Long examId) {
+        return jpaAttemptRepository.countAttemptsPerExamId(examId);
+    }
+
+    @Override
+    public Double findAverageExamScore(Long examId) {
+        return jpaAttemptRepository.findAverageScoreByExamId(examId);
+    }
+
+    @Override
+    public Long findPassedExamCount(Long examId) {
+        return jpaAttemptRepository.countPassedAttemptsByExamId(examId);
     }
 }

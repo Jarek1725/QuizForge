@@ -7,6 +7,15 @@
   margin: 0 auto;
 }
 
+.last-score-spinner-container-text{
+  align-items: center;
+  font-size: 60px;
+  gap: 15px;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
 .last-exam-container{
   display: grid;
   grid-template-columns: repeat(2, 1fr);

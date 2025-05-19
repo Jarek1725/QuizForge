@@ -10,6 +10,7 @@ public class AttemptModel {
     private ExamModel exam;
     private LocalDateTime startTime;
     private Integer score;
+    private Integer maxScore;
     private Boolean passed;
     private Boolean isAttemptExam;
     private List<UserAnswersModel> userAnswerModels;
@@ -24,6 +25,18 @@ public class AttemptModel {
         this.startTime = startTime;
         this.score = score;
         this.passed = passed;
+        this.userAnswerModels = userAnswerModels;
+    }
+
+    public AttemptModel(Long id, UserModel user, ExamModel exam, LocalDateTime startTime, Integer score, Integer maxScore, Boolean passed, Boolean isAttemptExam, List<UserAnswersModel> userAnswerModels) {
+        this.id = id;
+        this.user = user;
+        this.exam = exam;
+        this.startTime = startTime;
+        this.score = score;
+        this.maxScore = maxScore;
+        this.passed = passed;
+        this.isAttemptExam = isAttemptExam;
         this.userAnswerModels = userAnswerModels;
     }
 
@@ -100,6 +113,14 @@ public class AttemptModel {
 
     public void setAttemptExam(Boolean attemptExam) {
         isAttemptExam = attemptExam;
+    }
+
+    public Integer getMaxScore() {
+        return maxScore;
+    }
+
+    public void setMaxScore(Integer maxScore) {
+        this.maxScore = maxScore;
     }
 
     @Override

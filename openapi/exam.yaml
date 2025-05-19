@@ -91,6 +91,30 @@ paths:
         "404":
           description: Attempt not found
 
+  /api/exam/exam-stats/{examId}:
+    get:
+      x-principal: 'true'
+      tags:
+        - Exam
+      parameters:
+        - name: examId
+          in: path
+          description: The ID of the exam
+          required: true
+          schema:
+              type: integer
+              format: int64
+      summary: Retrieves statistics for current user
+      operationId: getUserExamStats
+      responses:
+        "200":
+          description: Statistics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserExamStatsDTO"
+
+
   /api/user/attempts:
     get:
       x-principal: 'true'
@@ -452,3 +476,26 @@ components:
           items:
             type: number
             format: double
+
+    UserExamStatsDTO:
+      type: object
+      properties:
+        averageScore:
+          type: number
+          format: double
+          example: 276
+        totalAttempts:
+          type: integer
+          example: 10
+        passRate:
+          type: number
+          format: double
+          description: Pass rate in percentage (0–100)
+          example: 72.5
+        lastScore:
+          type: number
+          format: double
+        questionPoolSize:
+          type: integer
+          description: Total number of questions in user's exam pool
+          example: 120

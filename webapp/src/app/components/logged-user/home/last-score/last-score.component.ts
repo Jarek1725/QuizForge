@@ -4,7 +4,7 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatButton} from '@angular/material/button';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AttemptService, AttemptSummaryDTO} from '../../../../openapi/tomaszewski/openapi';
-import {DatePipe} from '@angular/common';
+import {DatePipe, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-last-score',
@@ -14,7 +14,8 @@ import {DatePipe} from '@angular/common';
     MatCardHeader,
     MatProgressSpinner,
     MatButton,
-    DatePipe
+    DatePipe,
+    NgIf
   ],
   templateUrl: './last-score.component.html',
   styleUrl: './last-score.component.scss'
