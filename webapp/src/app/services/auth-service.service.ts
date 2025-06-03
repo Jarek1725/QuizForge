@@ -46,6 +46,22 @@ export class AuthServiceService {
       )
   }
 
+  register(email: string, password: string): Observable<any> {
+    const body = {
+      email: email,
+      password: password
+    };
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.httpClient.post('/api/auth/register', body, {
+      headers,
+      withCredentials: true
+    });
+  }
+
   logout(): void {
     localStorage.removeItem('user');
     this.currentUserSubject.next(null);

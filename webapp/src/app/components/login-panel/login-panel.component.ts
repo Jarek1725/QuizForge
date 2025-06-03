@@ -18,30 +18,64 @@ import {Router} from '@angular/router';
 export class LoginPanelComponent {
   isLogin = true;
   loginForm: FormGroup;
+  registerForm: FormGroup;
   loginError: boolean = false;
+  registerError: boolean = false;
 
   toggleForm() {
     this.isLogin = !this.isLogin;
   }
 
-  constructor(private fb: FormBuilder, private authService: AuthServiceService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthServiceService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
       rememberMe: [false]
     });
+
+    this.registerForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    });
   }
 
   login() {
     if (this.loginForm.valid) {
-      const {username, password} = this.loginForm.value;
+      const { username, password } = this.loginForm.value;
       this.authService.login(username, password).subscribe({
         next: () => {
           this.loginError = false;
           this.router.navigate(['/home']);
         },
-        error: (error) => {
-          this.loginError = true
+        error: () => {
+          this.loginError = true;
+        }
+      });
+    }
+  }
+
+  register() {
+    if (this.registerForm.valid) {
+      const { email, password, confirmPassword } = this.registerForm.value;
+
+      if (password !== confirmPassword) {
+        this.registerError = true;
+        return;
+      }
+
+      this.authService.register(email, password).subscribe({
+        next: () => {
+          this.registerError = false;
+          this.toggleForm();
+        },
+        error: () => {
+          this.registerError = false;
+          this.toggleForm();
         }
       });
     }

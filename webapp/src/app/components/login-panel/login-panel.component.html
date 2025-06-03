@@ -1,5 +1,5 @@
 <div>
-  <div *ngIf="isLogin; else registerForm" class="login-panel-container">
+  <div *ngIf="isLogin; else registerTemplate" class="login-panel-container">
     <h2>Logowanie</h2>
     <p id="login-error" [ngClass]="{ 'error-text': loginError }">Błędny login lub hasło</p>
     <form [formGroup]="loginForm" (ngSubmit)="login()">
@@ -19,37 +19,27 @@
     <a id="reset-password" (click)="toggleForm()">Nie pamiętasz hasła?</a>
   </div>
 
-  <ng-template #registerForm>
+  <ng-template #registerTemplate>
     <div class="login-panel-container">
       <h2>Rejestracja</h2>
-      <div id="register-form-container">
-        <mat-form-field appearance="outline" class="register-form-field">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" placeholder="Email">
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="register-form-field">
-          <mat-label>Hasło</mat-label>
-          <input matInput type="password" placeholder="Hasło">
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="register-form-field">
-          <mat-label>Potwierdź hasło</mat-label>
-          <input matInput type="password" placeholder="Potwierdź hasło">
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="register-form-field">
-          <mat-label>Potwierdź hasło</mat-label>
-          <input matInput type="password" placeholder="Potwierdź hasło">
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="register-form-field">
-          <mat-label>Potwierdź hasło</mat-label>
-          <input matInput type="password" placeholder="Potwierdź hasło">
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="register-form-field">
-          <mat-label>Potwierdź hasło</mat-label>
-          <input matInput type="password" placeholder="Potwierdź hasło">
-        </mat-form-field>
-      </div>
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div id="register-form-container">
+          <mat-form-field appearance="outline" class="register-form-field">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" placeholder="Email">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="register-form-field">
+            <mat-label>Hasło</mat-label>
+            <input matInput formControlName="password" type="password" placeholder="Hasło">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="register-form-field">
+            <mat-label>Potwierdź hasło</mat-label>
+            <input matInput formControlName="confirmPassword" type="password" placeholder="Potwierdź hasło">
+          </mat-form-field>
+        </div>
+        <button mat-flat-button type="submit" [disabled]="registerForm.invalid">Rejestracja</button>
+      </form>
       <p>Masz już konto? <a (click)="toggleForm()">Zaloguj się!</a></p>
-      <button mat-flat-button>Rejestracja</button>
     </div>
   </ng-template>
 </div>
